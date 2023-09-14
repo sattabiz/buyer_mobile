@@ -1,0 +1,37 @@
+tr:
+  detail_table:
+    row_1: "Ürün"
+    row_2: "Miktar"
+    row_3: "Fiyat"
+    row_4: "Toplam"
+  detail_info:
+    proposal: 
+      row_1: "Talep Tarihi:"
+      row_2: "Termin:"
+      row_3: "Ödeme Vadesi:"
+      row_4: "Nakliye:"
+    order:
+      row_1: "Sipariş Tarihi:"
+      row_2: "Termin:"
+      row_3: "Ödeme Vadesi:"
+      row_4: "Nakliye:"
+      row_5: "Ödeme Şekli:"
+    invoice:
+      row_1: "Fatura Tarihi:"
+      row_2: "Ödeme Tarihi:"
+      row_3: "Sipariş No:"
+      row_4: "Ödeme Şekli:"
+  ready_for_ship:
+    title: "Sevke Hazır Ürünler"
+    information: "Sevke hazır olan malzeme miktarlarını girip kaydet butonuna basın. Daha sonra fatura bölümünde yeni fatura butonuna basarak bu malzemeleri faturalandırabilirsiniz."
+    order_no: "Sipariş No"
+    tracking: "Nakliye: "
+    payment: "Ödeme: "
+    product: "Ürün"
+    amount: "Miktar"
+    ship: "Sevk"
+    delete: "Sil"
+    generate_invoice: "Faturala"
+    invoice_info: "Fatura Bilgileri"
+      
+
