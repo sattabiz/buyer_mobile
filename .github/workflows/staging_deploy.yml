@@ -1,13 +1,13 @@
-name: StagingDeployment
+name: StagingDeploymentForAndroid
 on:
   push:
     branches:
       - staging
       
 jobs:
-  build_web:
+  build_android:
     environment: staging_env
-    name: Build Flutter (Web)
+    name: Build Flutter (Android-APK)
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -17,9 +17,7 @@ jobs:
       with:
           flutter-version: '3.7.10'
           channel: 'stable'
-    - run: flutter config --enable-web
-    - run: flutter create .
-    - run: flutter build web --web-renderer html --dart-define=API_URL=$API_URL --dart-define=USERNAME=$USERNAME --dart-define=PASSWORD=$PASSWORD
+    - run: flutter build apk --split-per-abi
       env:
         API_URL: ${{ secrets.API_URL }}
         USERNAME: ${{ secrets.SERVICE_USER }}
@@ -27,7 +25,7 @@ jobs:
     - uses: easingthemes/ssh-deploy@v4.1.8
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SOURCE: "build/web/"
+        SOURCE: "build/app/outputs/apk/release/"
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
         TARGET: ${{ secrets.REMOTE_TARGET }}
