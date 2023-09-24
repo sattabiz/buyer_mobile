@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../view_model/get_proposal_view_model.dart';
 import '../widget/index_list_tile.dart';
 import 'counter.dart';
 import 'proposal_detail.dart';
@@ -24,7 +25,11 @@ class _ProposalState extends ConsumerState<ProposalView> {
         subtitle: 'Subtitle',
         svgPath: 'assets/alert.svg',
         // trailing: const Counter(),
-        onTap: () => context.go('/proposal/detail'),
+        //onTap: () => context.go('/proposal/detail'),
+        onTap: () async{
+          ref.watch(getProposalProvider);
+           context.go('/proposal/detail');
+        },
       ),
     );
   }

@@ -1,26 +1,26 @@
+import 'package:buyer_mobile/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
-class IndexListTile extends StatelessWidget {
+class IndexListTile extends ConsumerWidget {
   final String title;
   final String subtitle;
   final String svgPath;
   final Widget? trailing;
-  final void Function() ?onTap;
+  final Function()? onTap;
 
-
-  const IndexListTile({ 
+  const IndexListTile({
     Key? key,
     required this.title,
     required this.subtitle,
     required this.svgPath,
-    this.trailing, 
+    this.trailing,
     this.onTap,
-
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         ListTile(
@@ -32,14 +32,12 @@ class IndexListTile extends StatelessWidget {
           title: Text(
             title,
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant
-            ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
           subtitle: Text(
             subtitle,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant
-            ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
           trailing: trailing,
           onTap: () {
@@ -50,6 +48,13 @@ class IndexListTile extends StatelessWidget {
           height: 1,
           thickness: 1,
         ),
+        ElevatedButton(
+            onPressed: () async {
+              await ref.read(loginProvider.notifier).login(
+                  email: "alperburat@gmail.com",
+                  password: "deneme123");
+            },
+            child: Text("data"))
       ],
     );
   }
