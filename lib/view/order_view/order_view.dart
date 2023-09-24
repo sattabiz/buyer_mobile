@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../widget/index_list_tile.dart';
 
+final orderIdProvider = StateProvider<int?>((ref) => 0);   //for all post service
+
 class OrderView extends ConsumerWidget {
   const OrderView({Key? key}) : super(key: key);
 
@@ -22,6 +24,7 @@ class OrderView extends ConsumerWidget {
             svgPath: 'assets/alert.svg',           //map olusturulmasi lazim
             trailing: const Icon(Icons.shape_line),
             onTap: () {
+              ref.read(orderIdProvider.notifier).state=data[index].id;
               ref.watch(getOrderProvider);
               context.go('/order/detail');
             }, //context.go('/order/detail'),

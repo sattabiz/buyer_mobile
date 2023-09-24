@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/api_url.dart';
 import '../service/post_service.dart';
+import '../view/order_view/order_view.dart';
 import 'get_order_view_model.dart';
 
 
@@ -24,7 +25,7 @@ final confirmOrderProvider = FutureProvider.autoDispose((ref) async {
       };
   } */
   Map<String, dynamic> _productsAttributes = {
-    "order_id":619
+    "order_id":ref.watch(orderIdProvider)
   };
   try {
     response = await apiService.post(url: ApiUrls.confirmOrder, data: _productsAttributes);
