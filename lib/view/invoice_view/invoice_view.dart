@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../view_model/get_invoice_view_model.dart';
 import '../widget/index_list_tile.dart';
 
-class InvoiceView extends StatelessWidget {
+class InvoiceView extends ConsumerWidget {
   const InvoiceView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Stack(
       children: [
         ListView.builder(
@@ -17,7 +19,12 @@ class InvoiceView extends StatelessWidget {
             subtitle: 'Subtitle',
             svgPath: 'assets/alert.svg',
             trailing: const Icon(Icons.shape_line),
-            onTap: () => context.go('/invoice/detail'),
+            onTap: () async{
+              ref.watch(getInvoicesProvider);
+              context.go('/invoice/detail');
+            },
+            
+            //context.go('/invoice/detail'),
           ),
         ),
         Container(
