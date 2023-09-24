@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../view_model/confirm_order_view_model.dart.dart';
+import '../../view_model/get_order_view_model.dart';
 import '../widget/app_bar/top_app_bar_left.dart';
 import '../widget/detail_components/detail_table.dart';
 import 'order_detail_info.dart';
@@ -70,6 +71,8 @@ class OrderDetail extends ConsumerWidget {
         ElevatedButton(
           onPressed: () async{
             ref.watch(confirmOrderProvider);
+            ref.refresh(getOrderProvider);
+            //context.go('/order/detail');   //order sayfasina geri dondurulmesi lazim
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
