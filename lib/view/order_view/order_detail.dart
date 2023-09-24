@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../view_model/confirm_order_view_model.dart.dart';
 import '../widget/app_bar/top_app_bar_left.dart';
 import '../widget/detail_components/detail_table.dart';
 import 'order_detail_info.dart';
 
-class OrderDetail extends StatelessWidget {
+class OrderDetail extends ConsumerWidget {
   const OrderDetail({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: TopAppBarLeft(
@@ -66,7 +68,9 @@ class OrderDetail extends StatelessWidget {
       persistentFooterAlignment: AlignmentDirectional.bottomStart,
       persistentFooterButtons: [
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () async{
+            ref.watch(confirmOrderProvider);
+          },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
                 Theme.of(context).colorScheme.primary),
