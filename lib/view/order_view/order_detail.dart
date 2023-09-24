@@ -10,7 +10,7 @@ class OrderDetail extends ConsumerWidget {
   const OrderDetail({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {     //tasarima karar verilecek
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: TopAppBarLeft(
