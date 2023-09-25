@@ -43,3 +43,6 @@ final confirmOrderProvider = FutureProvider.autoDispose((ref) async {
 
   return response.statusCode;
 });
+
+
+final orderIdProvider = StateProvider<int?>((ref) => 0);   //read orderId for confirm order post service

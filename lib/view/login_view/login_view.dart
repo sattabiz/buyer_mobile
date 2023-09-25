@@ -113,37 +113,32 @@ class _LoginState extends ConsumerState<Login> {
                   height: 60,
                 ),
                 ElevatedButton(
-                  onPressed: () async{
-                          try {
-                             await ref
-                                .read(loginProvider.notifier)
-                                .login(
-                                    email: _emailController.text,
-                                    password: _passwordController.text);
-                            final loginState =
-                                ref.watch(loginProvider);
+                  onPressed: () async {
+                    try {
+                      await ref.read(loginProvider.notifier).login(
+                          email: _emailController.text,
+                          password: _passwordController.text);
+                      final loginState = ref.watch(loginProvider);
 
-                            if (loginState == LoginState.success) {
-                              context.go('/home');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Basarili giris"
-                                ),
-                              ),);
-                              //context.go('/home');
-                            } else if (loginState == LoginState.failure) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Hata"),
-                                ),
-                              );
-                            }
-                          } catch (e) {
-                            // print(e);
-                          }
-                        },
-      
-
+                      if (loginState == LoginState.success) {
+                        context.go('/home');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Basarili giris"),
+                          ),
+                        );
+                        //context.go('/home');
+                      } else if (loginState == LoginState.failure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Hata"),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      // print(e);
+                    }
+                  },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
                         Theme.of(context).colorScheme.primary),
@@ -161,7 +156,31 @@ class _LoginState extends ConsumerState<Login> {
                   height: 10,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    try {
+                      await ref.read(loginProvider.notifier).login(
+                        email: "alperburat@gmail.com", password: "deneme123");
+                      final loginState = ref.watch(loginProvider);
+
+                      if (loginState == LoginState.success) {
+                        context.go('/home');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Basarili giris"),
+                          ),
+                        );
+                        //context.go('/home');
+                      } else if (loginState == LoginState.failure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Hata"),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      // print(e);
+                    }
+                  },
                   child: Text(
                     'Sifremi Unuttum',
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
