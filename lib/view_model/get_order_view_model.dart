@@ -41,3 +41,5 @@ final getOrderProvider =
 final navigatorKeyProvider = Provider<GlobalKey<NavigatorState>>((ref) {
   return GlobalKey<NavigatorState>();
 });
+
+final orderIndexProvider = StateProvider<OrderModel?>((ref) => OrderModel());

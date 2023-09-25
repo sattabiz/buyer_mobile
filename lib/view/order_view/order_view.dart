@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../view_model/confirm_order_view_model.dart.dart';
 import '../widget/index_list_tile.dart';
 
-final orderIdProvider = StateProvider<int?>((ref) => 0);   //for all post service
 
 class OrderView extends ConsumerWidget {
   const OrderView({Key? key}) : super(key: key);
@@ -24,7 +24,8 @@ class OrderView extends ConsumerWidget {
             svgPath: 'assets/alert.svg',           //map olusturulmasi lazim
             trailing: const Icon(Icons.shape_line),
             onTap: () {
-              ref.read(orderIdProvider.notifier).state=data[index].id;
+              ref.read(orderIdProvider.notifier).state=data[index].id;        //read orderId for confirm order post service
+              ref.read(orderIndexProvider.notifier).state = data[index];            //read index for order-detail page
               ref.watch(getOrderProvider);
               context.go('/order/detail');
             }, //context.go('/order/detail'),
@@ -39,21 +40,5 @@ class OrderView extends ConsumerWidget {
         return Text('An error occurred: $error');
       },
     );
-
-    /* ListView.builder(
-      itemCount: 4,
-      itemBuilder: (context, index) => IndexListTile(
-        title: 'Headline',
-        subtitle: 'Subtitle',
-        svgPath: 'assets/alert.svg',
-        trailing: const Icon(
-          Icons.shape_line
-          ),
-        onTap: () {
-          ref.watch(getOrderProvider);
-          context.go('/order/detail');
-        }, //context.go('/order/detail'),
-      ),
-    ); */
   }
 }

@@ -7,9 +7,9 @@ class OrderModel {
   int? companyId;
   String? customerCompanyName;
   String? state;
-  dynamic deliveryDate;
+  String? deliveryDate;
   int? paymentDueDate;
-  dynamic paymentType;
+  String? paymentType;
   bool? includeShipmentCost;
   String? orderDate;
   List<Product>? products;
@@ -76,15 +76,15 @@ class Product {
   Map? productsProposalFiles;
   String? name;
   int? categoryId;
-  dynamic categoryErpId;
+  String? categoryErpId;
   String? description;
-  int? amount;
-  dynamic sendedAmount;
+  double? amount;
+  double? sendedAmount;
   String? unit;
   double? price;
   int? taxRate;
   String? currencyCode;
-  dynamic proposalNote;
+  String? proposalNote;
 
   Product({
     this.productProposalId,

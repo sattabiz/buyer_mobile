@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../view_model/get_order_view_model.dart';
+
 class DetailTable extends ConsumerWidget {
  DetailTable({ Key? key }) : super(key: key);
 
@@ -46,6 +48,7 @@ class DetailTable extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref){
+    final orderProducts = ref.watch(orderIndexProvider);
     return Table(
       border: TableBorder(
         bottom: BorderSide(
@@ -113,14 +116,14 @@ class DetailTable extends ConsumerWidget {
           ],
         ),
 
-        for (var i = 0; i < products.length; i++)
+        for (var i = 0; i < orderProducts!.products!.length; i++)
           TableRow(
             children: [
               Container(
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 padding: EdgeInsets.only(left: 5.0),
                 child: Text(
-                  products[i]!['name']!,
+                  orderProducts.products![i].name.toString(),
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )
@@ -130,7 +133,7 @@ class DetailTable extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 alignment: Alignment.centerRight,
                 child: Text(
-                  products[i]!['amount']!,
+                  orderProducts.products![i].amount.toString(),
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )
@@ -140,7 +143,7 @@ class DetailTable extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 alignment: Alignment.centerRight,
                 child: Text(
-                  products[i]!['price']!,
+                  orderProducts.products![i].price.toString(),
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )
@@ -150,7 +153,7 @@ class DetailTable extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 alignment: Alignment.centerRight,
                 child: Text(
-                  products[i]!['total']!,
+                  "000",
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )
