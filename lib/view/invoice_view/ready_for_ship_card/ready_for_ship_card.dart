@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:go_router/go_router.dart';
 
 import 'card_table.dart';
 
@@ -87,29 +88,51 @@ class _ReadyForShipCardState extends State<ReadyForShipCard> {
           ),
           const SizedBox(height: 10),
           Container(
-            height: 60,
-            margin: const EdgeInsets.only(right: 15.0),
-            alignment: Alignment.centerRight,
+            height: 50,
+            margin: const EdgeInsets.only(bottom: 5.0),
+            // alignment: Alignment.centerRight,
             decoration:const BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(10.0),
                 bottomRight: Radius.circular(10.0),
               ),
             ),
-            child: OutlinedButton(
-              onPressed: () {},
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(
-                  color: Theme.of(context).colorScheme.error,
-                ),
-                fixedSize: const Size(90, 10),
-              ),
-              child: Text(
-                FlutterI18n.translate(context, 'tr.ready_for_ship.delete'),
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                OutlinedButton(
+                  onPressed: () {},
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(
                       color: Theme.of(context).colorScheme.error,
                     ),
-              ),
+                    fixedSize: const Size(90, 8),
+                  ),
+                  child: Text(
+                    FlutterI18n.translate(context, 'tr.ready_for_ship.delete'),
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                  ),
+                ),
+                const SizedBox(width: 130),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                    onPressed: () => context.go('/chatbox'),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.tertiaryContainer),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(100, 8))
+                    ),
+                    child: Text(
+                      FlutterI18n.translate(context, 'tr.ready_for_ship.message'),
+                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ),
+                )
+              ],
             )
           ),
         ],

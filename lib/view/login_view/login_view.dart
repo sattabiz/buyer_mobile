@@ -96,10 +96,8 @@ class _LoginState extends ConsumerState<Login> {
                     context.go('/home');
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Theme.of(context).colorScheme.primary),
-                    fixedSize:
-                        MaterialStateProperty.all<Size>(const Size(140, 30)),
+                    backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary),
+                    fixedSize: MaterialStateProperty.all<Size>(const Size(140, 30)),
                   ),
                   child: Text(
                     'Giris Yap',

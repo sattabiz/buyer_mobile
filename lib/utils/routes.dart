@@ -1,4 +1,4 @@
-import 'package:buyer_mobile/view/login_view/login.view.dart';
+import 'package:buyer_mobile/view/login_view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../view/home.dart';
