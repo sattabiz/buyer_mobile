@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../view_model/login_view_model.dart';
+
 class Login extends ConsumerStatefulWidget {
   const Login({super.key});
 
@@ -11,6 +13,23 @@ class Login extends ConsumerStatefulWidget {
 }
 
 class _LoginState extends ConsumerState<Login> {
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -39,9 +58,9 @@ class _LoginState extends ConsumerState<Login> {
                 const SizedBox(
                   height: 60,
                 ),
-    
                 TextField(
                   cursorColor: Theme.of(context).colorScheme.onBackground,
+                  controller: _emailController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Theme.of(context).colorScheme.onPrimary,
@@ -49,15 +68,16 @@ class _LoginState extends ConsumerState<Login> {
                     label: Text(
                       'Eposta Adresi',
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
                     ),
-                    constraints: const BoxConstraints(
-                      maxWidth: 300,
-                      maxHeight: 40),
+                    constraints:
+                        const BoxConstraints(maxWidth: 300, maxHeight: 40),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant),
+                          color:
+                              Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                     border: const OutlineInputBorder(),
                   ),
@@ -67,6 +87,7 @@ class _LoginState extends ConsumerState<Login> {
                 ),
                 TextField(
                   cursorColor: Theme.of(context).colorScheme.onBackground,
+                  controller: _passwordController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Theme.of(context).colorScheme.onPrimary,
@@ -92,9 +113,37 @@ class _LoginState extends ConsumerState<Login> {
                   height: 60,
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    context.go('/home');
-                  },
+                  onPressed: () async{
+                          try {
+                             await ref
+                                .read(loginProvider.notifier)
+                                .login(
+                                    email: _emailController.text,
+                                    password: _passwordController.text);
+                            final loginState =
+                                ref.watch(loginProvider);
+
+                            if (loginState == LoginState.success) {
+                              context.go('/home');
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Basarili giris"
+                                ),
+                              ),);
+                              //context.go('/home');
+                            } else if (loginState == LoginState.failure) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Hata"),
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            // print(e);
+                          }
+                        },
+      
+
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
                         Theme.of(context).colorScheme.primary),
@@ -104,9 +153,8 @@ class _LoginState extends ConsumerState<Login> {
                   child: Text(
                     'Giris Yap',
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                   ),
                 ),
                 const SizedBox(
@@ -119,8 +167,7 @@ class _LoginState extends ConsumerState<Login> {
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
                           color: Theme.of(context).colorScheme.outline,
                           decoration: TextDecoration.underline,
-                          decorationColor:
-                              Theme.of(context).colorScheme.shadow,
+                          decorationColor: Theme.of(context).colorScheme.shadow,
                         ),
                   ),
                 ),
