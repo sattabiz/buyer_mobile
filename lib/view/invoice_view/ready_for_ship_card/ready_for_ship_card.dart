@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../widget/chat_box.dart';
 import 'card_table.dart';
 
 class ReadyForShipCard extends StatefulWidget {
@@ -119,7 +120,11 @@ class _ReadyForShipCardState extends State<ReadyForShipCard> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
-                    onPressed: () => context.go('/chatbox'),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const ChatBox()),
+                      );
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.tertiaryContainer),
                       fixedSize: MaterialStateProperty.all<Size>(const Size(100, 8))
