@@ -35,5 +35,6 @@ tr:
     delete: "Sil"
     generate_invoice: "Faturala"
     invoice_info: "Fatura Bilgileri"
+    message: "Mesaj"
       
 
