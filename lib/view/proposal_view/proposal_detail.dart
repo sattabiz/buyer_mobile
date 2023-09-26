@@ -1,3 +1,4 @@
+import 'package:buyer_mobile/view_model/get_proposal_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,6 +18,7 @@ class ProposalDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final proposalAsyncValue = ref.watch(proposalIndexProvider);
 
     List<DropdownMenuEntry<String>> dropDownMenuPaymentType =
         ["Cari Hesap", "DBS"].map((String value) {
@@ -39,7 +41,7 @@ class ProposalDetail extends ConsumerWidget {
 
     return Scaffold(
       appBar: TopAppBarLeft(
-        title: 'Teklif No: 1533',
+        title: 'Teklif No: ${proposalAsyncValue!.proposalId}',
         icon: Icons.chat_bubble_outline,
         route: '/proposal',
       ),
@@ -61,12 +63,12 @@ class ProposalDetail extends ConsumerWidget {
               ),
               SizedBox(
                 width: width,
-                child: const DetailInfo(
+                child: DetailInfo(
                   className: 'proposal',
-                  row1: "15.09.2023", 
-                  row2: "15.09.2023", 
-                  row3: "30 gun", 
-                  row4: "Satici"
+                  row1: proposalAsyncValue.proposalCreatedAt.toString().split('T')[0], 
+                  row2: proposalAsyncValue.deliveryDate.toString().split('T')[0], 
+                  row3: proposalAsyncValue.paymentDueDate.toString(), 
+                  row4: proposalAsyncValue.includeShipmentCost == true? "Satıcı" :"Alıcı"
                 ),
               ),
               const SizedBox(height: 20.0),
@@ -190,11 +192,11 @@ class ProposalDetail extends ConsumerWidget {
               // const Divider(thickness: 2),
               ListView.builder(
                 shrinkWrap: true, // makes ListView size itself according to children
-                itemCount: 5,
+                itemCount: proposalAsyncValue.productProposals!.length,
                 itemBuilder: (context, index) {
                   return ProposalBody(
-                      paletteDimensions: '120 x 100 Tahta Palet',
-                      itemCount: 100);
+                      paletteDimensions: proposalAsyncValue.productProposals![index].productName!,
+                      itemCount: proposalAsyncValue.productProposals![index].amount!,);
                 },
               )
 

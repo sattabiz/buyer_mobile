@@ -14,7 +14,7 @@ class ProposalModel {
     String? customerCompany;
     int? customerCompanyId;
     String? sellerUserName;
-    dynamic paymentType;
+    String? paymentType;
     List<ProductProposal>? productProposals;
 
     ProposalModel({
@@ -85,17 +85,17 @@ class ProductProposal {
     String? productUnit;
     dynamic productErpId;
     String? updatedAt;
-    int? price;
-    dynamic url;
-    dynamic description;
+    double? price;
+    String? url;
+    String? description;
     int? productId;
     String? status;
     int? updateCount;
-    dynamic equivalentId;
+    String? equivalentId;
     String? proposalNote;
     int? taxRate;
     String? currencyCode;
-    int? amount;
+    double? amount;
 
     ProductProposal({
         this.productProposalId,

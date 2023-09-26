@@ -18,35 +18,46 @@ class ProposalView extends ConsumerStatefulWidget {
 class _ProposalState extends ConsumerState<ProposalView> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ListView.builder(
-          itemCount: 4,
+    final proposalListAsyncValue = ref.watch(getProposalProvider);
+    return proposalListAsyncValue.when(
+      data: (data) {
+        return ListView.builder(
+          itemCount: data.length,
           itemBuilder: (context, index) => IndexListTile(
-            title: 'Headline',
+            title: "Teklif No: ${data[index].proposalId.toString()}",
             subtitle: 'Subtitle',
             svgPath: 'assets/alert.svg',
             // trailing: const Counter(),
             //onTap: () => context.go('/proposal/detail'),
             onTap: () async {
-              ref.watch(getProposalProvider);
+              ref.read(proposalIndexProvider.notifier).state = data[index];   
               context.go('/proposal/detail');
             },
           ),
-        ),
-        Container(
-          alignment: Alignment.bottomRight,
-          padding: const EdgeInsets.all(16.0),
-          child: FloatingActionButton(
-            onPressed: () async {
-              await ref
-                  .read(loginProvider.notifier)
-                  .login(email: "alperburat@gmail.com", password: "deneme123");
-            },
-            child: const Text("Login"),
-          ),
-        )
-      ],
+        );
+      },
+      loading: () => Container(),
+      error: (error, stack) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.pushNamed(context, '/login');
+        });
+        return Text('An error occurred: $error');
+      },
     );
+
+    /* ListView.builder(
+      itemCount: 4,
+      itemBuilder: (context, index) => IndexListTile(
+        title: 'Headline',
+        subtitle: 'Subtitle',
+        svgPath: 'assets/alert.svg',
+        // trailing: const Counter(),
+        //onTap: () => context.go('/proposal/detail'),
+        onTap: () async {
+          ref.watch(getProposalProvider);
+          context.go('/proposal/detail');
+        },
+      ),
+    ); */
   }
 }

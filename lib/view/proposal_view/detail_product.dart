@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ProposalBody extends StatefulWidget {
   final String paletteDimensions;
-  final int itemCount;
+  final double itemCount;
 
   ProposalBody({required this.paletteDimensions, required this.itemCount});
 
