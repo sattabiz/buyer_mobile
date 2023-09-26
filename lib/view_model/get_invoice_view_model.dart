@@ -11,6 +11,7 @@ final getInvoicesProvider =
   final apiService = ApiService();
   Response response;
   try {
+    debugPrint('provider calisti');
     response = await apiService.get(url: ApiUrls.invoices);
     debugPrint(response.data.toString());
   } catch (error) {
@@ -26,7 +27,6 @@ final getInvoicesProvider =
   debugPrint(response.data.toString());
   List<InvoiceModel> _invoicesList = [];
   if (response.data['invoices'] != null) {
-    debugPrint('_invoicesList[0].products![0].categoryId.toString()qweqw');
     _invoicesList = (response.data['invoices'] as List)
         .map((e) => InvoiceModel.fromMap(e))
         .toList();
