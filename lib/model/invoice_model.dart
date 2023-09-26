@@ -79,9 +79,9 @@ class Product {
     String? name;
     int? categoryId;
     String? description;
-    int? shippedAmount;
+    double? shippedAmount;
     String? unit;
-    int? price;
+    double? price;
     String? currencyCode;
     dynamic proposalNote;
 
@@ -112,7 +112,7 @@ class Product {
         description: json["description"],
         shippedAmount: json["shipped_amount"],
         unit: json["unit"],
-        price: json["price"],
+        price: json   ["price"],
         currencyCode: json["currency_code"],
         proposalNote: json["proposal_note"],
     );
