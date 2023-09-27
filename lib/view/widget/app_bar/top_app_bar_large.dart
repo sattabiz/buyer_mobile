@@ -40,7 +40,7 @@ class TopAppBarLarge extends StatelessWidget implements PreferredSizeWidget {
                 Icons.arrow_back,
                 color: Colors.white,
                 ),
-              onPressed: () => context.pop()
+              onPressed: () => context.go('/login')
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),

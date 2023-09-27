@@ -1,10 +1,12 @@
+
+
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../config/api_url.dart';
 import '../model/proposal_model.dart';
 import '../service/get_services.dart';
-import '../storage/jwt_storage.dart';
 
 final getProposalProvider =
     FutureProvider.autoDispose<List<ProposalModel>>((ref) async {
@@ -13,8 +15,6 @@ final getProposalProvider =
   Response response;
 
   try {
-    final _jwt = await jwtStorageService().getJwtData();
-    debugPrint(_jwt);
     response = await apiService.get(url: ApiUrls.proposals);
     debugPrint(response.data.toString());
   } catch (e) {
@@ -30,11 +30,13 @@ final getProposalProvider =
         .map((e) => ProposalModel.fromMap(e))
         .toList();
   }
-  for (int i = 0; i <= _proposalList.length; i++) {
+  /* for (int i = 0; i <= _proposalList.length; i++) {
     debugPrint(
         '--------------------------------------------------------------------------------------------------------------------------------------------------------------');
     debugPrint(_proposalList[i].productProposals.toString());
-  }
+  } */
   _proposalList.sort((a, b) => b.proposalId!.compareTo(a.proposalId!));
   return _proposalList;
 });
+
+final proposalIndexProvider = StateProvider<ProposalModel?>((ref) => ProposalModel());

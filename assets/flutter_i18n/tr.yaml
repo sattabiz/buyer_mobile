@@ -16,6 +16,8 @@ tr:
       row_3: "Ödeme Vadesi:"
       row_4: "Nakliye:"
       row_5: "Ödeme Şekli:"
+      order_confirmed: "Hazırlanıyor"
+      order_approved: "Yeni Sipariş"
     invoice:
       row_1: "Fatura Tarihi:"
       row_2: "Ödeme Tarihi:"
@@ -33,5 +35,6 @@ tr:
     delete: "Sil"
     generate_invoice: "Faturala"
     invoice_info: "Fatura Bilgileri"
+    message: "Mesaj"
       
 

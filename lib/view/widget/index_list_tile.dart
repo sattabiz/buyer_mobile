@@ -48,13 +48,6 @@ class IndexListTile extends ConsumerWidget {
           height: 1,
           thickness: 1,
         ),
-        ElevatedButton(
-            onPressed: () async {
-              await ref.read(loginProvider.notifier).login(
-                  email: "alperburat@gmail.com",
-                  password: "deneme123");
-            },
-            child: Text("data"))
       ],
     );
   }

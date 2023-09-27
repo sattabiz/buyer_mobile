@@ -6,11 +6,9 @@ class ApiService {
   final Dio _dio = Dio();
 
   Future<Response> get({required String url}) async {
-    debugPrint('servis calisti...');
     try {
-      debugPrint("servisin içerisine girdi");
       final _jwt = await jwtStorageService().getJwtData();
-      debugPrint(_jwt);
+      
       var response = await _dio.get(
         url,
         options: Options(
@@ -24,7 +22,7 @@ class ApiService {
             requestOptions: response.requestOptions,
             error: 'HTTP status error: ${response.statusCode}');
       }
-
+      debugPrint(response.data.toString());
       return response;
     } catch (e) {
       throw e;

@@ -1,3 +1,4 @@
+import 'package:buyer_mobile/view/login_view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../view/home.dart';
@@ -17,69 +18,15 @@ import '../view/widget/chat_box.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _sectionNavigatorKey = GlobalKey<NavigatorState>();
-final _detailNavigatorKey = GlobalKey<NavigatorState>();
-
-PreferredSizeWidget customAppBar(String location) {
-  PreferredSizeWidget customAppBar;
-  switch (location) {
-    case '/home':
-      customAppBar = const PreferredSize(
-        preferredSize: Size(double.infinity, 110),
-        child: TopAppBarLarge(
-          title: 'Palet Point',
-        ),
-      );
-      break;
-    case '/home/detail':
-      customAppBar = const PreferredSize(
-        preferredSize: Size(double.infinity, 110),
-        child: TopAppBarLarge(
-          title: 'Palet Point',
-        ),
-      );
-      break;
-    case '/proposal':
-      customAppBar = CustomAppBar(
-        height: kToolbarHeight,
-        child: const TopAppBarCentered(
-          title: 'Teklif İstekleri',
-          route: '/home',
-        ),
-      );
-      break;
-    case '/order':
-      customAppBar = CustomAppBar(
-        height: kToolbarHeight,
-        child: const TopAppBarCentered(
-          title: 'SİPARİŞLER',
-          route: '/proposal',
-        ),
-      );
-      break;
-    case '/invoice':
-      customAppBar = CustomAppBar(
-        height: kToolbarHeight,
-        child: const TopAppBarCentered(
-          title: 'FATURALAR',
-          route: '/order',
-        ),
-      );
-      break;
-    default:
-      customAppBar = CustomAppBar(
-        height: 110,
-        child: const TopAppBarLarge(
-          title: 'Palet Point',
-        ),
-      );
-  }
-  return customAppBar;
-}
 
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/home',
+  initialLocation: '/login',
   routes: <RouteBase>[
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => Login(),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return Index(
@@ -220,3 +167,60 @@ final router = GoRouter(
     )
   ],
 );
+
+PreferredSizeWidget customAppBar(String location) {
+  PreferredSizeWidget customAppBar;
+  switch (location) {
+    case '/home':
+      customAppBar = const PreferredSize(
+        preferredSize: Size(double.infinity, 110),
+        child: TopAppBarLarge(
+          title: 'Palet Point',
+        ),
+      );
+      break;
+    case '/home/detail':
+      customAppBar = const PreferredSize(
+        preferredSize: Size(double.infinity, 110),
+        child: TopAppBarLarge(
+          title: 'Palet Point',
+        ),
+      );
+      break;
+    case '/proposal':
+      customAppBar = CustomAppBar(
+        height: kToolbarHeight,
+        child: const TopAppBarCentered(
+          title: 'Teklif İstekleri',
+          route: '/home',
+        ),
+      );
+      break;
+    case '/order':
+      customAppBar = CustomAppBar(
+        height: kToolbarHeight,
+        child: const TopAppBarCentered(
+          title: 'SİPARİŞLER',
+          route: '/proposal',
+        ),
+      );
+      break;
+    case '/invoice':
+      customAppBar = CustomAppBar(
+        height: kToolbarHeight,
+        child: const TopAppBarCentered(
+          title: 'FATURALAR',
+          route: '/order',
+        ),
+      );
+      break;
+    default:
+      customAppBar = CustomAppBar(
+        height: 110,
+        child: const TopAppBarLarge(
+          title: 'Palet Point',
+        ),
+      );
+  }
+  return customAppBar;
+}
