@@ -1,3 +1,4 @@
+import 'package:buyer_mobile/view_model/get_shipment_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -34,7 +35,12 @@ class InvoiceView extends ConsumerWidget {
               alignment: Alignment.bottomRight,
               padding: const EdgeInsets.all(20.0),
               child: FloatingActionButton(
-                onPressed: () => context.go('/invoice_ready'),
+                onPressed: () async{
+                  ref.watch(getShipmentProvider);
+                  context.go('/invoice_ready');
+                },
+                
+                //context.go('/invoice_ready'),
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 child: const Icon(
                   Icons.add,
