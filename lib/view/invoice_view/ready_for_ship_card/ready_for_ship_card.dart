@@ -1,3 +1,4 @@
+import 'package:buyer_mobile/model/shipment_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
@@ -5,7 +6,8 @@ import '../../widget/chat_box.dart';
 import 'card_table.dart';
 
 class ReadyForShipCard extends StatefulWidget {
-  const ReadyForShipCard({ Key? key }) : super(key: key);
+  ShipmentModel shipmentList;
+  ReadyForShipCard({ Key? key, required this.shipmentList }) : super(key: key);
 
   @override
   _ReadyForShipCardState createState() => _ReadyForShipCardState();
@@ -24,7 +26,7 @@ class _ReadyForShipCardState extends State<ReadyForShipCard> {
             height: 60,
             padding: const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10.0),
                 topRight: Radius.circular(10.0),
             
@@ -42,7 +44,7 @@ class _ReadyForShipCardState extends State<ReadyForShipCard> {
                       ),
                     ),
                     Text(
-                      '2566 ',
+                      widget.shipmentList.shipmentId.toString(),
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
@@ -58,7 +60,7 @@ class _ReadyForShipCardState extends State<ReadyForShipCard> {
                       ),
                     ),
                     Text(
-                      'Satici',
+                      widget.shipmentList.includeShipmentCost! ? "Alıcı" : "Satıcı",
                       style: Theme.of(context).textTheme.labelMedium!.copyWith(
                           color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
@@ -70,7 +72,7 @@ class _ReadyForShipCardState extends State<ReadyForShipCard> {
                       ),
                     ),
                     Text(
-                      "DBS",
+                      widget.shipmentList.paymentType == null ? 'Api data Null' : widget.shipmentList.paymentType ,
                       style: Theme.of(context).textTheme.labelMedium!.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant
                       ),
@@ -83,8 +85,8 @@ class _ReadyForShipCardState extends State<ReadyForShipCard> {
 
           ),
           const SizedBox(height: 5),
-          const SizedBox(
-            child: CardTable()
+          SizedBox(
+            child: CardTable(shipmentProduct: widget.shipmentList.products!,)
           ),
           const SizedBox(height: 10),
           Container(

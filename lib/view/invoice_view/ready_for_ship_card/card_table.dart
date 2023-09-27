@@ -1,9 +1,13 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../model/shipment_model.dart';
+
 class CardTable extends ConsumerStatefulWidget {
-  const CardTable({super.key});
+  List<Product> shipmentProduct;
+  CardTable({super.key, required this.shipmentProduct});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CardTableState();
@@ -136,7 +140,7 @@ class _CardTableState extends ConsumerState<CardTable> {
             ),
           ],
         ),
-        for (var i = 0; i < products.length; i++)
+        for (var i = 0; i < widget.shipmentProduct.length; i++)
           TableRow(
             children: [
               Container(
@@ -157,7 +161,7 @@ class _CardTableState extends ConsumerState<CardTable> {
               Container(
                 margin: const EdgeInsets.only(top: 8.0),
                 alignment: Alignment.centerLeft,
-                child: Text(products[i]!['name']!,
+                child: Text(widget.shipmentProduct[i].name!,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         )),
@@ -165,7 +169,7 @@ class _CardTableState extends ConsumerState<CardTable> {
               Container(
                 margin: const EdgeInsets.only(top: 8.0),
                 alignment: Alignment.center,
-                child: Text(products[i]!['amount']!,
+                child: Text(widget.shipmentProduct[i].shippedAmount!.toString(),    //amount gelmiyor simdilik shippedAmount duruyor
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         )),
@@ -174,7 +178,7 @@ class _CardTableState extends ConsumerState<CardTable> {
                 margin: const EdgeInsets.all(5.0),
                 alignment: Alignment.center,
                 child: TextFormField(
-                  initialValue: products[i]!['shippedAmount']!,
+                  initialValue: widget.shipmentProduct[i].shippedAmount!.toString(),
                   textAlign: TextAlign.right,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant),
