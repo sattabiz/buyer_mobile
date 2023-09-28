@@ -1,5 +1,7 @@
+import 'package:buyer_mobile/utils/widget_helper.dart';
 import 'package:buyer_mobile/view_model/get_shipment_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../view_model/get_invoice_view_model.dart';
@@ -19,15 +21,18 @@ class InvoiceView extends ConsumerWidget {
               itemCount: data.length,
               shrinkWrap: true,
               itemBuilder: (context, index) => IndexListTile(
-                title: 'Headline',
-                subtitle: 'Subtitle',
-                svgPath: 'assets/alert.svg',
+                title: FlutterI18n.translate(context, 'tr.invoice.${data[index].state}'),
+                subtitle: FlutterI18n.translate(context, 'tr.invoice.invoice_no'),
+                subtitle2: data[index].invoiceNo,
+                subtitle3: FlutterI18n.translate(context, 'tr.invoice.invoice_date'),
+                subtitle4: formattedDate(data[index].invoiceDate.toString()),
+                svgPath: statusIconMap[data[index].state] ?? ' ',
                 trailing: const Icon(Icons.shape_line),
                 onTap: () async {
                   ref.watch(getInvoicesProvider);
+                  ref.read(invoiceIndexProvider.notifier).state = data[index];
                   context.go('/invoice/detail');
                 },
-
                 //context.go('/invoice/detail'),
               ),
             ),

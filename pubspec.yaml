@@ -75,6 +75,7 @@ flutter:
     - assets/
     - assets/flutter_i18n/en.yaml
     - assets/flutter_i18n/tr.yaml
+    - assets/svg/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -79,7 +79,7 @@ class Product {
     String? name;
     int? categoryId;
     String? description;
-    double? shippedAmount;
+    double? amount;
     String? unit;
     double? price;
     String? currencyCode;
@@ -92,7 +92,7 @@ class Product {
         this.name,
         this.categoryId,
         this.description,
-        this.shippedAmount,
+        this.amount,
         this.unit,
         this.price,
         this.currencyCode,
@@ -110,7 +110,7 @@ class Product {
         name: json["name"],
         categoryId: json["category_id"],
         description: json["description"],
-        shippedAmount: json["shipped_amount"],
+        amount: json["shipped_amount"],
         unit: json["unit"],
         price: json   ["price"],
         currencyCode: json["currency_code"],
@@ -122,7 +122,7 @@ class Product {
         "name": name,
         "category_id": categoryId,
         "description": description,
-        "shipped_amount": shippedAmount,
+        "shipped_amount": amount,
         "unit": unit,
         "price": price,
         "currency_code": currencyCode,

@@ -1,19 +1,22 @@
+import 'package:buyer_mobile/view_model/get_invoice_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../utils/widget_helper.dart';
 import '../widget/app_bar/top_app_bar_left.dart';
 import '../widget/detail_components/detail_info.dart';
 import '../widget/detail_components/detail_table.dart';
 import '../widget/detail_components/detail_table_panel.dart';
 
-class InvoiceDetail extends StatelessWidget {
+class InvoiceDetail extends ConsumerWidget {
   const InvoiceDetail({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     double width = MediaQuery.of(context).size.width;
+    final invoiceList = ref.watch(invoiceIndexProvider);
     return Scaffold(
       appBar: TopAppBarLeft(
-        title: 'Fatura: GIB1533',
+        title: 'Fatura: ${invoiceList.invoiceNo}',
         icon: Icons.chat_bubble_outline,
         route: '/invoice',
       ),
@@ -36,19 +39,21 @@ class InvoiceDetail extends StatelessWidget {
               ),
               SizedBox(
                 width: width,
-                child: const DetailInfo(
+                child: DetailInfo(
                   className: 'invoice',
-                  row1: "15.01.2023",
-                  row2: "18.03.2023",
-                  row3: "355",
-                  row4: "Cari Hesap",
+                  row1: invoiceList.invoiceDate.toString().split('T')[0],
+                  row2: invoiceList.paymentDate.toString().split('T')[0],
+                  row3: invoiceList.orderId.toString(),
+                  row4: invoiceList.paymentType,
                 ),
               ),
               const SizedBox(height: 20.0),
               Container(
                 width: width,
                 padding: const EdgeInsets.all(5.0),
-                child: DetailTable(),
+                child: DetailTable(
+                  products: invoiceList.products!
+                ),
               ),
               SizedBox(
                 width: width,
