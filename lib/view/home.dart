@@ -15,7 +15,7 @@ const Home({ Key? key }) : super(key: key);
           IndexListTile(
             title: 'Headline',
             subtitle: 'Subtitle',
-            svgPath: 'assets/alert.svg',
+            svgPath: 'assets/svg/alert.svg',
             onTap: ()  => context.go('/home/detail')
           ),
       ),
