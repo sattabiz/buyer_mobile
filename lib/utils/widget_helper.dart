@@ -1,26 +1,15 @@
-String getCurrencySymbol(String currencyCode) {
-  switch (currencyCode) {
-    case 'TRY':
-      return '₺';
-    case 'EUR':
-      return '€';
-    case 'USD':
-      return '\$';
-    default:
-      return currencyCode;
-  }
-}
+
 
 Map<String, String> statusIconMap = {
   // 'pending': 'assets/proposal_pending.svg',
   // 'replied': 'assets/exportNotes.svg',
   // 'proposal_stvs': 'assets/exportNotes.svg',
   // 'last_offer': 'assets/exportNotes.svg',
-  // 'order_approved': 'assets/exportNotes.svg',
-  // 'order_confirmed': 'assets/conveyor.svg',
-  // 'order_prepared': 'assets/trolley.svg',
-  // 'order_on_the_way': 'assets/shipment.svg',
-  // 'order_delivered': 'assets/warehouse.svg',
+  'order_approved': 'assets/svg/flare.svg',
+  'order_confirmed': 'assets/svg/conveyor.svg',
+  'order_prepared': 'assets/svg/trolley.svg',
+  'order_on_the_way': 'assets/svg/truck.svg',
+  'order_delivered': 'assets/svg/warehouse.svg',
   'invoice_sended': 'assets/svg/truck.svg', //yolda
   'invoice_goods_delivered': 'assets/svg/warehouse.svg', //onay bekl;iyor
   'invoice_approved': 'assets/svg/not_secure.svg', //acik fatura
@@ -105,6 +94,18 @@ String formattedDate(String date) {
   } else {
     final DateTime parsedDate = DateTime.parse(date);
     return "${parsedDate.day}-${parsedDate.month.toString().padLeft(2, '0')}-${parsedDate.year.toString().padLeft(2, '0')}";
+  }
+}
+String getCurrencySymbol(String currencyCode) {
+  switch (currencyCode) {
+    case 'TRY':
+      return '₺';
+    case 'EUR':
+      return '€';
+    case 'USD':
+      return '\$';
+    default:
+      return currencyCode;
   }
 }
 

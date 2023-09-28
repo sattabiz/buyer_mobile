@@ -12,6 +12,7 @@ class IndexListTile extends ConsumerWidget {
   final String ?subtitle4;
   final String svgPath;
   final Widget? trailing;
+  final double ?width;
   final Function()? onTap;
 
   const IndexListTile({
@@ -24,6 +25,7 @@ class IndexListTile extends ConsumerWidget {
     required this.svgPath,
     this.trailing,
     this.onTap,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -50,7 +52,7 @@ class IndexListTile extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
               SizedBox(
-                width: 100,
+                width: width,
                 child: Text(
                   subtitle2 ?? ' ',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(

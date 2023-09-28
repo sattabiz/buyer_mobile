@@ -26,6 +26,7 @@ class InvoiceView extends ConsumerWidget {
                 subtitle2: data[index].invoiceNo,
                 subtitle3: FlutterI18n.translate(context, 'tr.invoice.invoice_date'),
                 subtitle4: formattedDate(data[index].invoiceDate.toString()),
+                width: 100,
                 svgPath: statusIconMap[data[index].state] ?? ' ',
                 trailing: const Icon(Icons.shape_line),
                 onTap: () async {

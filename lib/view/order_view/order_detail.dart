@@ -33,7 +33,7 @@ class OrderDetail extends ConsumerWidget {
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(bottom: 10.0),
                 child: Text(
-                  FlutterI18n.translate(context, 'tr.detail_info.order.${orderAsyncValue.state}'),
+                  FlutterI18n.translate(context, 'tr.order.${orderAsyncValue.state}'),
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color:
                             Theme.of(context).colorScheme.onSecondaryContainer,
@@ -62,7 +62,9 @@ class OrderDetail extends ConsumerWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: 
+      orderAsyncValue.state == 'order_confirmed'
+      ? FloatingActionButton(
         onPressed: () => context.go('/order_detail/ready'),
           // print();
         
@@ -71,9 +73,13 @@ class OrderDetail extends ConsumerWidget {
           Icons.add,
           color: Colors.white,
         ),
-      ),
+      )
+      : null,
       persistentFooterAlignment: AlignmentDirectional.bottomStart,
-      persistentFooterButtons: [
+      
+      persistentFooterButtons: 
+      orderAsyncValue.state == 'order_approved'
+      ? [
         ElevatedButton(
           onPressed: () async{
             ref.watch(confirmOrderProvider);
@@ -93,20 +99,22 @@ class OrderDetail extends ConsumerWidget {
           ),
         ),
         OutlinedButton(
-            onPressed: () {},
-            style: OutlinedButton.styleFrom(
-              side: BorderSide(
-                color: Theme.of(context).colorScheme.error,
-              ),
-              fixedSize: const Size(100, 30),
+          onPressed: () {},
+          style: OutlinedButton.styleFrom(
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.error,
             ),
-            child: Text(
-              'Ret',
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
-            ))
-      ],
+            fixedSize: const Size(100, 30),
+          ),
+          child: Text(
+            'Ret',
+            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+              color: Theme.of(context).colorScheme.error,
+            ),
+          )
+        )
+      ]
+      : null,
     );
   }
 }
