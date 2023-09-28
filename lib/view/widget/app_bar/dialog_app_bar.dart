@@ -20,7 +20,7 @@ class DialogAppBar extends StatelessWidget {
             Icons.close,
             color: Theme.of(context).colorScheme.onBackground,
           ),
-          onPressed: () => context.go(route)
+          onPressed: () => context.pop()
       ),
       title: Text(
         title,

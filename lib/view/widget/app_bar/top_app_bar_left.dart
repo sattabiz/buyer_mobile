@@ -5,13 +5,15 @@ import '../chat_box.dart';
 class TopAppBarLeft extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final IconData? icon;
-  String route;
+  void Function()? backRoute;
+  void Function()? chatRoute;
 
   TopAppBarLeft({
     Key? key,
     required this.title,
     required this.icon,
-    required this.route,
+     this.backRoute,
+     this.chatRoute,
   }) : super(key: key);
 
   @override
@@ -22,11 +24,12 @@ class TopAppBarLeft extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).colorScheme.onSecondary,
-          ),
-          onPressed: () => context.go(route)),
+        icon: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).colorScheme.onSecondary,
+        ),
+        onPressed: () => backRoute!()
+      ),
       title: Text(
         title,
         style: Theme.of(context)
@@ -36,15 +39,12 @@ class TopAppBarLeft extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-            icon: Icon(
-              icon,
-              color: Theme.of(context).colorScheme.onSecondary,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ChatBox()),
-              );
-            }),
+          icon: Icon(
+            icon,
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
+          onPressed: () => chatRoute!()
+        ),
       ],
     );
   }

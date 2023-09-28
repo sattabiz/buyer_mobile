@@ -13,108 +13,136 @@ class OrderDetail extends ConsumerWidget {
   const OrderDetail({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {     //tasarima karar verilecek
+  Widget build(BuildContext context, WidgetRef ref) {
+    //tasarima karar verilecek
     OrderModel? orderAsyncValue = ref.watch(orderIndexProvider);
-  
+
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: TopAppBarLeft(
-        title: "Sipariş No: ${orderAsyncValue!.id.toString()}",
-        route: '/order',
-        icon: Icons.chat_bubble_outline,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Theme.of(context).colorScheme.onSecondary,
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.only(bottom: 10.0),
-                child: Text(
-                  FlutterI18n.translate(context, 'tr.order.${orderAsyncValue.state}'),
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color:
-                            Theme.of(context).colorScheme.onSecondaryContainer,
-                      ),
-                ),
-              ),
-              SizedBox(
-                width: width,
-                child: OrderDetailInfo(
-                  row1: orderAsyncValue.orderDate.toString().split('T')[0],
-                  row2: orderAsyncValue.deliveryDate.toString().split('T')[0] ?? "API Null deger",                   //null gelmesine gore ayarlamak lazim  
-                  row3: orderAsyncValue.paymentDueDate.toString(),
-                  row4: orderAsyncValue.includeShipmentCost == true? "Alıcı" :"Satıcı",
-                  row5: orderAsyncValue.paymentType ?? "API Null deger",                    //null gelmesine gore ayarlamak lazim
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              Container(
-                width: width,
-                padding: const EdgeInsets.all(5.0),
-                child: DetailTable(
-                  products: orderAsyncValue.products!
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: 
-      orderAsyncValue.state == 'order_confirmed'
-      ? FloatingActionButton(
-        onPressed: () => context.go('/order_detail/ready'),
-          // print();
-        
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      )
-      : null,
-      persistentFooterAlignment: AlignmentDirectional.bottomStart,
-      
-      persistentFooterButtons: 
-      orderAsyncValue.state == 'order_approved'
-      ? [
-        ElevatedButton(
-          onPressed: () async{
-            ref.watch(confirmOrderProvider);
-            ref.refresh(getOrderProvider);
-            //context.go('/order/detail');   //order sayfasina geri dondurulmesi lazim
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(
-                Theme.of(context).colorScheme.primary),
-            fixedSize: MaterialStateProperty.all<Size>(const Size(100, 30)),
-          ),
-          child: Text(
-            'Onayla',
-            style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-          ),
-        ),
-        OutlinedButton(
-          onPressed: () {},
-          style: OutlinedButton.styleFrom(
-            side: BorderSide(
-              color: Theme.of(context).colorScheme.error,
+    return Stack(
+      children: [
+        Column(
+          children: [
+            TopAppBarLeft(
+              title: "Sipariş No: ${orderAsyncValue!.id.toString()}",
+              icon: Icons.chat_bubble_outline,
+              backRoute: () => context.go('/order'),
+              chatRoute: () => context.goNamed('order_chat', pathParameters: {
+                'orderId': orderAsyncValue.id.toString(),
+                'chatId': '1'
+              }),
             ),
-            fixedSize: const Size(100, 30),
-          ),
-          child: Text(
-            'Ret',
-            style: Theme.of(context).textTheme.labelMedium!.copyWith(
-              color: Theme.of(context).colorScheme.error,
+            SingleChildScrollView(
+              child: Container(
+                color: Theme.of(context).colorScheme.onSecondary,
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(bottom: 10.0),
+                      child: Text(
+                        FlutterI18n.translate(
+                            context, 'tr.order.${orderAsyncValue.state}'),
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSecondaryContainer,
+                            ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: width,
+                      child: OrderDetailInfo(
+                        row1: orderAsyncValue.orderDate.toString().split('T')[0],
+                        row2: orderAsyncValue.deliveryDate
+                            .toString()
+                            .split('T')[0], //null gelmesine gore ayarlamak lazim
+                        row3: orderAsyncValue.paymentDueDate.toString(),
+                        row4: orderAsyncValue.includeShipmentCost == true
+                            ? "Alıcı"
+                            : "Satıcı",
+                        row5: orderAsyncValue.paymentType ??
+                            "API Null deger", //null gelmesine gore ayarlamak lazim
+                      ),
+                    ),
+                    const SizedBox(height: 20.0),
+                    Container(
+                      width: width,
+                      padding: const EdgeInsets.all(5.0),
+                      child: DetailTable(products: orderAsyncValue.products!),
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+          ],
+        ),
+        orderAsyncValue.state == 'order_confirmed'
+        ? Container(
+            alignment: Alignment.bottomRight,
+            padding: const EdgeInsets.all(20.0),
+            child: FloatingActionButton(
+              onPressed: () => context.go('/order_detail/ready'),
+              // print();
+                  
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
             ),
           )
+        : const SizedBox(width: 0,),
+        orderAsyncValue.state == 'order_approved'
+        ?  Container(
+            alignment: Alignment.bottomLeft,
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    ref.watch(confirmOrderProvider);
+                    ref.refresh(getOrderProvider);
+                    context
+                        .go('/order'); //order sayfasina geri dondurulmesi lazim
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Theme.of(context).colorScheme.primary),
+                    fixedSize:
+                        MaterialStateProperty.all<Size>(const Size(100, 30)),
+                  ),
+                  child: Text(
+                    'Onayla',
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
+                ),
+                const SizedBox(width: 10.0),
+                OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                      fixedSize: const Size(100, 30),
+                    ),
+                    child: Text(
+                      'Ret',
+                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    )
+                  )
+              ],
+              ),
         )
-      ]
-      : null,
+          : const SizedBox(width: 0,)
+      ],
     );
   }
 }
+
+

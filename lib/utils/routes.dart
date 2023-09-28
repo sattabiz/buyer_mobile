@@ -14,6 +14,7 @@ import '../view/proposal_view/proposal_detail.dart';
 import '../view/proposal_view/proposal_view.dart';
 import '../view/widget/app_bar/top_app_bar_centered.dart';
 import '../view/widget/app_bar/top_app_bar_large.dart';
+import '../view/widget/bottom_navigation.dart';
 import '../view/widget/chat_box.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -25,14 +26,13 @@ final router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: '/login',
-      builder: (context, state) => Login(),
+      builder: (context, state) => const Login(),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return Index(
-          navigationShell,
-          customAppBar(state.matchedLocation),
-        );
+        debugPrint('${state.path}');
+        return Index(navigationShell, customAppBar(state.matchedLocation, context),
+            bottomNavigatonBar(state.matchedLocation, navigationShell));
       },
       branches: [
         StatefulShellBranch(
@@ -55,121 +55,143 @@ final router = GoRouter(
             ),
           ],
         ),
-        StatefulShellBranch(routes: <RouteBase>[
-          GoRoute(
-            path: '/proposal',
-            builder: (context, state) => const ProposalView(),
-            routes: <RouteBase>[
-              GoRoute(
-                path: 'detail',
-                redirect: (context, state) => '/proposal_detail',
-              ),
-            ],
-          ),
-        ]),
-        StatefulShellBranch(routes: <RouteBase>[
-          GoRoute(
-            path: '/order',
-            builder: (context, state) => const OrderView(),
-            routes: <RouteBase>[
-              GoRoute(
-                path: 'detail',
-                redirect: (context, state) => '/order_detail',
-                // routes: <RouteBase>[
-                //   // GoRoute(
-                //   //   path: 'chat',
-                //   //   builder: (context, state) => const ChatBox(),
-                //   // ),
-                //   // GoRoute(
-                //   //   path: 'ready',
-                //   //   builder: (context, state){
-                //   //     debugPrint(state.matchedLocation);
-                //   //     throw UnimplementedError();
-                //   //   }
-                //   // )
-                // ],
-              ),
-            ],
-          ),
-        ]),
-        StatefulShellBranch(routes: <RouteBase>[
-          GoRoute(
-            path: '/invoice',
-            builder: (context, state) => const InvoiceView(),
-            routes: <RouteBase>[
-              GoRoute(
-                path: 'detail',
-                redirect: (context, state) => '/invoice_detail',
-                routes: <RouteBase>[
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+              path: '/proposal',
+              builder: (context, state) => const ProposalView(),
+              routes: <RouteBase>[
                   GoRoute(
-                    path: 'chat',
-                    builder: (context, state) => const ChatBox(),
+                  name: 'proposal_detail',
+                  path: 'detail/:proposalId',
+                  builder: (context, state) => ProposalDetail(
+                    key: state.pageKey,
+                    proposalId: state.pathParameters['proposalId']!,
                   ),
-                ],
+                  routes: [
+                    GoRoute(
+                      name: 'proposal_chat',
+                      path: 'chat/:chatId', //messageId ile degistirilecek
+                      builder: (context, state) => ChatBox(
+                        key: state.pageKey,
+                        id: state.pathParameters['chatId']!,
+                      ),
+                    )
+                  ]
+                ),
+              ],
+            ),
+          ]
+        ),
+        StatefulShellBranch(
+          initialLocation: '/order', 
+          routes: <RouteBase>[
+            GoRoute(
+              path: '/order',
+              builder: (context, state) => const OrderView(),
+              routes: <RouteBase>[
+                GoRoute(
+                  name: 'order_detail',
+                  path: 'detail/:orderId',
+                  builder: (context, state) => OrderDetail(),
+                  routes: [
+                    GoRoute(
+                      name: 'order_chat',
+                      path: 'chat/:chatId', //message id ile degistirilecek
+                      builder: (context, state) => ChatBox(
+                        key: state.pageKey,
+                        id: state.pathParameters['chatId']!,
+                      ),
+                    ),
+                    GoRoute(
+                      path: 'ready',
+                      builder: (context, state) => ReadyForShipDetail(
+                        key: state.pageKey,
+                      ),
+                    ),
+                  ]
+                ),
+              ],
+            ),
+          ]
+        ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+              path: '/invoice',
+              builder: (context, state) =>
+              InvoiceView(
+                  key: state.pageKey,
               ),
-              GoRoute(
-                path: 'invoice_ready',
-                builder: (context, state) => ReadyForShipInvoice(),
-                routes: <RouteBase>[
-                  GoRoute(
-                    path: 'generate',
-                    builder: (context, state) => const GenerateInvoice(),
+              routes: <RouteBase>[
+                GoRoute(
+                  name: 'invoice_detail',
+                  path: 'detail/:invoiceId',
+                  builder: (context, state) => InvoiceDetail(
+                        key: state.pageKey,
+                      ),
+                  routes: [
+                    GoRoute(
+                      name: 'invoice_chat',
+                      path: 'chat/:chatId', //messageId ile degistirilecek
+                      builder: (context, state) => ChatBox(
+                        key: state.pageKey,
+                        id: state.pathParameters['chatId']!,
+                      ),
+                    ),
+                  ]
+                ),
+                GoRoute(
+                  path: 'invoice_ready',
+                  builder: (context, state) => ReadyForShipInvoice(
+                    key: state.pageKey,
                   ),
-                ],
-              ),
-            ],
-          ),
-        ])
+                  routes: [
+                    GoRoute(
+                      name: 'invoice_ready_chat',
+                      path: 'chat/:chatId', //messageId ile degistirilecek
+                      builder: (context, state) => ChatBox(
+                        key: state.pageKey,
+                        id: state.pathParameters['chatId']!,
+                      )
+                    ),
+                    GoRoute(
+                      path: 'generate',
+                      builder: (context, state) => GenerateInvoice(
+                        key: state.pageKey,
+                      ),
+                    ),
+                  ]
+                ),
+              ],
+            ),
+          ]
+        )
       ],
     ),
-    GoRoute(
-      path: '/home_detail',
-      builder: (context, state) => Container(
-        key: state.pageKey,
-        color: Colors.white,
-      ),
-    ),
-    GoRoute(
-      path: '/proposal_detail',
-      builder: (context, state) => ProposalDetail(
-        key: state.pageKey,
-      ),
-    ),
-    GoRoute(
-      path: '/order_detail',
-      builder: (context, state) => OrderDetail(
-        key: state.pageKey,
-      ),
-    ),
-    GoRoute(
-      path: '/invoice_detail',
-      builder: (context, state) => InvoiceDetail(
-        key: state.pageKey,
-      ),
-    ),
-    GoRoute(
-      path: '/invoice_ready',
-      builder: (context, state) => ReadyForShipInvoice(
-        key: state.pageKey,
-      ),
-    ),
-    GoRoute(
-      path: '/invoice_ready/generate',
-      builder: (context, state) => GenerateInvoice(
-        key: state.pageKey,
-      ),
-    ),
-    GoRoute(
-      path: '/order_detail/ready',
-      builder: (context, state) => ReadyForShipDetail(
-        key: state.pageKey,
-      ),
-    )
   ],
 );
 
-PreferredSizeWidget customAppBar(String location) {
-  PreferredSizeWidget customAppBar;
+Widget? bottomNavigatonBar(String location, StatefulNavigationShell navigationShell) {
+  int currentIndex = navigationShell.currentIndex;
+  Widget? bottomNavigation;
+  void onTap(index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
+  }
+
+  if (location == '/home' || location == '/proposal' || location == '/order' || location == '/invoice') {
+    bottomNavigation = BottomNavigation(currentIndex: currentIndex, onItemTapped: onTap);
+  } else {
+    bottomNavigation = null;
+  }
+  return bottomNavigation;
+}
+
+PreferredSizeWidget? customAppBar(String location, BuildContext context) {
+  PreferredSizeWidget? customAppBar;
   switch (location) {
     case '/home':
       customAppBar = const PreferredSize(
@@ -190,9 +212,9 @@ PreferredSizeWidget customAppBar(String location) {
     case '/proposal':
       customAppBar = CustomAppBar(
         height: kToolbarHeight,
-        child: const TopAppBarCentered(
+        child:  const TopAppBarCentered(
           title: 'Teklif İstekleri',
-          route: '/home',
+          backRoute: '/home',
         ),
       );
       break;
@@ -201,7 +223,7 @@ PreferredSizeWidget customAppBar(String location) {
         height: kToolbarHeight,
         child: const TopAppBarCentered(
           title: 'SİPARİŞLER',
-          route: '/proposal',
+          backRoute: '/proposal',
         ),
       );
       break;
@@ -210,7 +232,7 @@ PreferredSizeWidget customAppBar(String location) {
         height: kToolbarHeight,
         child: const TopAppBarCentered(
           title: 'FATURALAR',
-          route: '/order',
+          backRoute: '/order',
         ),
       );
       break;
@@ -222,5 +244,12 @@ PreferredSizeWidget customAppBar(String location) {
         ),
       );
   }
-  return customAppBar;
+  if (location == '/home' ||
+      location == '/proposal' ||
+      location == '/order' ||
+      location == '/invoice') {
+    return customAppBar;
+  } else {
+    return customAppBar = null;
+  }
 }

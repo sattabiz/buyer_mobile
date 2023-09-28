@@ -35,7 +35,7 @@ class _ProposalState extends ConsumerState<ProposalView> {
               if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
                 context.go('/proposal');
               } else {
-                context.go('/proposal/detail'); //sonra kaldirilacak
+                context.goNamed('proposal_detail', pathParameters: {'proposalId' : data[index].proposalId.toString()});
               }   
             },
           ),

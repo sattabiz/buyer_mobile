@@ -19,7 +19,11 @@ class ChatMessage {
 final readMessageProvider = StateProvider<String?>((ref) => '');
 
 class ChatBox extends ConsumerStatefulWidget {
-  const ChatBox({super.key});
+  final String id;
+  const ChatBox({
+    Key? key,
+    required this.id, 
+  }) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatBoxState();
@@ -38,7 +42,6 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
           print('Bottom');
         }
       }
-    
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       messageController.animateTo(
@@ -92,9 +95,9 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
         verticalDirection: VerticalDirection.down,
         children: [
           const TopAppBarCentered(
-            title: "Teklif 1533",route: "/home",
-
-            ),
+            title: "Teklif 1533",
+            backRoute: "null",
+          ),
           Expanded(
             child: Container(
               color: Theme.of(context).colorScheme.onPrimary,
