@@ -2,48 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../utils/widget_helper.dart';
 import '../../../view_model/get_order_view_model.dart';
 
 class DetailTable extends ConsumerWidget {
- DetailTable({ Key? key }) : super(key: key);
+  List products;
+ DetailTable({ 
+  Key? key,
+  required this.products,
+   }) : super(key: key);
 
-  Map<int, Map<String, String>> products = {
-    0: {
-      'name': 'Ürün 1',
-      'amount': '1 adet',
-      'price': '110 ₺',
-      'total': '100 ₺',
-      'shippedAmount': "100",
-    },
-    1: {
-      'name': 'Ürün 2',
-      'amount': '10 adet',
-      'price': '110 ₺',
-      'total': '100 ₺',
-      'shippedAmount': "20",
-    },
-    2: {
-      'name': 'Ürün 3',
-      'amount': '1 adet',
-      'price': '110 ₺',
-      'total': '100 ₺ ',
-      'shippedAmount': "100",
-    },
-    3: {
-      'name': 'Ürün 4',
-      'amount': '1 adet',
-      'price': '110 ₺',
-      'total': '100 ₺ ',
-      'shippedAmount': "100",
-    },
-    4: {
-      'name': 'Ürün 5',
-      'amount': '1 adet',
-      'price': '110 ₺',
-      'total': '100 ₺ ',
-      'shippedAmount': "100",
-    },
-  };
+  // Map<int, Map<String, String>> products = {
+  //   0: {
+  //     'name': 'Ürün 1',
+  //     'amount': '1 adet',
+  //     'price': '110 ₺',
+  //     'total': '100 ₺',
+  //     'shippedAmount': "100",
+  //   },
+  //   1: {
+  //     'name': 'Ürün 2',
+  //     'amount': '10 adet',
+  //     'price': '110 ₺',
+  //     'total': '100 ₺',
+  //     'shippedAmount': "20",
+  //   },
+  //   2: {
+  //     'name': 'Ürün 3',
+  //     'amount': '1 adet',
+  //     'price': '110 ₺',
+  //     'total': '100 ₺ ',
+  //     'shippedAmount': "100",
+  //   },
+  //   3: {
+  //     'name': 'Ürün 4',
+  //     'amount': '1 adet',
+  //     'price': '110 ₺',
+  //     'total': '100 ₺ ',
+  //     'shippedAmount': "100",
+  //   },
+  //   4: {
+  //     'name': 'Ürün 5',
+  //     'amount': '1 adet',
+  //     'price': '110 ₺',
+  //     'total': '100 ₺ ',
+  //     'shippedAmount': "100",
+  //   },
+  // };
 
 
   @override
@@ -116,14 +121,14 @@ class DetailTable extends ConsumerWidget {
           ],
         ),
 
-        for (var i = 0; i < orderProducts!.products!.length; i++)
+        for (var i = 0; i < products.length; i++)
           TableRow(
             children: [
               Container(
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 padding: EdgeInsets.only(left: 5.0),
                 child: Text(
-                  orderProducts.products![i].name.toString(),
+                  products[i].name.toString(),
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )
@@ -133,7 +138,7 @@ class DetailTable extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 alignment: Alignment.centerRight,
                 child: Text(
-                  orderProducts.products![i].amount.toString(),
+                  products[i].amount.toString(),
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )
@@ -143,7 +148,7 @@ class DetailTable extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 alignment: Alignment.centerRight,
                 child: Text(
-                  orderProducts.products![i].price.toString(),
+                  products[i].price.toString(),
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )
@@ -153,7 +158,10 @@ class DetailTable extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 alignment: Alignment.centerRight,
                 child: Text(
-                  "000",
+                  calcuteAmount(
+                    products[i].amount.toString(),
+                    products[i].price.toString(),
+                  ),
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )

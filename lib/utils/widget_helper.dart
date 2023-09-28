@@ -11,6 +11,24 @@ String getCurrencySymbol(String currencyCode) {
   }
 }
 
+Map<String, String> statusIconMap = {
+  // 'pending': 'assets/proposal_pending.svg',
+  // 'replied': 'assets/exportNotes.svg',
+  // 'proposal_stvs': 'assets/exportNotes.svg',
+  // 'last_offer': 'assets/exportNotes.svg',
+  // 'order_approved': 'assets/exportNotes.svg',
+  // 'order_confirmed': 'assets/conveyor.svg',
+  // 'order_prepared': 'assets/trolley.svg',
+  // 'order_on_the_way': 'assets/shipment.svg',
+  // 'order_delivered': 'assets/warehouse.svg',
+  'invoice_sended': 'assets/svg/truck.svg', //yolda
+  'invoice_goods_delivered': 'assets/svg/warehouse.svg', //onay bekl;iyor
+  'invoice_approved': 'assets/svg/not_secure.svg', //acik fatura
+  'invoice_approved_dbs': 'assets/svg/dbs.svg',
+  'invoice_collecting': 'assets/svg/payment_process.svg',
+  'invoice_discounted': 'assets/svg/paid.svg', //odendi
+};
+
 Map<int, Map<String, String>> products = {
   0: {
     'name': 'Ürün 1',
@@ -81,7 +99,18 @@ List<dynamic> productList = [
   }
 ];
 
+String formattedDate(String date) {
+  if (date == 'null') {
+    return '-';
+  } else {
+    final DateTime parsedDate = DateTime.parse(date);
+    return "${parsedDate.day}-${parsedDate.month.toString().padLeft(2, '0')}-${parsedDate.year.toString().padLeft(2, '0')}";
+  }
+}
 
+String calcuteAmount(String amount, String price) {
+  return (double.parse(amount) * double.parse(price)).toString();
+}
 
 Map<String, String> calculateTaxRate(List<dynamic> productList) {
   Map<String, double> taxRateMap = {};

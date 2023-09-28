@@ -54,7 +54,9 @@ class OrderDetail extends ConsumerWidget {
               Container(
                 width: width,
                 padding: const EdgeInsets.all(5.0),
-                child: DetailTable(),
+                child: DetailTable(
+                  products: orderAsyncValue.products!
+                ),
               )
             ],
           ),

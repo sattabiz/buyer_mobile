@@ -36,3 +36,5 @@ final getInvoicesProvider =
   _invoicesList.sort((a, b) => b.invoiceId!.compareTo(a.invoiceId!));
   return _invoicesList;
 });
+
+final invoiceIndexProvider = StateProvider<InvoiceModel>((ref) => InvoiceModel());

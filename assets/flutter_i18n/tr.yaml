@@ -1,4 +1,18 @@
 tr:
+  invoice:
+    invoice_sended: "Yolda"
+    invoice_goods_delivered: "Onay Bekliyor"
+    invoice_discounted: 'Ödendi'
+    invoice_approved_dbs: "DBS Fatura"
+    invoice_collecting: "Ödeniyor"
+    invoice_approved: "Açık Fatura"
+    invoice_no: "Fatura: "
+    invoice_date: " Tarih: "
+  order:
+    order_confirmed: "Hazırlanıyor"
+    order_prepared: "Sevke Hazır"
+    order_on_the_way: "Yolda"
+    order_delivered: "Teslim Alındı"
   detail_table:
     row_1: "Ürün"
     row_2: "Miktar"
