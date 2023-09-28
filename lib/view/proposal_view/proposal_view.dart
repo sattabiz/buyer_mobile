@@ -1,3 +1,4 @@
+import 'package:buyer_mobile/utils/widget_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,13 +26,17 @@ class _ProposalState extends ConsumerState<ProposalView> {
           itemCount: data.length,
           itemBuilder: (context, index) => IndexListTile(
             title: "Teklif No: ${data[index].proposalId.toString()}",
-            subtitle: 'Subtitle',
-            svgPath: 'assets/alert.svg',
+            subtitle: 'Subtitle', //proposalName gelecek
+            svgPath: statusIconMap[data[index].proposalState] ?? '',
             // trailing: const Counter(),
             //onTap: () => context.go('/proposal/detail'),
             onTap: () async {
-              ref.read(proposalIndexProvider.notifier).state = data[index];   
-              context.go('/proposal/detail');
+              ref.read(proposalIndexProvider.notifier).state = data[index];
+              if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
+                context.go('/proposal');
+              } else {
+                context.go('/proposal/detail'); //sonra kaldirilacak
+              }   
             },
           ),
         );

@@ -1,10 +1,10 @@
 
 
 Map<String, String> statusIconMap = {
-  // 'pending': 'assets/proposal_pending.svg',
-  // 'replied': 'assets/exportNotes.svg',
-  // 'proposal_stvs': 'assets/exportNotes.svg',
-  // 'last_offer': 'assets/exportNotes.svg',
+  'pending': 'assets/svg/alert.svg',
+  'replied': 'assets/chat.svg', //degisecek
+  'proposal_stvs': 'assets/svg/hourGlass.svg', //degisecek
+  'last_offer': 'assets/svg/hourGlass.svg',
   'order_approved': 'assets/svg/flare.svg',
   'order_confirmed': 'assets/svg/conveyor.svg',
   'order_prepared': 'assets/svg/trolley.svg',
