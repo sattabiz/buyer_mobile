@@ -9,10 +9,13 @@ tr:
     invoice_no: "Fatura: "
     invoice_date: " Tarih: "
   order:
+    order_approved: "Yeni Sipariş"
     order_confirmed: "Hazırlanıyor"
-    order_prepared: "Sevke Hazır"
+    order_prepared: "Hazır"
     order_on_the_way: "Yolda"
     order_delivered: "Teslim Alındı"
+    order_no: "Sipariş No: "
+    order_date: "Sipariş Tarihi: "
   detail_table:
     row_1: "Ürün"
     row_2: "Miktar"
