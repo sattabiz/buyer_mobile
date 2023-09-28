@@ -1,6 +1,7 @@
 import 'package:buyer_mobile/model/shipment_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../widget/chat_box.dart';
 import 'card_table.dart';
@@ -118,11 +119,10 @@ class _ReadyForShipCardState extends State<ReadyForShipCard> {
                 ),
                 const SizedBox(width: 130),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const ChatBox()),
-                    );
-                  },
+                  onPressed: () => context.goNamed('invoice_ready_chat',
+                    pathParameters: {
+                      'chatId': '1'
+                    }),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.tertiaryContainer),
                     fixedSize: MaterialStateProperty.all<Size>(const Size(100, 8))

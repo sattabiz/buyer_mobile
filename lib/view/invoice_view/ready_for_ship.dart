@@ -23,7 +23,7 @@ class ReadyForShipInvoice extends ConsumerWidget {
             preferredSize: const Size.fromHeight(60.0),
             child: TopAppBarCentered(
               title: FlutterI18n.translate(context, 'tr.ready_for_ship.title'),
-              route: '/invoice',
+              backRoute: '/invoice',
             ),
           ),
           body: ListView.builder(
@@ -80,7 +80,7 @@ class ReadyForShipInvoice extends ConsumerWidget {
 
     /* Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
+        preferredSize: const Size.fromHeight(60.0),
         child: TopAppBarCentered(
           title: FlutterI18n.translate(context, 'tr.ready_for_ship.title'),
           route: '/invoice',
@@ -93,7 +93,7 @@ class ReadyForShipInvoice extends ConsumerWidget {
         itemBuilder: (context, index) => ReadyForShipCard(),
       ),
       floatingActionButton: ElevatedButton(
-        onPressed: () => context.go('/invoice_ready/generate'),
+        onPressed: () => context.go('/invoice/invoice_ready/generate'),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
             Theme.of(context).colorScheme.primary,

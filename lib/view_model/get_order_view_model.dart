@@ -16,7 +16,7 @@ final getOrderProvider =
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {
-        ref.read(navigatorKeyProvider).currentState!.pushNamed("/login");
+        print('${e.response?.statusCode}');
       }
     }
     rethrow;
@@ -27,9 +27,9 @@ final getOrderProvider =
         .map((e) => OrderModel.fromMap(e))
         .toList();
   }
- 
- debugPrint(response.data.toString());
- /* for (int i = 0; i <= _orderList.length; i++) {
+
+  debugPrint(response.data.toString());
+  /* for (int i = 0; i <= _orderList.length; i++) {
     debugPrint(
         '--------------------------------------------------------------------------------------------------------------------------------------------------------------');
     debugPrint(_orderList[i].toString());

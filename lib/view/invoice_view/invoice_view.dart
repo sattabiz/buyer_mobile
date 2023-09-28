@@ -32,7 +32,7 @@ class InvoiceView extends ConsumerWidget {
                 onTap: () async {
                   ref.watch(getInvoicesProvider);
                   ref.read(invoiceIndexProvider.notifier).state = data[index];
-                  context.go('/invoice/detail');
+                  context.goNamed('invoice_detail', pathParameters: {'invoiceId' : data[index].invoiceId.toString()});
                 },
                 //context.go('/invoice/detail'),
               ),
@@ -43,7 +43,7 @@ class InvoiceView extends ConsumerWidget {
               child: FloatingActionButton(
                 onPressed: () async{
                   ref.watch(getShipmentProvider);
-                  context.go('/invoice_ready');
+                  context.go('/invoice/invoice_ready');
                 },
                 
                 //context.go('/invoice_ready'),
@@ -65,38 +65,5 @@ class InvoiceView extends ConsumerWidget {
         return Text('An error occurred: $error');
       },
     );
-
-    /* Stack(
-      children: [
-        ListView.builder(
-          itemCount: 6,
-          shrinkWrap: true,
-          itemBuilder: (context, index) => IndexListTile(
-            title: 'Headline',
-            subtitle: 'Subtitle',
-            svgPath: 'assets/alert.svg',
-            trailing: const Icon(Icons.shape_line),
-            onTap: () async{
-              ref.watch(getInvoicesProvider);
-              context.go('/invoice/detail');
-            },
-            
-            //context.go('/invoice/detail'),
-          ),
-        ),
-        Container(
-          alignment: Alignment.bottomRight,
-          padding: const EdgeInsets.all(20.0),
-          child: FloatingActionButton(
-            onPressed: () => context.go('/invoice_ready'),
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-          ),
-        )
-      ],
-    ); */
   }
 }

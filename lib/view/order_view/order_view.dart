@@ -31,7 +31,7 @@ class OrderView extends ConsumerWidget {
               ref.read(orderIdProvider.notifier).state=data[index].id;        //read orderId for confirm order post service
               ref.read(orderIndexProvider.notifier).state = data[index];            //read index for order-detail page
               ref.watch(getOrderProvider);
-              context.go('/order/detail');
+              context.goNamed('order_detail', pathParameters: {'orderId' : data[index].id.toString()});
             }, //context.go('/order/detail'),
           ),
         );
@@ -39,7 +39,7 @@ class OrderView extends ConsumerWidget {
       loading: () => Container(),
       error: (error, stack) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushNamed(context, '/login');
+          context.go('/login');
         });
         return Text('An error occurred: $error');
       },
