@@ -2,12 +2,11 @@ import 'package:buyer_mobile/utils/widget_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../view_model/get_proposal_view_model.dart';
-import '../../view_model/login_view_model.dart';
+import '../../view_model/proposal_controller/create_proposal_view_model.dart';
+import '../../view_model/proposal_controller/get_proposal_view_model.dart';
+import '../../view_model/proposal_controller/list_currencies_view_model.dart';
 import '../widget/index_list_tile.dart';
-import 'counter.dart';
-import 'proposal_detail.dart';
+
 
 class ProposalView extends ConsumerStatefulWidget {
   const ProposalView({super.key});
@@ -32,6 +31,8 @@ class _ProposalState extends ConsumerState<ProposalView> {
             //onTap: () => context.go('/proposal/detail'),
             onTap: () async {
               ref.read(proposalIndexProvider.notifier).state = data[index];
+              ref.watch(getListCurrenciesProvider);
+              ref.refresh(formItemProvider);
               if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
                 context.go('/proposal');
               } else {

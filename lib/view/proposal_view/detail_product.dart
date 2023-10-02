@@ -1,16 +1,28 @@
-import 'package:flutter/material.dart';
 
-class ProposalBody extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../view_model/proposal_controller/create_proposal_view_model.dart';
+
+
+
+class ProposalBody extends ConsumerStatefulWidget {
+  final int productId;
+  final int index;
   final String paletteDimensions;
   final double itemCount;
 
-  ProposalBody({required this.paletteDimensions, required this.itemCount});
+  ProposalBody(
+      {required this.productId,
+      required this.index,
+      required this.paletteDimensions,
+      required this.itemCount});
 
   @override
-  State<ProposalBody> createState() => _ProposalBodyState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ProposalBodyState();
 }
 
-class _ProposalBodyState extends State<ProposalBody> {
+class _ProposalBodyState extends ConsumerState<ProposalBody> {
   bool isTextFieldVisible = false;
 
   String? dropdownValue;
@@ -27,17 +39,11 @@ class _ProposalBodyState extends State<ProposalBody> {
 
   @override
   Widget build(BuildContext context) {
+    int productId = 0;
     return Container(
       decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            width: 0.15
-          ),
-          bottom: BorderSide(
-            width: 0.15
-          )
-        )
-      ),
+          border: Border(
+              top: BorderSide(width: 0.15), bottom: BorderSide(width: 0.15))),
       child: ExpansionTile(
         tilePadding: const EdgeInsets.all(0.0),
         iconColor: Theme.of(context).colorScheme.onBackground,
@@ -73,27 +79,38 @@ class _ProposalBodyState extends State<ProposalBody> {
                 Expanded(
                   flex: 4,
                   child: TextFormField(
-                      cursorColor: Theme.of(context).colorScheme.onBackground,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).colorScheme.onPrimary,
-                        contentPadding: const EdgeInsets.only(left: 10.0),
-                        label: Text(
-                          'Fiyat',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        constraints: const BoxConstraints(maxHeight: 35),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.onSurfaceVariant),
-                        ),
-                        border: const OutlineInputBorder(),
+                    cursorColor: Theme.of(context).colorScheme.onBackground,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Theme.of(context).colorScheme.onPrimary,
+                      contentPadding: const EdgeInsets.only(left: 10.0),
+                      label: Text(
+                        'Fiyat',
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
+                      constraints: const BoxConstraints(maxHeight: 35),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant),
+                      ),
+                      border: const OutlineInputBorder(),
+                    ),
                     validator: (String? value) {
                       if (value == null || value.isEmpty) {
                         return 'Lütfen fiyat giriniz.';
                       }
                       return null;
+                    },
+                    onChanged: (value) {
+                      /* ref.read(formItemProvider.notifier).state[widget.index].price = double.parse(value);
+                      ref.read(formItemProvider.notifier).state[widget.index].productId = widget.productId; */
+                      if(productId != widget.productId ){
+                        ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
+                        productId = widget.productId;
+                      }
+                      ref.read(formItemProvider.notifier).addPrice(widget.productId, double.parse(value));
+
                     },
                   ),
                 ),
@@ -114,7 +131,8 @@ class _ProposalBodyState extends State<ProposalBody> {
                       constraints: const BoxConstraints(maxHeight: 35),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant),
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant),
                       ),
                       border: const OutlineInputBorder(),
                     ),
@@ -158,6 +176,9 @@ class _ProposalBodyState extends State<ProposalBody> {
                   return 'Lütfen konu giriniz.';
                 }
                 return null;
+              },
+              onChanged: (value) {
+                ref.read(formItemProvider.notifier).addNote(widget.productId, value);
               },
             ),
           ),
