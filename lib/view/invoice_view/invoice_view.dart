@@ -34,7 +34,6 @@ class InvoiceView extends ConsumerWidget {
                   ref.read(invoiceIndexProvider.notifier).state = data[index];
                   context.goNamed('invoice_detail', pathParameters: {'invoiceId' : data[index].invoiceId.toString()});
                 },
-                //context.go('/invoice/detail'),
               ),
             ),
             Container(

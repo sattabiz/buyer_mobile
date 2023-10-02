@@ -8,6 +8,15 @@ tr:
     invoice_approved: "Açık Fatura"
     invoice_no: "Fatura: "
     invoice_date: " Tarih: "
+    paid__btn: "Ödendi "  
+    generate_invoice: 
+      invoice_no: "Fatura No(zorunlu)"
+      invoice_date: "Fatura Tarihi"
+      ship_date: "Sevk Tarihi"
+      waybill_no: "İrsaliye No"
+      address: "Adres"
+      tracking: "Nakliye"
+      tracking_no: "Takip No"
   order:
     order_approved: "Yeni Sipariş"
     order_confirmed: "Hazırlanıyor"

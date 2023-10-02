@@ -19,8 +19,8 @@ class _ReadyForShipCardState extends State<ReadyForShipCard> {
   Widget build(BuildContext context) {
     return Card(
       surfaceTintColor: Theme.of(context).colorScheme.surface,
-      elevation: 2,
-      margin: const EdgeInsets.all(20.0),
+      elevation: 4,
+      margin: const EdgeInsets.only(bottom: 20.0, right: 20.0, left: 20.0, top: 0.0),
       child: Column(
         children: [
           Container(
