@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../config/api_url.dart';
-import '../model/proposal_model.dart';
-import '../service/get_services.dart';
+import '../../config/api_url.dart';
+import '../../model/proposal_model.dart';
+import '../../service/get_services.dart';
 
 final getProposalProvider =
     FutureProvider.autoDispose<List<ProposalModel>>((ref) async {
@@ -39,4 +39,6 @@ final getProposalProvider =
   return _proposalList;
 });
 
-final proposalIndexProvider = StateProvider<ProposalModel?>((ref) => ProposalModel());
+final proposalIndexProvider = StateProvider<ProposalModel?>((ref) {
+  ProposalModel();
+}, );

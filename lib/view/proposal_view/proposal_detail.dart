@@ -1,12 +1,21 @@
-import 'package:buyer_mobile/view_model/get_proposal_view_model.dart';
+import 'package:buyer_mobile/view_model/proposal_controller/get_proposal_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
+import '../../view_model/proposal_controller/create_proposal_view_model.dart';
 import '../widget/app_bar/top_app_bar_left.dart';
 import '../widget/detail_components/detail_info.dart';
 import 'detail_product.dart';
+
+class OfferModel{
+  int? proposalId;
+  int deliveryTime;
+  int validPeriod;
+  
+  OfferModel({this.proposalId,required this.deliveryTime, required this.validPeriod});
+}
+
+final offerModelProvider = Provider((ref) => OfferModel(deliveryTime: 3, validPeriod: 10,));
 
 class ProposalDetail extends ConsumerWidget {
   final String proposalId;
@@ -22,9 +31,8 @@ class ProposalDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint(proposalId);
     final proposalAsyncValue = ref.watch(proposalIndexProvider);
-
+    ref.read(offerModelProvider).proposalId = proposalAsyncValue!.proposalId;
     List<DropdownMenuEntry<String>> dropDownMenuPaymentType =
         ["Cari Hesap", "DBS"].map((String value) {
       return DropdownMenuEntry<String>(
@@ -45,7 +53,7 @@ class ProposalDetail extends ConsumerWidget {
     return Column(
       children: [
         TopAppBarLeft(
-          title: 'Teklif No: ${proposalAsyncValue!.proposalId}',
+          title: 'Teklif No: ${proposalAsyncValue.proposalId}',
           icon: Icons.chat_bubble_outline,
           backRoute: () => context.go('/proposal'),
           chatRoute: () => context.goNamed('proposal_chat', pathParameters: {
@@ -130,6 +138,9 @@ class ProposalDetail extends ConsumerWidget {
                                 Theme.of(context).colorScheme.onPrimary),
                           ),
                           dropdownMenuEntries: dropDownMenuDate,
+                          onSelected: (value) {
+                            ref.read(offerModelProvider).deliveryTime = value!;
+                          },
                         ),
                       ),
                       Expanded(
@@ -153,6 +164,10 @@ class ProposalDetail extends ConsumerWidget {
                             ),
                             border: const OutlineInputBorder(),
                           ),
+                          onChanged: (value) {
+                            debugPrint(value);
+                            ref.read(offerModelProvider).validPeriod = int.parse(value);
+                          },
                         ),
                       ),
                     ],
@@ -198,6 +213,10 @@ class ProposalDetail extends ConsumerWidget {
                           Theme.of(context).colorScheme.onPrimary),
                     ),
                     dropdownMenuEntries: dropDownMenuPaymentType,
+                    onSelected: (value) {
+                      debugPrint(ref.watch(offerModelProvider).validPeriod.toString());
+                      //ref.read(offerModelProvider).deliveryTime = value;
+                    },
                   ),
                 ),
 
@@ -219,18 +238,21 @@ class ProposalDetail extends ConsumerWidget {
                   itemCount: proposalAsyncValue.productProposals!.length,
                   itemBuilder: (context, index) {
                     return ProposalBody(
-                      paletteDimensions: proposalAsyncValue
-                          .productProposals![index].productName!,
-                      itemCount:
-                          proposalAsyncValue.productProposals![index].amount!,
+                      index: index,
+                      productId: proposalAsyncValue.productProposals![index].productProposalId!,                                 
+                      paletteDimensions: proposalAsyncValue.productProposals![index].productName!,
+                      itemCount:proposalAsyncValue.productProposals![index].amount!,
                     );
+                    
                   },
                 ),
                 const SizedBox(height: 30,),
                 Align(
                 alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ref.watch(createProposalProvider);
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
                           Theme.of(context).colorScheme.primary),

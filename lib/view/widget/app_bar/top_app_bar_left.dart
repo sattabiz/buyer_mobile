@@ -1,8 +1,11 @@
+import 'package:buyer_mobile/view/proposal_view/detail_product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../view_model/proposal_controller/create_proposal_view_model.dart';
 import '../chat_box.dart';
 
-class TopAppBarLeft extends StatelessWidget implements PreferredSizeWidget {
+class TopAppBarLeft extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final IconData? icon;
   void Function()? backRoute;
@@ -20,7 +23,7 @@ class TopAppBarLeft extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       leading: IconButton(
@@ -28,7 +31,10 @@ class TopAppBarLeft extends StatelessWidget implements PreferredSizeWidget {
           Icons.arrow_back,
           color: Theme.of(context).colorScheme.onSecondary,
         ),
-        onPressed: () => backRoute!()
+        onPressed: () async{
+          backRoute!();
+          ref.refresh(formItemProvider);
+        },
       ),
       title: Text(
         title,

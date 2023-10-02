@@ -22,7 +22,6 @@ class ApiService {
             requestOptions: response.requestOptions,
             error: 'HTTP status error: ${response.statusCode}');
       }
-      debugPrint(response.data.toString());
       return response;
     } catch (e) {
       throw e;
