@@ -1,4 +1,5 @@
 import 'package:buyer_mobile/view_model/get_invoice_view_model.dart';
+import 'package:buyer_mobile/view_model/invoice_paid_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,7 +78,10 @@ class InvoiceDetail extends ConsumerWidget {
                     alignment: Alignment.bottomLeft,
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
-                      onPressed: ()  {},
+                      onPressed: ()  {
+                        ref.watch(invoicePaidProvider);
+                
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Theme.of(context).colorScheme.primary),
