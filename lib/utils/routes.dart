@@ -104,6 +104,7 @@ final router = GoRouter(
                       ),
                     ),
                     GoRoute(
+                      // name: 'order_ready',
                       path: 'ready',
                       builder: (context, state) => ReadyForShipDetail(
                         key: state.pageKey,

@@ -83,7 +83,7 @@ class OrderDetail extends ConsumerWidget {
             alignment: Alignment.bottomRight,
             padding: const EdgeInsets.all(20.0),
             child: FloatingActionButton(
-              onPressed: () => context.go('/order_detail/ready'),
+              onPressed: () => context.go('/order/detail/${orderAsyncValue.id}/ready'),
               // print();
                   
               backgroundColor: Theme.of(context).colorScheme.primary,

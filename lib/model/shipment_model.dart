@@ -90,8 +90,10 @@ class ShipmentModel {
         "message_notification": messageNotification,
         "products": products == null ? [] : List<dynamic>.from(products!.map((x) => x.toMap())),
     };
+
+    @override
     String toString() {
-    return 'ProductProposal(shipmentId: $shipmentId, invoiceNo: $invoiceNo, invoiceDate: $invoiceDate, waybillNo: $waybillNo, shipmentDate: $shipmentDate, carrier: $carrier, trackingNo: $trackingNo, state: $state, customerName: $customerName, proposalId: $proposalId, address: $address, orderDate: $orderDate, paymentType: $paymentType, paymentDueDate: $paymentDueDate, deliveryDate: $deliveryDate, includeShipmentCost: $includeShipmentCost, notification: $notification, messageNotification: $messageNotification )';
+      return 'ProductProposal(shipmentId: $shipmentId, invoiceNo: $invoiceNo, invoiceDate: $invoiceDate, waybillNo: $waybillNo, shipmentDate: $shipmentDate, carrier: $carrier, trackingNo: $trackingNo, state: $state, customerName: $customerName, proposalId: $proposalId, address: $address, orderDate: $orderDate, paymentType: $paymentType, paymentDueDate: $paymentDueDate, deliveryDate: $deliveryDate, includeShipmentCost: $includeShipmentCost, notification: $notification, messageNotification: $messageNotification )';
   }
 }
 

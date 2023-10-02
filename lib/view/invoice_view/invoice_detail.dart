@@ -1,5 +1,6 @@
 import 'package:buyer_mobile/view_model/get_invoice_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../utils/widget_helper.dart';
@@ -36,7 +37,8 @@ class InvoiceDetail extends ConsumerWidget {
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.only(bottom: 10.0),
                   child: Text(
-                    "Yolda",
+                    FlutterI18n.translate(
+                        context, 'tr.invoice.${invoiceList.state}'),
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color:
                           Theme.of(context).colorScheme.onSecondaryContainer,
@@ -69,7 +71,28 @@ class InvoiceDetail extends ConsumerWidget {
                     isFileAttached: false, 
                     isPending: true
                   ),
+                ),
+                invoiceList.state == 'invoice_approved'
+                ? Container(
+                    alignment: Alignment.bottomLeft,
+                    padding: const EdgeInsets.all(20.0),
+                    child: ElevatedButton(
+                      onPressed: ()  {},
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Theme.of(context).colorScheme.primary),
+                        fixedSize:
+                            MaterialStateProperty.all<Size>(const Size(100, 30)),
+                      ),
+                      child: Text(
+                        FlutterI18n.translate(context, 'tr.invoice.paid__btn'),
+                        style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                      ),
+                    ),
                 )
+                : const SizedBox(),
               ],
             ),
           ),

@@ -60,7 +60,8 @@ class _DetailDropdownState extends State<DetailDropdown> {
                 child: DropdownMenu<int>(
                   menuHeight: 200,
                   width: 140,
-                  enableFilter: false,
+                  enabled: false,
+                  enableFilter: true,
                   enableSearch: false,
                   inputDecorationTheme: InputDecorationTheme(
                     filled: true,

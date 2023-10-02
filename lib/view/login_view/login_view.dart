@@ -88,6 +88,7 @@ class _LoginState extends ConsumerState<Login> {
                 TextField(
                   cursorColor: Theme.of(context).colorScheme.onBackground,
                   controller: _passwordController,
+                  obscureText: true,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Theme.of(context).colorScheme.onPrimary,
