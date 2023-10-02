@@ -1,5 +1,6 @@
 import 'package:buyer_mobile/utils/widget_helper.dart';
 import 'package:buyer_mobile/view_model/get_shipment_view_model.dart';
+import 'package:buyer_mobile/view_model/invoice_paid_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,6 +33,7 @@ class InvoiceView extends ConsumerWidget {
                 onTap: () async {
                   ref.watch(getInvoicesProvider);
                   ref.read(invoiceIndexProvider.notifier).state = data[index];
+                  ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 
                   context.goNamed('invoice_detail', pathParameters: {'invoiceId' : data[index].invoiceId.toString()});
                 },
               ),
