@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../config/api_url.dart';
 import '../service/get_services.dart';
+import 'SupplierGenerateMultiOrder/multi_order_invoice_view_model.dart';
 import 'get_order_view_model.dart';
 
 final getShipmentProvider =
@@ -13,7 +14,6 @@ final getShipmentProvider =
   Response response;
   try {
     response = await apiService.get(url: ApiUrls.shipment);
-    debugPrint(response.data.toString());
   } catch (error) {
     if (error is DioException) {
       if (error.response?.statusCode != 200) {

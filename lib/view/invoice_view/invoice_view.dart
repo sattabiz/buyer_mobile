@@ -1,4 +1,6 @@
 import 'package:buyer_mobile/utils/widget_helper.dart';
+import 'package:buyer_mobile/view_model/SupplierGenerateMultiOrder/multi_order_invoice_view_model.dart';
+import 'package:buyer_mobile/view_model/get_address_view_model.dart';
 import 'package:buyer_mobile/view_model/get_shipment_view_model.dart';
 import 'package:buyer_mobile/view_model/invoice_paid_view_model.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +46,8 @@ class InvoiceView extends ConsumerWidget {
               child: FloatingActionButton(
                 onPressed: () async{
                   ref.watch(getShipmentProvider);
+                  ref.read(multiOrderProvider.notifier).removeAllFormItems();
+                  ref.watch(getAddressFutureProvider);
                   context.go('/invoice/invoice_ready');
                 },
                 
