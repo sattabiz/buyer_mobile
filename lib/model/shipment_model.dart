@@ -100,33 +100,47 @@ class ShipmentModel {
 class Product {
     int? orderId;
     int? productsProposalId;
+    int? productsProposalShipmentId;
     Map? productFiles;
     Map? productsProposalFiles;
     String? name;
     int? categoryId;
     String? description;
     double? shippedAmount;
+    double? invoiceAmount; // it's not read from response
     String? unit;
     double? price;
     int? taxRate;
     String? currencyCode;
     String? proposalNote;
+    bool? checkbox; // it' s not read from response
 
     Product({
         this.orderId,
         this.productsProposalId,
+        this.productsProposalShipmentId,
         this.productFiles,
         this.productsProposalFiles,
         this.name,
         this.categoryId,
         this.description,
         this.shippedAmount,
+        this.invoiceAmount,
         this.unit,
         this.price,
         this.taxRate,
         this.currencyCode,
         this.proposalNote,
+        this.checkbox
     });
+
+    Product copyWith({bool? checkbox, double? invoiceAmount}) {
+    return Product(
+      checkbox: checkbox,
+      invoiceAmount: invoiceAmount
+
+    );
+  }
 
     factory Product.fromJson(String str) => Product.fromMap(json.decode(str));
 
@@ -135,23 +149,26 @@ class Product {
     factory Product.fromMap(Map<String, dynamic> json) => Product(
         orderId: json["order_id"],
         productsProposalId: json["products_proposal_id"],
+        productsProposalShipmentId: json["products_proposal_shipment_id"],
         productFiles: json["product_files"],
         productsProposalFiles: json['products_proposal_files'],
         name: json["name"],
         categoryId: json["category_id"],
         description: json["description"],
         shippedAmount: json["shipped_amount"],
+        invoiceAmount: json["shipped_amount"],
         unit: json["unit"],
         price: json["price"],
         taxRate: json["tax_rate"],
         currencyCode: json["currency_code"],
         proposalNote: json["proposal_note"],
+        checkbox: false
     );
 
     Map<String, dynamic> toMap() => {
         "order_id": orderId,
         "products_proposal_id": productsProposalId,
-
+        "products_proposal_shipment_id": productsProposalShipmentId,
         "name": name,
         "category_id": categoryId,
         "description": description,
@@ -164,7 +181,7 @@ class Product {
     };
     @override
   String toString() {
-    return 'ProductProposal(orderId: $orderId, productsProposalId: $productsProposalId, productFiles: $productFiles, productsProposalFiles: $productsProposalFiles, name: $name, categoryId: $categoryId, description: $description, shippedAmount: $shippedAmount, unit: $unit, price: $price, taxRate: $taxRate, currencyCode: $currencyCode, proposalNote: $proposalNote)';
+    return 'ProductProposal(orderId: $orderId, productsProposalId: $productsProposalId, productsProposalShipmentId: $productsProposalShipmentId, productFiles: $productFiles, productsProposalFiles: $productsProposalFiles, name: $name, categoryId: $categoryId, description: $description, invoiceAmount:$invoiceAmount, shippedAmount: $shippedAmount, unit: $unit, price: $price, taxRate: $taxRate, currencyCode: $currencyCode, proposalNote: $proposalNote, checkbox:$checkbox )';
   }
 }
 

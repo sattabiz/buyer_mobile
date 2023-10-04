@@ -1,12 +1,14 @@
 import 'package:buyer_mobile/view/invoice_view/ready_for_ship_card/ready_for_ship_card.dart';
+import 'package:buyer_mobile/view_model/SupplierGenerateMultiOrder/multi_order_invoice_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import '../../utils/widget_helper.dart';
 import '../../view_model/get_shipment_view_model.dart';
 import '../widget/app_bar/top_app_bar_centered.dart';
+
+
 
 class ReadyForShipInvoice extends ConsumerWidget {
   ReadyForShipInvoice({Key? key}) : super(key: key);
@@ -41,7 +43,10 @@ class ReadyForShipInvoice extends ConsumerWidget {
               alignment: Alignment.bottomRight,
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
-                onPressed: () => context.go('/invoice/invoice_ready/generate'),
+                onPressed: () {
+                  debugPrint(ref.watch(multiOrderProvider).toString());
+                  context.go('/invoice/invoice_ready/generate');
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                     Theme.of(context).colorScheme.primary,
