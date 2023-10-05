@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class DialogAppBar extends StatelessWidget {
+import '../../../view_model/SupplierGenerateMultiOrder/create_multi_order_invoice_view_model.dart';
+
+class DialogAppBar extends ConsumerWidget {
   final String title;
   final String route;
 
@@ -12,7 +15,7 @@ class DialogAppBar extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.onSecondary,
       leading: IconButton(
@@ -31,7 +34,9 @@ class DialogAppBar extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          onPressed: () {},
+          onPressed: () async{
+            ref.watch(createMultiOrderInvoiceProvider);
+          },
           child: Text(
             'Kaydet',
             style: Theme.of(context)

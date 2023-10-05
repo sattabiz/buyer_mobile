@@ -260,11 +260,16 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                       return null;
                     },
                     onChanged: (value) {
+                      // dropdownValue = value.toString();
+                     AddressModel address = data.firstWhere((element) => element.address == value);
+                     ref.read(invoiceTableProvider).contactInformationId = address.id ;
                     },
                     onSaved: (value) {
                      // dropdownValue = value.toString();
-                     ref.read(invoiceTableProvider).contactInformationId;
+                     AddressModel address = data.firstWhere((element) => element.address == value);
+                     ref.read(invoiceTableProvider).contactInformationId = address.id ;
                     },
+
                     iconStyleData: const IconStyleData(
                       icon: Icon(
                         Icons.arrow_drop_down,
