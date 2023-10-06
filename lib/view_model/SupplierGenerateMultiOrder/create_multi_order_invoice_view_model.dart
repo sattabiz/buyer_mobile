@@ -31,29 +31,29 @@ final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((
   } */
   
   for (int i = 0; i < _formItems.length; i++) {
-      _productsAttributes["${_formItems[i].productsProposalShipmentId}"] = _formItems[i].invoiceAmount.toString();
+      _productsAttributes["${_formItems[i].productsProposalShipmentId}"] = _formItems[i].invoiceAmount;
    
   }
 
   Map<String, dynamic> data = {
-    "invoice_no": _contentItems.invoiceNo,
-    "invoice_date": _contentItems.invoiceDate,
-    "shipment_date": _contentItems.shipmentDate,
-    "waybill_no": _contentItems.waybillNo,
+    "invoice_no": _contentItems.invoiceNo.toString(),
+    "invoice_date": _contentItems.invoiceDate.toString(),
+    "shipment_date": _contentItems.shipmentDate.toString(),
+    "waybill_no": _contentItems.waybillNo.toString(),
     "contact_information_id": _contentItems.contactInformationId,
-    "carrier": _contentItems.carrier,
-    "tracking": _contentItems.tracking,
+    "carrier": _contentItems.carrier.toString(),
+    "tracking": _contentItems.tracking.toString(),
     "products_proposal_shipments": _productsAttributes
   };
-  debugPrint('datanin ustu');
+  //debugPrint('datanin ustu');
   debugPrint(data.toString());
-
+  debugPrint('create invoice service');
  
 
    try {
     debugPrint("--------------------------------------------");
-     response = await apiService.post(url: ApiUrls.createMultiOrderInvoice, data: data); 
-      debugPrint(response.toString());
+    response = await apiService.post(url: ApiUrls.createMultiOrderInvoice, data: data); 
+    debugPrint(response.toString());
     await ref.refresh(getShipmentProvider);
     ref.read(getShipmentProvider.future);
   } catch (e) {

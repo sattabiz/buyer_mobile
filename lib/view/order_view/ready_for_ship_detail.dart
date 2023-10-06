@@ -1,16 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import '../../utils/widget_helper.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../model/order_model.dart';
+import '../../view_model/get_order_view_model.dart';
 import '../widget/app_bar/dialog_app_bar.dart';
 
-class ReadyForShipDetail extends StatefulWidget {
+final createShipmentOrderIdProvider = StateProvider<int?>((ref) => 0);
+
+class ProductProposalsModel{
+  int? productsProposalId;
+  int? readyAmount;
+
+
+  ProductProposalsModel({this.productsProposalId, this.readyAmount});
+  @override
+  String toString() {
+    return 'ProductProposalsModel(productsProposalId: $productsProposalId, readyAmount:$readyAmount)';
+  }
+  ProductProposalsModel copyWith({int? readyAmount,int? productsProposalId}) {
+    return ProductProposalsModel(
+      readyAmount: readyAmount,
+      productsProposalId: productsProposalId
+    );
+  }
+}
+
+final createShipmentFormProvider =
+    StateNotifierProvider<FormItemModelNotifier, List<ProductProposalsModel>>((ref) {
+  return FormItemModelNotifier();
+});
+
+class FormItemModelNotifier extends StateNotifier<List<ProductProposalsModel>> {
+  FormItemModelNotifier() : super([]);
+
+
+   void addFormItem(ProductProposalsModel productProposal,) {    
+    state = [...state, productProposal];
+  }
+
+  void updateReadyAmount(int productProposalId, int readyAmount){
+    state = [
+      for(final productProposal in state)
+        if(productProposal.productsProposalId == productProposalId)
+          productProposal.copyWith(readyAmount: readyAmount, productsProposalId:productProposalId)
+        else
+         productProposal
+
+    ];
+  }
+
+  void removeAllFormItems(){
+    state = [];
+  }
+
+}
+
+
+
+class ReadyForShipDetail extends ConsumerStatefulWidget {
   const ReadyForShipDetail({ Key? key }) : super(key: key);
 
   @override
-  _ReadyForShipDetailState createState() => _ReadyForShipDetailState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ReadyForShipDetailState();
 }
 
-class _ReadyForShipDetailState extends State<ReadyForShipDetail> {
+class _ReadyForShipDetailState extends ConsumerState<ReadyForShipDetail> {
 
   ScrollController _scrollController = ScrollController();
 
@@ -75,6 +129,7 @@ class _ReadyForShipDetailState extends State<ReadyForShipDetail> {
 
   @override
   Widget build(BuildContext context) {
+    OrderModel? orderAsyncValue = ref.watch(orderIndexProvider);
     return Material(
       color: Theme.of(context).colorScheme.onPrimary,
       child: Column(
@@ -83,10 +138,11 @@ class _ReadyForShipDetailState extends State<ReadyForShipDetail> {
           DialogAppBar(
             title: FlutterI18n.translate(context, 'tr.ready_for_ship.title'),
             route: '/order_detail',
+            providerName: 'createShipmentPostProvider',
           ),
           Flexible(
             child: ListView.builder(
-              itemCount: products.length,
+              itemCount: orderAsyncValue!.products!.length,
               shrinkWrap: true,
               controller: _scrollController,
               itemBuilder: (context, index) {
@@ -100,7 +156,7 @@ class _ReadyForShipDetailState extends State<ReadyForShipDetail> {
                       SizedBox(
                         width: 150,
                         child: Text(
-                          products[index]!['name']!,
+                          orderAsyncValue.products![index].name!,
                           maxLines: 1,
                           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: Theme.of(context).colorScheme.onSurfaceVariant
@@ -120,7 +176,7 @@ class _ReadyForShipDetailState extends State<ReadyForShipDetail> {
                               'Hazir Miktar',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
-                            suffix: Text(products[index]!['unit']!),
+                            suffix: Text(orderAsyncValue.products![index].unit!),
                             suffixStyle: Theme.of(context).textTheme.bodySmall,
                             constraints: const BoxConstraints(maxHeight: 40), 
                             focusedBorder: OutlineInputBorder(
@@ -136,6 +192,9 @@ class _ReadyForShipDetailState extends State<ReadyForShipDetail> {
                               ),
                             ),
                           ),
+                          onChanged: (value) async{
+                            ref.read(createShipmentFormProvider.notifier).updateReadyAmount(orderAsyncValue.products![index].productProposalId!, int.parse(value));
+                          },
                         ),
                       ),
                     ],
