@@ -1,4 +1,10 @@
 tr:
+  login:
+    email: "E-posta Adresi"
+    password: "Şifre"
+    login_btn: "Giriş Yap"
+    forgot_password: "Şifremi Unuttum"
+    success: "Giriş Başarılı"
   invoice:
     invoice_sended: "Yolda"
     invoice_goods_delivered: "Onay Bekliyor"
@@ -25,6 +31,11 @@ tr:
     order_delivered: "Teslim Alındı"
     order_no: "Sipariş No: "
     order_date: "Sipariş Tarihi: "
+  bottom_navigation_bar:
+    home: "Ana sayfa"
+    proposal: "Teklif"
+    order: "Sipariş"
+    invoice: "Fatura"
   detail_table:
     row_1: "Ürün"
     row_2: "Miktar"

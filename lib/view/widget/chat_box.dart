@@ -53,10 +53,12 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
   }
 
   void onSubmitted(String value) {
+    FocusScope.of(context).unfocus(); //close the keyboard
+    textEditingController.clear();
     setState(() {
+      // gelen veriyi asagidan yukari baslatmak icinChatMessage.orderBy('createdAt', descending: true).get();
       liveChats.add(ChatMessage(
           body: value, userID: 1, createdAt: "22:01", user: "Bilgesu"));
-      textEditingController.clear();
       scrollToMaxExtent();
     });
   }
@@ -104,6 +106,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
               padding: const EdgeInsets.only(right: 15, left: 15),
               child: ListView.builder(
                 controller: messageController,
+                // reverse: true, gelen veriyi asagidan yukari siralamak icin
                 itemCount: liveChats.length,
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
