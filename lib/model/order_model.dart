@@ -71,6 +71,7 @@ class OrderModel {
 }
 
 class Product {
+  int? orderId;
   int? productProposalId;
   Map? productFiles;
   Map? productsProposalFiles;
@@ -79,7 +80,6 @@ class Product {
   String? categoryErpId;
   String? description;
   double? amount;
-  double? sendedAmount;
   String? unit;
   double? price;
   int? taxRate;
@@ -87,6 +87,7 @@ class Product {
   String? proposalNote;
 
   Product({
+    this.orderId,
     this.productProposalId,
     this.productFiles,
     this.productsProposalFiles,
@@ -95,7 +96,6 @@ class Product {
     this.categoryErpId,
     this.description,
     this.amount,
-    this.sendedAmount,
     this.unit,
     this.price,
     this.taxRate,
@@ -108,15 +108,15 @@ class Product {
   String toJson() => json.encode(toMap());
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
-        productProposalId: json["product_proposal_id"],
+        orderId: json["order_id"],
+        productProposalId: json["products_proposal_id"],
         productFiles: json['products_proposal_files'],
         productsProposalFiles: json['products_proposal_files'],
         name: json["name"],
         categoryId: json["category_id"],
         categoryErpId: json["category_erp_id"],
         description: json["description"],
-        amount: json["amount"],
-        sendedAmount: json["sended_amount"],
+        amount: json["sended_amount"],
         unit: json["unit"],
         price: json["price"],
         taxRate: json["tax_rate"],
@@ -130,8 +130,7 @@ class Product {
         "category_id": categoryId,
         "category_erp_id": categoryErpId,
         "description": description,
-        "amount": amount,
-        "sended_amount": sendedAmount,
+        "sended_amount": amount,
         "unit": unit,
         "price": price,
         "tax_rate": taxRate,
@@ -140,6 +139,6 @@ class Product {
       };
   @override
   String toString() {
-    return 'Product{productProposalId: $productProposalId, name: $name, categoryId: $categoryId, categoryErpId: $categoryErpId, description: $description, amount: $amount, taxRate: $taxRate, sendedAmount: $sendedAmount unit: $unit, price: $price, currencyCode: $currencyCode, proposalNote: $proposalNote, productsProposalFiles: $productsProposalFiles}';
+    return 'Product{productProposalId: $productProposalId, name: $name, categoryId: $categoryId, categoryErpId: $categoryErpId, description: $description, amount: $amount, taxRate: $taxRate, unit: $unit, price: $price, currencyCode: $currencyCode, proposalNote: $proposalNote, productsProposalFiles: $productsProposalFiles}';
   }
 }

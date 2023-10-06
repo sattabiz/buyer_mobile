@@ -1,3 +1,4 @@
+import 'package:buyer_mobile/view/order_view/ready_for_ship_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,7 +84,18 @@ class OrderDetail extends ConsumerWidget {
             alignment: Alignment.bottomRight,
             padding: const EdgeInsets.all(20.0),
             child: FloatingActionButton(
-              onPressed: () => context.go('/order/detail/${orderAsyncValue.id}/ready'),
+              onPressed: () async{
+                context.go('/order/detail/${orderAsyncValue.id}/ready');
+                ref.read(createShipmentFormProvider.notifier).removeAllFormItems();
+                ref.read(createShipmentOrderIdProvider.notifier).state = orderAsyncValue.id;
+                for(int i = 0; i<orderAsyncValue.products!.length;i++){
+                   ProductProposalsModel model = ProductProposalsModel();
+                   model.productsProposalId = orderAsyncValue.products![i].productProposalId;
+                   ref.read(createShipmentFormProvider.notifier).addFormItem(model);
+                }
+              },
+              /* ProductProposalsModel model = ProductProposalsModel();
+                ref.read(createShipmentFormProvider.notifier).addFormItem(model); */
               // print();
                   
               backgroundColor: Theme.of(context).colorScheme.primary,

@@ -3,15 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../view_model/SupplierGenerateMultiOrder/create_multi_order_invoice_view_model.dart';
+import '../../../view_model/create_shipment_record_view_model.dart';
 
 class DialogAppBar extends ConsumerWidget {
   final String title;
   final String route;
+  final String providerName;
 
   const DialogAppBar({
     Key? key,
     required this.title,
     required this.route,
+    required this.providerName
   }) : super(key: key);
 
   @override
@@ -35,7 +38,11 @@ class DialogAppBar extends ConsumerWidget {
       actions: [
         TextButton(
           onPressed: () async{
-            ref.watch(createMultiOrderInvoiceProvider);
+            if(providerName == 'createMultiOrderInvoiceProvider'){
+              ref.watch(createMultiOrderInvoiceProvider);
+            }else{
+              ref.watch(createShipmentPostProvider);
+            }
           },
           child: Text(
             'Kaydet',
