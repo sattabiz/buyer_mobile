@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -66,18 +67,15 @@ class _LoginState extends ConsumerState<Login> {
                     fillColor: Theme.of(context).colorScheme.onPrimary,
                     contentPadding: const EdgeInsets.only(left: 10.0),
                     label: Text(
-                      'Eposta Adresi',
+                      FlutterI18n.translate(context, 'tr.login.email'),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                    constraints:
-                        const BoxConstraints(maxWidth: 300, maxHeight: 40),
+                    constraints: const BoxConstraints(maxWidth: 300, maxHeight: 50),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color:
-                              Theme.of(context).colorScheme.onSurfaceVariant),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                     border: const OutlineInputBorder(),
                   ),
@@ -94,18 +92,15 @@ class _LoginState extends ConsumerState<Login> {
                     fillColor: Theme.of(context).colorScheme.onPrimary,
                     contentPadding: const EdgeInsets.only(left: 10.0),
                     label: Text(
-                      'Sifre',
+                      FlutterI18n.translate(context, 'tr.login.password'),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                    constraints:
-                        const BoxConstraints(maxWidth: 300, maxHeight: 40),
+                    constraints: const BoxConstraints(maxWidth: 300, maxHeight: 50),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color:
-                              Theme.of(context).colorScheme.onSurfaceVariant),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                     border: const OutlineInputBorder(),
                   ),
@@ -124,8 +119,8 @@ class _LoginState extends ConsumerState<Login> {
                       if (loginState == LoginState.success) {
                         context.go('/home');
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Basarili giris"),
+                          SnackBar(
+                            content: Text(FlutterI18n.translate(context, 'tr.login.success'),),
                           ),
                         );
                         //context.go('/home');
@@ -147,7 +142,7 @@ class _LoginState extends ConsumerState<Login> {
                         MaterialStateProperty.all<Size>(const Size(140, 30)),
                   ),
                   child: Text(
-                    'Giris Yap',
+                    FlutterI18n.translate(context, 'tr.login.login_btn'),
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
@@ -183,12 +178,12 @@ class _LoginState extends ConsumerState<Login> {
                     }
                   },
                   child: Text(
-                    'Sifremi Unuttum',
+                    FlutterI18n.translate(context, 'tr.login.forgot_password'),
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.outline,
-                          decoration: TextDecoration.underline,
-                          decorationColor: Theme.of(context).colorScheme.shadow,
-                        ),
+                      color: Theme.of(context).colorScheme.outline,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Theme.of(context).colorScheme.shadow,
+                    ),
                   ),
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -28,25 +29,25 @@ class BottomNavigationState extends State<BottomNavigation> {
           icon: SvgPicture.asset(
             'assets/home.svg',
           ),
-          label: 'Ana Sayfa',
+          label: FlutterI18n.translate(context, 'tr.bottom_navigation_bar.home'),
         ),
         NavigationDestination(
           icon: SvgPicture.asset(
             'assets/proposal.svg',
           ),
-          label: 'Teklif',
+          label: FlutterI18n.translate(context, 'tr.bottom_navigation_bar.proposal'),
         ),
         NavigationDestination(
           icon: SvgPicture.asset(
             'assets/order.svg',
           ),
-          label: 'Siparis',
+          label: FlutterI18n.translate(context, 'tr.bottom_navigation_bar.order'),
         ),
         NavigationDestination(
           icon: SvgPicture.asset(
             'assets/invoice.svg',
           ),
-          label: 'Fatura',
+          label: FlutterI18n.translate(context, 'tr.bottom_navigation_bar.invoice'),
         ),
 
       ],
