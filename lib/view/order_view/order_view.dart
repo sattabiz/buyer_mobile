@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../utils/widget_helper.dart';
 import '../../view_model/confirm_order_view_model.dart.dart';
+import '../../view_model/message_controller/create_message_view_model.dart';
+import '../proposal_view/proposal_view.dart';
 import '../widget/index_list_tile.dart';
 
 
@@ -27,7 +29,9 @@ class OrderView extends ConsumerWidget {
             width: 30,
             svgPath: statusIconMap[data[index].state] ?? '',
             trailing: const Icon(Icons.shape_line),
-            onTap: () {
+            onTap: () async{
+              ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
+              ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
               ref.read(orderIdProvider.notifier).state=data[index].id;        //read orderId for confirm order post service
               ref.read(orderIndexProvider.notifier).state = data[index];            //read index for order-detail page
               ref.watch(getOrderProvider);
