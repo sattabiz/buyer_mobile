@@ -8,6 +8,8 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../view_model/get_invoice_view_model.dart';
+import '../../view_model/message_controller/create_message_view_model.dart';
+import '../proposal_view/proposal_view.dart';
 import '../widget/index_list_tile.dart';
 
 class InvoiceView extends ConsumerWidget {
@@ -33,6 +35,8 @@ class InvoiceView extends ConsumerWidget {
                 svgPath: statusIconMap[data[index].state] ?? ' ',
                 trailing: const Icon(Icons.shape_line),
                 onTap: () async {
+                  ref.read(messageIdProvider.notifier).state = 'invoice_id=${data[index].invoiceId}';
+                ref.read(createMessageMapProvider.notifier).state = {'invoice_id': data[index].invoiceId};
                   ref.watch(getInvoicesProvider);
                   ref.read(invoiceIndexProvider.notifier).state = data[index];
                   ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 

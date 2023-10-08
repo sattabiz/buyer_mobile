@@ -2,6 +2,7 @@ import 'package:buyer_mobile/view/proposal_view/detail_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../view_model/message_controller/get_message_view_model.dart';
 import '../../../view_model/proposal_controller/create_proposal_view_model.dart';
 import '../chat_box.dart';
 
@@ -49,9 +50,15 @@ class TopAppBarLeft extends ConsumerWidget implements PreferredSizeWidget {
             icon,
             color: Theme.of(context).colorScheme.onSecondary,
           ),
-          onPressed: () => chatRoute!()
+          onPressed: () {
+            chatRoute!();
+            ref.watch(getMessageProvider);
+          },
+          //ref.watch(getMessageProvider);
         ),
       ],
     );
   }
 }
+
+//230202

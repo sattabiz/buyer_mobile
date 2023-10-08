@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../view_model/message_controller/create_message_view_model.dart';
+import '../../view_model/message_controller/list_messages_view_model.dart';
 import 'app_bar/top_app_bar_centered.dart';
 
 class ChatMessage {
@@ -22,7 +24,7 @@ class ChatBox extends ConsumerStatefulWidget {
   final String id;
   const ChatBox({
     Key? key,
-    required this.id, 
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -57,10 +59,10 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
     textEditingController.clear();
     setState(() {
       // gelen veriyi asagidan yukari baslatmak icinChatMessage.orderBy('createdAt', descending: true).get();
-      liveChats.add(ChatMessage(
-          body: value, userID: 1, createdAt: "22:01", user: "Bilgesu"));
       scrollToMaxExtent();
     });
+    ref.read(readMessageProvider.notifier).state = value;
+    ref.watch(createMessageProvider);
   }
 
   @override
@@ -73,23 +75,14 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
     super.dispose();
   }
 
-  List<ChatMessage> liveChats = [
-    ChatMessage(
-        body: "Siparis yolda", userID: 1, createdAt: "22:01", user: "Atakan"),
-    ChatMessage(
-        body: "Elinizde baska urun var mi?",
-        userID: 2,
-        createdAt: "22:02",
-        user: "Bilgesu"),
-    ChatMessage(body: "aaa", userID: 1, createdAt: "22:02", user: "Atakan"),
-    ChatMessage(body: "deneme", userID: 0, createdAt: "22:02", user: "Bilgesu"),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
+    final liveChats = ref.watch(liveChatProvider);
+    debugPrint('view calisti');
+    debugPrint(liveChats.length.toString());
     return Material(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -111,6 +104,8 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
                 itemBuilder: (context, index) {
+                  debugPrint('liveChats[index].body');
+                  debugPrint(liveChats[index].userID.toString());
                   return liveChats[index].userID == 0
                       ? Container(
                           margin: const EdgeInsets.only(bottom: 15, top: 15),
@@ -124,7 +119,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                       : Container(
                           margin: const EdgeInsets.only(bottom: 15),
                           child: Align(
-                            alignment: (liveChats[index].userID == 1
+                            alignment: (liveChats[index].userID == 7
                                 ? Alignment.topRight
                                 : Alignment.topLeft),
                             child: Container(
@@ -134,14 +129,14 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                                 borderRadius: BorderRadius.only(
                                   topLeft: const Radius.circular(8),
                                   topRight: const Radius.circular(8),
-                                  bottomLeft: (liveChats[index].userID == 1
+                                  bottomLeft: (liveChats[index].userID == 7
                                       ? const Radius.circular(10)
                                       : const Radius.circular(0)),
-                                  bottomRight: (liveChats[index].userID == 1
+                                  bottomRight: (liveChats[index].userID == 7
                                       ? const Radius.circular(0)
                                       : const Radius.circular(10)),
                                 ),
-                                color: (liveChats[index].userID == 1
+                                color: (liveChats[index].userID == 7
                                     ? Theme.of(context)
                                         .colorScheme
                                         .inversePrimary
@@ -162,7 +157,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                                           .bodySmall!
                                           .copyWith(
                                             fontWeight: FontWeight.bold,
-                                            color: liveChats[index].userID == 1
+                                            color: liveChats[index].userID == 7
                                                 ? Theme.of(context)
                                                     .colorScheme
                                                     .secondary
@@ -249,8 +244,10 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                     size: 35,
                   ),
-                  onPressed: () {
-                    onSubmitted(textEditingController.text);
+                  onPressed: () async {
+                    if (textEditingController.text != "") {
+                      onSubmitted(textEditingController.text);
+                    }
                   },
                 ),
               ],
