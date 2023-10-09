@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../view_model/message_controller/get_message_view_model.dart';
+import '../../../view_model/message_controller/websocket_message_view_model.dart';
 import '../../../view_model/proposal_controller/create_proposal_view_model.dart';
 import '../chat_box.dart';
 
@@ -50,9 +51,11 @@ class TopAppBarLeft extends ConsumerWidget implements PreferredSizeWidget {
             icon,
             color: Theme.of(context).colorScheme.onSecondary,
           ),
-          onPressed: () {
+          onPressed: () async{
             chatRoute!();
-            ref.watch(getMessageProvider);
+            await ref.watch(getMessageProvider);
+            ref.read(messagePipeProvider.notifier).state = 1;
+            ref.watch(webSocketProvider);
           },
           //ref.watch(getMessageProvider);
         ),

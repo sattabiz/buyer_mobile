@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../view_model/get_invoice_view_model.dart';
 import '../../view_model/message_controller/create_message_view_model.dart';
+import '../../view_model/message_controller/get_message_view_model.dart';
 import '../proposal_view/proposal_view.dart';
 import '../widget/index_list_tile.dart';
 
@@ -40,6 +41,7 @@ class InvoiceView extends ConsumerWidget {
                   ref.watch(getInvoicesProvider);
                   ref.read(invoiceIndexProvider.notifier).state = data[index];
                   ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 
+                  ref.watch(getMessageProvider);
                   context.goNamed('invoice_detail', pathParameters: {'invoiceId' : data[index].invoiceId.toString()});
                 },
               ),

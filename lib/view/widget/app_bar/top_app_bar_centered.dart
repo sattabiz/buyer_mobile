@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../utils/routes.dart';
+import '../../../view_model/message_controller/websocket_message_view_model.dart';
 
-class TopAppBarCentered extends StatelessWidget implements PreferredSizeWidget {
+class TopAppBarCentered extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final String ?backRoute;
 
@@ -17,7 +19,7 @@ class TopAppBarCentered extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // debugPrint("${state.pa}");
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -27,7 +29,11 @@ class TopAppBarCentered extends StatelessWidget implements PreferredSizeWidget {
           Icons.arrow_back,
           color: Theme.of(context).colorScheme.onSecondary,
         ),
-        onPressed: () => backRoute == "null" ? context.pop() : context.go(backRoute!) 
+        onPressed:() async{
+          backRoute == "null" ? context.pop() : context.go(backRoute!);
+          ref.read(messagePipeProvider.notifier).state = 2;
+          ref.watch(webSocketProvider);
+        },
       ),
       title: Text(
         title,

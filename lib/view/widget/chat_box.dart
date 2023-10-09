@@ -81,7 +81,6 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
     final width = MediaQuery.of(context).size.width;
 
     final liveChats = ref.watch(liveChatProvider);
-    debugPrint('view calisti');
     debugPrint(liveChats.length.toString());
     return Material(
       child: Column(
@@ -104,8 +103,6 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  debugPrint('liveChats[index].body');
-                  debugPrint(liveChats[index].userID.toString());
                   return liveChats[index].userID == 0
                       ? Container(
                           margin: const EdgeInsets.only(bottom: 15, top: 15),

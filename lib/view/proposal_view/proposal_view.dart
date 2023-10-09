@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../view_model/message_controller/create_message_view_model.dart';
+import '../../view_model/message_controller/get_message_view_model.dart';
 import '../../view_model/proposal_controller/create_proposal_view_model.dart';
 import '../../view_model/proposal_controller/get_proposal_view_model.dart';
 import '../../view_model/proposal_controller/list_currencies_view_model.dart';
@@ -36,6 +37,7 @@ class _ProposalState extends ConsumerState<ProposalView> {
               ref.read(proposalIndexProvider.notifier).state = data[index];
               ref.watch(getListCurrenciesProvider);
               ref.refresh(formItemProvider);
+              ref.watch(getMessageProvider);
               if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
                 context.go('/proposal');
               } else {

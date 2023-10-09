@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../utils/widget_helper.dart';
 import '../../view_model/confirm_order_view_model.dart.dart';
 import '../../view_model/message_controller/create_message_view_model.dart';
+import '../../view_model/message_controller/get_message_view_model.dart';
 import '../proposal_view/proposal_view.dart';
 import '../widget/index_list_tile.dart';
 
@@ -35,6 +36,7 @@ class OrderView extends ConsumerWidget {
               ref.read(orderIdProvider.notifier).state=data[index].id;        //read orderId for confirm order post service
               ref.read(orderIndexProvider.notifier).state = data[index];            //read index for order-detail page
               ref.watch(getOrderProvider);
+              ref.watch(getMessageProvider);
               context.goNamed('order_detail', pathParameters: {'orderId' : data[index].id.toString()});
             }, //context.go('/order/detail'),
           ),
