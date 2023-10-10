@@ -1,5 +1,7 @@
+import 'package:buyer_mobile/model/get_current_user_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../view_model/current_user_view_model.dart';
 import '../../view_model/message_controller/create_message_view_model.dart';
 import '../../view_model/message_controller/list_messages_view_model.dart';
 import 'app_bar/top_app_bar_centered.dart';
@@ -82,6 +84,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
 
     final liveChats = ref.watch(liveChatProvider);
     debugPrint(liveChats.length.toString());
+    CurrentUserInfoModel userInfo = ref.watch(userIdProvider);
     return Material(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -116,7 +119,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                       : Container(
                           margin: const EdgeInsets.only(bottom: 15),
                           child: Align(
-                            alignment: (liveChats[index].userID == 7
+                            alignment: (liveChats[index].userID == userInfo.company!.id
                                 ? Alignment.topRight
                                 : Alignment.topLeft),
                             child: Container(
@@ -126,14 +129,14 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                                 borderRadius: BorderRadius.only(
                                   topLeft: const Radius.circular(8),
                                   topRight: const Radius.circular(8),
-                                  bottomLeft: (liveChats[index].userID == 7
+                                  bottomLeft: (liveChats[index].userID == userInfo.company!.id
                                       ? const Radius.circular(10)
                                       : const Radius.circular(0)),
-                                  bottomRight: (liveChats[index].userID == 7
+                                  bottomRight: (liveChats[index].userID == userInfo.company!.id
                                       ? const Radius.circular(0)
                                       : const Radius.circular(10)),
                                 ),
-                                color: (liveChats[index].userID == 7
+                                color: (liveChats[index].userID == userInfo.company!.id
                                     ? Theme.of(context)
                                         .colorScheme
                                         .inversePrimary
@@ -154,7 +157,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                                           .bodySmall!
                                           .copyWith(
                                             fontWeight: FontWeight.bold,
-                                            color: liveChats[index].userID == 7
+                                            color: liveChats[index].userID == userInfo.company!.id
                                                 ? Theme.of(context)
                                                     .colorScheme
                                                     .secondary

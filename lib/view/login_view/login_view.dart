@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../view_model/current_user_view_model.dart';
 import '../../view_model/login_view_model.dart';
 
 class Login extends ConsumerStatefulWidget {
@@ -160,6 +161,7 @@ class _LoginState extends ConsumerState<Login> {
 
                       if (loginState == LoginState.success) {
                         context.go('/home');
+                        ref.watch(getCurrentUserInfoProvider);
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text("Basarili giris"),

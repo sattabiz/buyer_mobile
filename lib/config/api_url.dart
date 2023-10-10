@@ -34,6 +34,8 @@ class ApiUrls{
 
   static const String notifications = "$baseUrl/supplier_list_current_notifications.json";
 
+  static const String userInfo = "$baseUrl/current_user_info.json";
+
 
   ///supplier_confirm_order.json
 }

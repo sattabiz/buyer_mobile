@@ -25,7 +25,7 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
     socket.sink.add(json.encode(request));
-    print(socket.stream);
+    //print(socket.stream);
     await for (final message in socket.stream) {
       print(message);
       if (message.toString().contains('"body"')) {
@@ -53,8 +53,8 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
     socket.sink.add(json.encode(request2));
-    print(socket.stream.toString());
-    debugPrint("------------------------------------------------------");
+    //print(socket.stream.toString());
+    /* debugPrint("------------------------------------------------------"); */
   }
 });
 
