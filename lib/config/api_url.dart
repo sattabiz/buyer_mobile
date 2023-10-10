@@ -32,6 +32,8 @@ class ApiUrls{
   }
   static const String createMessage = "$baseUrl/post_message.json";
 
+  static const String notifications = "$baseUrl/supplier_list_current_notifications.json";
+
 
   ///supplier_confirm_order.json
 }

@@ -12,6 +12,8 @@ class OrderModel {
   String? paymentType;
   bool? includeShipmentCost;
   String? orderDate;
+  bool? notification;
+  bool? messageNotification;
   List<Product>? products;
 
   OrderModel({
@@ -26,6 +28,8 @@ class OrderModel {
     this.paymentType,
     this.includeShipmentCost,
     this.orderDate,
+    this.notification,
+    this.messageNotification,
     this.products,
   });
 
@@ -46,6 +50,8 @@ class OrderModel {
         paymentType: json["payment_type"],
         includeShipmentCost: json["include_shipment_cost"],
         orderDate: json["order_date"],
+        notification: json["notification"],
+        messageNotification: json["message_notification"],
         products: json["products"] == null
             ? []
             : List<Product>.from(

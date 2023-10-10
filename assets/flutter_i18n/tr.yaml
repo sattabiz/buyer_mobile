@@ -31,6 +31,8 @@ tr:
     order_delivered: "Teslim Alındı"
     order_no: "Sipariş No: "
     order_date: "Sipariş Tarihi: "
+  shipment:
+    shipment_no: "Sevkiyat No: "
   bottom_navigation_bar:
     home: "Ana sayfa"
     proposal: "Teklif"
