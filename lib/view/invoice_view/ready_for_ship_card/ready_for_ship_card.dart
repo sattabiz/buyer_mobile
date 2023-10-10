@@ -1,20 +1,25 @@
 import 'package:buyer_mobile/model/shipment_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../view_model/message_controller/create_message_view_model.dart';
+import '../../../view_model/message_controller/get_message_view_model.dart';
+import '../../../view_model/message_controller/websocket_message_view_model.dart';
+import '../../proposal_view/proposal_view.dart';
 import '../../widget/chat_box.dart';
 import 'card_table.dart';
 
-class ReadyForShipCard extends StatefulWidget {
+class ReadyForShipCard extends ConsumerStatefulWidget {
   ShipmentModel shipmentList;
   ReadyForShipCard({ Key? key, required this.shipmentList }) : super(key: key);
 
   @override
-  _ReadyForShipCardState createState() => _ReadyForShipCardState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ReadyForShipCardState();
 }
 
-class _ReadyForShipCardState extends State<ReadyForShipCard> {
+class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -119,10 +124,17 @@ class _ReadyForShipCardState extends State<ReadyForShipCard> {
                 ),
                 const SizedBox(width: 130),
                 ElevatedButton(
-                  onPressed: () => context.goNamed('invoice_ready_chat',
+                  onPressed: () {
+                    ref.read(messageIdProvider.notifier).state = 'shipment_id=${widget.shipmentList.shipmentId}';
+                    ref.read(createMessageMapProvider.notifier).state = {'shipment_id': widget.shipmentList.shipmentId};
+                    ref.watch(getMessageProvider);
+                    ref.read(messagePipeProvider.notifier).state = 1;
+                    ref.watch(webSocketProvider);
+                    context.goNamed('invoice_ready_chat',
                     pathParameters: {
                       'chatId': '1'
-                    }),
+                    });
+                  },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.tertiaryContainer),
                     fixedSize: MaterialStateProperty.all<Size>(const Size(100, 8))

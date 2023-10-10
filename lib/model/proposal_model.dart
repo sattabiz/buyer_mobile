@@ -15,6 +15,8 @@ class ProposalModel {
     int? customerCompanyId;
     String? sellerUserName;
     String? paymentType;
+    bool? notification;
+    bool? messageNotification;
     List<ProductProposal>? productProposals;
 
     ProposalModel({
@@ -32,6 +34,8 @@ class ProposalModel {
         this.customerCompanyId,
         this.sellerUserName,
         this.paymentType,
+        this.notification,
+        this.messageNotification,
         this.productProposals,
     });
 
@@ -54,6 +58,8 @@ class ProposalModel {
         customerCompanyId: json["customer_company_id"],
         sellerUserName: json["seller_user_name"],
         paymentType: json["payment_type"],
+        notification: json["notification"],
+        messageNotification: json["message_notification"],
         productProposals: json["product_proposals"] == null ? [] : List<ProductProposal>.from(json["product_proposals"]!.map((x) => ProductProposal.fromMap(x))),
     );
 

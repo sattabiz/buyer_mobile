@@ -1,7 +1,9 @@
+import 'package:buyer_mobile/view_model/get_notifications_view_model.dart';
 import 'package:buyer_mobile/view_model/get_order_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../utils/widget_helper.dart';
 import '../../view_model/confirm_order_view_model.dart.dart';
@@ -29,14 +31,30 @@ class OrderView extends ConsumerWidget {
             subtitle4: formattedDate(data[index].orderDate.toString()),
             width: 30,
             svgPath: statusIconMap[data[index].state] ?? '',
-            trailing: const Icon(Icons.shape_line),
+            trailing: (() {                                                                               //for widget notification icons
+              if (data[index].notification == true && data[index].messageNotification == true) {
+                return SvgPicture.asset(                  
+                  "assets/svg/alert.svg"
+                );
+              } else if (data[index].notification == true) {
+                return SvgPicture.asset(                  
+                  "assets/svg/alert.svg"
+                );
+              } else if (data[index].messageNotification == true) {
+                return SvgPicture.asset(                  
+                  "assets/chat.svg"
+                );
+              } else {
+                return SizedBox();
+              }
+            })(),
             onTap: () async{
               ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
               ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
               ref.read(orderIdProvider.notifier).state=data[index].id;        //read orderId for confirm order post service
               ref.read(orderIndexProvider.notifier).state = data[index];            //read index for order-detail page
-              ref.watch(getOrderProvider);
-              ref.watch(getMessageProvider);
+              ref.watch(getOrderProvider);                                          //get order data
+              ref.watch(getMessageProvider);                                        //get order messages
               context.goNamed('order_detail', pathParameters: {'orderId' : data[index].id.toString()});
             }, //context.go('/order/detail'),
           ),
