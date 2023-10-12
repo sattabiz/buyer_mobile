@@ -1,4 +1,5 @@
 
+import 'package:buyer_mobile/view_model/get_invoice_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,8 +31,8 @@ final invoicePaidProvider = FutureProvider.autoDispose((ref) async {
   debugPrint(_productsAttributes.toString());
   try {
     response = await apiService.post(url: ApiUrls.invoicesPaid, data: _productsAttributes);
-    /* await ref.refresh(getProposalListProvider);
-            ref.read(getProposalListProvider.future); */
+     await ref.refresh(getInvoicesProvider);
+     ref.read(getInvoicesProvider.future); 
   } catch (e) {
     if (e is DioException) {
 

@@ -80,7 +80,7 @@ class InvoiceDetail extends ConsumerWidget {
                     child: ElevatedButton(
                       onPressed: ()  {
                         ref.watch(invoicePaidProvider);
-                
+                        context.go('/invoice');
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
