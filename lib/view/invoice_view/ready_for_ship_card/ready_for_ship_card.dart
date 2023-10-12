@@ -22,6 +22,7 @@ class ReadyForShipCard extends ConsumerStatefulWidget {
 class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
   @override
   Widget build(BuildContext context) {
+    final chatId = ref.watch(messageRoomIdProvider);
     return Card(
       surfaceTintColor: Theme.of(context).colorScheme.surface,
       elevation: 4,
@@ -133,7 +134,7 @@ class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
                     ref.watch(webSocketProvider);
                     context.goNamed('invoice_ready_chat',
                     pathParameters: {
-                      'chatId': '1'
+                      'chatId': '$chatId'
                     });
                   },
                   style: ButtonStyle(

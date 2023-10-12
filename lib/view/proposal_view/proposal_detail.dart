@@ -52,7 +52,7 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
   @override
   Widget build(BuildContext context) {
     final proposalAsyncValue = ref.watch(proposalIndexProvider);
-    final chatProvider = ref.watch(getMessageProvider);
+    final chatId = ref.watch(messageRoomIdProvider);
     ref.read(offerModelProvider).proposalId = proposalAsyncValue!.proposalId;
     List<DropdownMenuItem<String>> dropDownMenuPaymentType =
         ["Cari Hesap", "DBS"].map((String value) {
@@ -86,7 +86,7 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
             backRoute: () => context.go('/proposal'),
             chatRoute: () => context.goNamed('proposal_chat', pathParameters: {
               'proposalId': proposalAsyncValue.proposalId.toString(),
-              'chatId': '1' //bakilcak
+              'chatId': '$chatId'
             }),
           ),
           SingleChildScrollView(
