@@ -57,7 +57,7 @@ class Home extends ConsumerWidget {
                   pathParameters: {'orderId' : data[index].id.toString()});
                 }, //context.go('/order/detail'),
               );
-            }/*  else if (data[index] is ProposalModel) {
+            } else if (data[index] is ProposalModel) {
               return IndexListTile(
                 title: "Teklif No: ${data[index].proposalId.toString()}",
                 subtitle: 'Subtitle', //proposalName gelecek
@@ -78,7 +78,7 @@ class Home extends ConsumerWidget {
                   }
                 },
               );
-            } */ else if(data[index] is InvoiceModel){
+            } else if(data[index] is InvoiceModel){
               debugPrint("-------ASDASFAS-----------");
               return IndexListTile(
                 title: FlutterI18n.translate(context, 'tr.invoice.${data[index].state}'),
