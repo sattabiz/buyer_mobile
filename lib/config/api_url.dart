@@ -12,7 +12,7 @@ class ApiUrls{
   static const String currencies = "$baseUrl/list_available_currencies.json";
 
   
-  static const String orders = "$baseUrl/supplier_order_list_by_state.json?state='order_approved','order_prepared','order_on_the_way','order_delivered','order_confirmed'&customer_id=$customerCompanyId";
+  static const String orders = "$baseUrl/supplier_order_list_by_state.json?state='order_approved','order_prepared','order_on_the_way','order_delivered','order_confirmed'&customer_company_id=$customerCompanyId";
   static const String confirmOrder = "$baseUrl/supplier_confirm_order.json";
 
   
