@@ -6,20 +6,6 @@ import '../../view_model/message_controller/create_message_view_model.dart';
 import '../../view_model/message_controller/list_messages_view_model.dart';
 import 'app_bar/top_app_bar_centered.dart';
 
-class ChatMessage {
-  String body;
-  int userID;
-  String createdAt;
-  String user;
-
-  ChatMessage({
-    required this.body,
-    required this.userID,
-    required this.createdAt,
-    required this.user,
-  });
-}
-
 final readMessageProvider = StateProvider<String?>((ref) => '');
 
 class ChatBox extends ConsumerStatefulWidget {
@@ -37,32 +23,9 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
   TextEditingController textEditingController = TextEditingController();
   ScrollController messageController = ScrollController();
 
-  void scrollToMaxExtent() {
-    messageController.addListener(() {
-      if (messageController.position.atEdge) {
-        if (messageController.position.pixels == 0) {
-          print('Top');
-        } else {
-          print('Bottom');
-        }
-      }
-    });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      messageController.animateTo(
-        messageController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 100),
-        curve: Curves.easeIn,
-      );
-    });
-  }
-
   void onSubmitted(String value) {
     FocusScope.of(context).unfocus(); //close the keyboard
     textEditingController.clear();
-    setState(() {
-      // gelen veriyi asagidan yukari baslatmak icinChatMessage.orderBy('createdAt', descending: true).get();
-      scrollToMaxExtent();
-    });
     ref.read(readMessageProvider.notifier).state = value;
     ref.watch(createMessageProvider);
   }
@@ -74,15 +37,19 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
 
   @override
   void dispose() {
+    textEditingController.dispose();
+    messageController.dispose();
     super.dispose();
   }
 
+  FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    final liveChats = ref.watch(liveChatProvider);
+    final liveChats = ref.watch(liveChatProvider).reversed.toList();
+    // liveChats.reversed.toList();
     debugPrint(liveChats.length.toString());
     CurrentUserInfoModel userInfo = ref.watch(userIdProvider);
     return Material(
@@ -91,7 +58,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
         mainAxisAlignment: MainAxisAlignment.end,
         verticalDirection: VerticalDirection.down,
         children: [
-           TopAppBarCentered(
+          TopAppBarCentered(
             title: ref.watch(chatBoxHeaderProvider)!,
             backRoute: "null",
           ),
@@ -101,7 +68,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
               padding: const EdgeInsets.only(right: 15, left: 15),
               child: ListView.builder(
                 controller: messageController,
-                // reverse: true, gelen veriyi asagidan yukari siralamak icin
+                reverse: true,
                 itemCount: liveChats.length,
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
@@ -119,9 +86,10 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                       : Container(
                           margin: const EdgeInsets.only(bottom: 15),
                           child: Align(
-                            alignment: (liveChats[index].userID == userInfo.company!.id
-                                ? Alignment.topRight
-                                : Alignment.topLeft),
+                            alignment:
+                                (liveChats[index].userID == userInfo.company!.id
+                                    ? Alignment.topRight
+                                    : Alignment.topLeft),
                             child: Container(
                               constraints:
                                   BoxConstraints.tightFor(width: width * 0.6),
@@ -129,14 +97,17 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                                 borderRadius: BorderRadius.only(
                                   topLeft: const Radius.circular(8),
                                   topRight: const Radius.circular(8),
-                                  bottomLeft: (liveChats[index].userID == userInfo.company!.id
+                                  bottomLeft: (liveChats[index].userID ==
+                                          userInfo.company!.id
                                       ? const Radius.circular(10)
                                       : const Radius.circular(0)),
-                                  bottomRight: (liveChats[index].userID == userInfo.company!.id
+                                  bottomRight: (liveChats[index].userID ==
+                                          userInfo.company!.id
                                       ? const Radius.circular(0)
                                       : const Radius.circular(10)),
                                 ),
-                                color: (liveChats[index].userID == userInfo.company!.id
+                                color: (liveChats[index].userID ==
+                                        userInfo.company!.id
                                     ? Theme.of(context)
                                         .colorScheme
                                         .inversePrimary
@@ -157,7 +128,8 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                                           .bodySmall!
                                           .copyWith(
                                             fontWeight: FontWeight.bold,
-                                            color: liveChats[index].userID == userInfo.company!.id
+                                            color: liveChats[index].userID ==
+                                                    userInfo.company!.id
                                                 ? Theme.of(context)
                                                     .colorScheme
                                                     .secondary
@@ -202,55 +174,67 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
               ),
             ),
           ),
-          Container(
-            width: width,
-            height: 70,
-            color: Theme.of(context).colorScheme.secondaryContainer,
-            padding: const EdgeInsets.only(
-                top: 15.0, bottom: 15.0, right: 5.0, left: 5.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  width: width * 0.8,
-                  child: TextField(
-                    controller: textEditingController,
-                    cursorColor: Theme.of(context).colorScheme.onBackground,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Theme.of(context).colorScheme.onPrimary,
-                      constraints: const BoxConstraints(maxHeight: 40),
-                      hintText: "Bir Mesaj Yazın...",
-                      hintStyle:
-                          Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                color: Theme.of(context).colorScheme.outline,
-                              ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+          SingleChildScrollView(
+            child: Container(
+              width: width,
+              height: 90,
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              padding: const EdgeInsets.only(
+                  top: 15.0, bottom: 15.0, right: 5.0, left: 5.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    width: width * 0.8,
+                    child: TextField(
+                      controller: textEditingController,
+                      // focusNode: focusNode,
+                      // autofocus: true,
+                      cursorColor: Theme.of(context).colorScheme.onBackground,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Theme.of(context).colorScheme.onPrimary,
+                        constraints: const BoxConstraints(maxHeight: 48),
+                        hintText: "Bir Mesaj Yazın...",
+                        hintStyle:
+                            Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                        contentPadding:
+                            const EdgeInsets.only(left: 10, right: 10),
                       ),
-                      contentPadding:
-                          const EdgeInsets.only(left: 10, right: 10),
                     ),
                   ),
-                ),
-                IconButton(
-                  padding: const EdgeInsets.all(0),
-                  icon: Icon(
-                    Icons.send,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    size: 35,
+                  IconButton(
+                    padding: const EdgeInsets.all(0),
+                    icon: Icon(
+                      Icons.send,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      size: 35,
+                    ),
+                    onPressed: () async {
+                      if (textEditingController.text != "") {
+                        onSubmitted(textEditingController.text);
+                      }
+                    },
                   ),
-                  onPressed: () async {
-                    if (textEditingController.text != "") {
-                      onSubmitted(textEditingController.text);
-                    }
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

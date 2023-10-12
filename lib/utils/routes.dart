@@ -31,7 +31,9 @@ final router = GoRouter(
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         debugPrint('${state.path}');
-        return Index(navigationShell, customAppBar(state.matchedLocation, context),
+        return Index(
+            navigationShell,
+            customAppBar(state.matchedLocation, context),
             bottomNavigatonBar(state.matchedLocation, navigationShell));
       },
       branches: [
@@ -55,19 +57,30 @@ final router = GoRouter(
             ),
           ],
         ),
-        StatefulShellBranch(
-          routes: <RouteBase>[
-            GoRoute(
-              path: '/proposal',
-              builder: (context, state) => const ProposalView(),
-              routes: <RouteBase>[
-                  GoRoute(
+        StatefulShellBranch(routes: <RouteBase>[
+          GoRoute(
+            path: '/proposal',
+            builder: (context, state) => const ProposalView(),
+            routes: <RouteBase>[
+              GoRoute(
                   name: 'proposal_detail',
                   path: 'detail/:proposalId',
-                  builder: (context, state) => ProposalDetail(
-                    key: state.pageKey,
-                    proposalId: state.pathParameters['proposalId']!,
-                  ),
+                  pageBuilder: (context, state) {
+                    return CustomTransitionPage(
+                      child: ProposalDetail(
+                        key: state.pageKey,
+                        proposalId: state.pathParameters['proposalId']!,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: CurveTween(curve: Curves.easeIn)
+                              .animate(animation),
+                          child: child,
+                        );
+                      },
+                    );
+                  },
                   routes: [
                     GoRoute(
                       name: 'proposal_chat',
@@ -77,20 +90,16 @@ final router = GoRouter(
                         id: state.pathParameters['chatId']!,
                       ),
                     )
-                  ]
-                ),
-              ],
-            ),
-          ]
-        ),
-        StatefulShellBranch(
-          initialLocation: '/order', 
-          routes: <RouteBase>[
-            GoRoute(
-              path: '/order',
-              builder: (context, state) => const OrderView(),
-              routes: <RouteBase>[
-                GoRoute(
+                  ]),
+            ],
+          ),
+        ]),
+        StatefulShellBranch(initialLocation: '/order', routes: <RouteBase>[
+          GoRoute(
+            path: '/order',
+            builder: (context, state) => const OrderView(),
+            routes: <RouteBase>[
+              GoRoute(
                   name: 'order_detail',
                   path: 'detail/:orderId',
                   builder: (context, state) => OrderDetail(),
@@ -110,22 +119,18 @@ final router = GoRouter(
                         key: state.pageKey,
                       ),
                     ),
-                  ]
-                ),
-              ],
+                  ]),
+            ],
+          ),
+        ]),
+        StatefulShellBranch(routes: <RouteBase>[
+          GoRoute(
+            path: '/invoice',
+            builder: (context, state) => InvoiceView(
+              key: state.pageKey,
             ),
-          ]
-        ),
-        StatefulShellBranch(
-          routes: <RouteBase>[
-            GoRoute(
-              path: '/invoice',
-              builder: (context, state) =>
-              InvoiceView(
-                  key: state.pageKey,
-              ),
-              routes: <RouteBase>[
-                GoRoute(
+            routes: <RouteBase>[
+              GoRoute(
                   name: 'invoice_detail',
                   path: 'detail/:invoiceId',
                   builder: (context, state) => InvoiceDetail(
@@ -140,40 +145,37 @@ final router = GoRouter(
                         id: state.pathParameters['chatId']!,
                       ),
                     ),
-                  ]
-                ),
-                GoRoute(
+                  ]),
+              GoRoute(
                   path: 'invoice_ready',
                   builder: (context, state) => ReadyForShipInvoice(
-                    key: state.pageKey,
-                  ),
+                        key: state.pageKey,
+                      ),
                   routes: [
                     GoRoute(
-                      name: 'invoice_ready_chat',
-                      path: 'chat/:chatId', //messageId ile degistirilecek
-                      builder: (context, state) => ChatBox(
-                        key: state.pageKey,
-                        id: state.pathParameters['chatId']!,
-                      )
-                    ),
+                        name: 'invoice_ready_chat',
+                        path: 'chat/:chatId', //messageId ile degistirilecek
+                        builder: (context, state) => ChatBox(
+                              key: state.pageKey,
+                              id: state.pathParameters['chatId']!,
+                            )),
                     GoRoute(
                       path: 'generate',
                       builder: (context, state) => GenerateInvoice(
                         key: state.pageKey,
                       ),
                     ),
-                  ]
-                ),
-              ],
-            ),
-          ]
-        )
+                  ]),
+            ],
+          ),
+        ])
       ],
     ),
   ],
 );
 
-Widget? bottomNavigatonBar(String location, StatefulNavigationShell navigationShell) {
+Widget? bottomNavigatonBar(
+    String location, StatefulNavigationShell navigationShell) {
   int currentIndex = navigationShell.currentIndex;
   Widget? bottomNavigation;
   void onTap(index) {
@@ -183,8 +185,12 @@ Widget? bottomNavigatonBar(String location, StatefulNavigationShell navigationSh
     );
   }
 
-  if (location == '/home' || location == '/proposal' || location == '/order' || location == '/invoice') {
-    bottomNavigation = BottomNavigation(currentIndex: currentIndex, onItemTapped: onTap);
+  if (location == '/home' ||
+      location == '/proposal' ||
+      location == '/order' ||
+      location == '/invoice') {
+    bottomNavigation =
+        BottomNavigation(currentIndex: currentIndex, onItemTapped: onTap);
   } else {
     bottomNavigation = null;
   }
@@ -213,7 +219,7 @@ PreferredSizeWidget? customAppBar(String location, BuildContext context) {
     case '/proposal':
       customAppBar = CustomAppBar(
         height: kToolbarHeight,
-        child:  const TopAppBarCentered(
+        child: const TopAppBarCentered(
           title: 'Teklif İstekleri',
           backRoute: '/home',
         ),

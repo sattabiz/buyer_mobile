@@ -16,7 +16,7 @@ class Index extends ConsumerWidget {
       appBar: customAppBar,
       body: navigationShell,
       bottomNavigationBar: bottomNavigationBar,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
     );
   }
 }

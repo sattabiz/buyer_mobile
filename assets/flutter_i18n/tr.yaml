@@ -5,6 +5,19 @@ tr:
     login_btn: "Giriş Yap"
     forgot_password: "Şifremi Unuttum"
     success: "Giriş Başarılı"
+  proposal:
+    proposal_detail: "Teklif Detayları"
+    proposal_period: "Teklif Süresi"
+    payment_type: "Ödeme Şekli"
+    products: "Teklif İstenen Ürünler"
+  order:
+    order_approved: "Yeni Sipariş"
+    order_confirmed: "Hazırlanıyor"
+    order_prepared: "Hazır"
+    order_on_the_way: "Yolda"
+    order_delivered: "Teslim Alındı"
+    order_no: "Sipariş No: "
+    order_date: "Sipariş Tarihi: "
   invoice:
     invoice_sended: "Yolda"
     invoice_goods_delivered: "Onay Bekliyor"
@@ -23,14 +36,6 @@ tr:
       address: "Adres"
       tracking: "Nakliye"
       tracking_no: "Takip No"
-  order:
-    order_approved: "Yeni Sipariş"
-    order_confirmed: "Hazırlanıyor"
-    order_prepared: "Hazır"
-    order_on_the_way: "Yolda"
-    order_delivered: "Teslim Alındı"
-    order_no: "Sipariş No: "
-    order_date: "Sipariş Tarihi: "
   shipment:
     shipment_no: "Sevkiyat No: "
   bottom_navigation_bar:
