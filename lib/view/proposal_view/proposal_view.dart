@@ -38,11 +38,12 @@ class _ProposalState extends ConsumerState<ProposalView> {
               ref.watch(getListCurrenciesProvider);
               ref.refresh(formItemProvider);
               ref.watch(getMessageProvider);
-              if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
+              context.goNamed('proposal_detail', pathParameters: {'proposalId' : data[index].proposalId.toString()});
+              /* if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
                 context.go('/proposal');
               } else {
                 context.goNamed('proposal_detail', pathParameters: {'proposalId' : data[index].proposalId.toString()});
-              }   
+              } */   
             },
           ),
         );
