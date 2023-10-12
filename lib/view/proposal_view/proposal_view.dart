@@ -21,40 +21,45 @@ class _ProposalState extends ConsumerState<ProposalView> {
   @override
   Widget build(BuildContext context) {
     final proposalListAsyncValue = ref.watch(getProposalProvider);
-    return proposalListAsyncValue.when(
-      data: (data) {
-        return ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (context, index) => IndexListTile(
-            title: "Teklif No: ${data[index].proposalId.toString()}",
-            subtitle: 'Subtitle', //proposalName gelecek
-            svgPath: statusIconMap[data[index].proposalState] ?? '',
-            // trailing: const Counter(),
-            //onTap: () => context.go('/proposal/detail'),
-            onTap: () async {
-              ref.read(messageIdProvider.notifier).state = 'proposal_id=${data[index].proposalId}';
-              ref.read(createMessageMapProvider.notifier).state = {'proposal_id': data[index].proposalId};
-              ref.read(proposalIndexProvider.notifier).state = data[index];
-              ref.watch(getListCurrenciesProvider);
-              ref.refresh(formItemProvider);
-              ref.watch(getMessageProvider);
-              context.goNamed('proposal_detail', pathParameters: {'proposalId' : data[index].proposalId.toString()});
-              /* if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
-                context.go('/proposal');
-              } else {
+    return RefreshIndicator(
+      onRefresh: () async{
+        await ref.refresh(getProposalProvider);        
+      },
+      child: proposalListAsyncValue.when(
+        data: (data) {
+          return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) => IndexListTile(
+              title: "Teklif No: ${data[index].proposalId.toString()}",
+              subtitle: 'Subtitle', //proposalName gelecek
+              svgPath: statusIconMap[data[index].proposalState] ?? '',
+              // trailing: const Counter(),
+              //onTap: () => context.go('/proposal/detail'),
+              onTap: () async {
+                ref.read(messageIdProvider.notifier).state = 'proposal_id=${data[index].proposalId}';
+                ref.read(createMessageMapProvider.notifier).state = {'proposal_id': data[index].proposalId};
+                ref.read(proposalIndexProvider.notifier).state = data[index];
+                ref.watch(getListCurrenciesProvider);
+                ref.refresh(formItemProvider);
+                ref.watch(getMessageProvider);
                 context.goNamed('proposal_detail', pathParameters: {'proposalId' : data[index].proposalId.toString()});
-              } */   
-            },
-          ),
-        );
-      },
-      loading: () => Container(),
-      error: (error, stack) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushNamed(context, '/login');
-        });
-        return Text('An error occurred: $error');
-      },
+                /* if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
+                  context.go('/proposal');
+                } else {
+                  context.goNamed('proposal_detail', pathParameters: {'proposalId' : data[index].proposalId.toString()});
+                } */   
+              },
+            ),
+          );
+        },
+        loading: () => Container(),
+        error: (error, stack) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushNamed(context, '/login');
+          });
+          return Text('An error occurred: $error');
+        },
+      ),
     );
 
     /* ListView.builder(
