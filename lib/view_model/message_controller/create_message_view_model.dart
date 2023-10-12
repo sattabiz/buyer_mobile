@@ -34,3 +34,4 @@ createMessageMapAsyncValue!['body'] = readMessageMapAsyncValue;
 });
 
 final createMessageMapProvider = StateProvider<Map?>((ref) => {})  ;
+final chatBoxHeaderProvider = StateProvider<String?>((ref) => "")  ;

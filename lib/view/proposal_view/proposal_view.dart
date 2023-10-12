@@ -38,6 +38,7 @@ class _ProposalState extends ConsumerState<ProposalView> {
               onTap: () async {
                 ref.read(messageIdProvider.notifier).state = 'proposal_id=${data[index].proposalId}';
                 ref.read(createMessageMapProvider.notifier).state = {'proposal_id': data[index].proposalId};
+                ref.read(chatBoxHeaderProvider.notifier).state = "Teklif No: ${data[index].proposalId}";
                 ref.read(proposalIndexProvider.notifier).state = data[index];
                 ref.watch(getListCurrenciesProvider);
                 ref.refresh(formItemProvider);

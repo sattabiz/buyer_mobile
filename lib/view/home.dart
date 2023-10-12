@@ -52,6 +52,7 @@ class Home extends ConsumerWidget {
                   onTap: () async {
                     ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
                     ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
+                    ref.read(chatBoxHeaderProvider.notifier).state = "Sipariş No: ${data[index].id}"; 
                     ref.read(orderIdProvider.notifier).state=data[index].id;        //read orderId for confirm order post service
                     ref.read(orderIndexProvider.notifier).state = data[index];            //read index for order-detail page
                     ref.watch(getOrderProvider);
@@ -71,6 +72,7 @@ class Home extends ConsumerWidget {
                   onTap: () async {
                     ref.read(messageIdProvider.notifier).state = 'proposal_id=${data[index].proposalId}';
                     ref.read(createMessageMapProvider.notifier).state = {'proposal_id': data[index].proposalId};
+                    ref.read(chatBoxHeaderProvider.notifier).state = "Teklif No: ${data[index].proposalId}";
                     ref.read(proposalIndexProvider.notifier).state = data[index];
                     ref.watch(getListCurrenciesProvider);
                     ref.refresh(formItemProvider);
@@ -96,6 +98,7 @@ class Home extends ConsumerWidget {
                   onTap: () async {
                     ref.read(messageIdProvider.notifier).state = 'invoice_id=${data[index].invoiceId}';
                     ref.read(createMessageMapProvider.notifier).state = {'invoice_id': data[index].invoiceId};
+                    ref.read(chatBoxHeaderProvider.notifier).state = "Fatura No: ${data[index].invoiceId}";
                     ref.watch(getInvoicesProvider);
                     ref.read(invoiceIndexProvider.notifier).state = data[index];
                     ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 
@@ -113,6 +116,7 @@ class Home extends ConsumerWidget {
                   onTap: () {
                     ref.read(messageIdProvider.notifier).state = 'shipment_id=${data[index].shipmentId}';
                       ref.read(createMessageMapProvider.notifier).state = {'shipment_id': data[index].shipmentId};
+                      ref.read(chatBoxHeaderProvider.notifier).state = "Sevkiyat No: ${data[index].shipmentId}";
                       ref.watch(getMessageProvider);
                       ref.read(messagePipeProvider.notifier).state = 1;
                       ref.watch(webSocketProvider);

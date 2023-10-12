@@ -59,6 +59,7 @@ class InvoiceView extends ConsumerWidget {
                   onTap: () async {
                     ref.read(messageIdProvider.notifier).state = 'invoice_id=${data[index].invoiceId}';
                     ref.read(createMessageMapProvider.notifier).state = {'invoice_id': data[index].invoiceId};
+                    ref.read(chatBoxHeaderProvider.notifier).state = "Fatura No: ${data[index].invoiceId}";
                     ref.watch(getInvoicesProvider);
                     ref.read(invoiceIndexProvider.notifier).state = data[index];
                     ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 
