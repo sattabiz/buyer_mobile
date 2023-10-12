@@ -30,6 +30,11 @@ class GetMessageModel {
         "message_room_id": messageRoomId,
         "messages": messages == null ? [] : List<dynamic>.from(messages!.map((x) => x.toMap())),
     };
+
+  @override
+  String toString() {
+    return 'GetMessageModel(status: $status, responseMessage: $responseMessage, messageRoomId: $messageRoomId, messages: $messages)';
+  }
 }
 
 class Message {
