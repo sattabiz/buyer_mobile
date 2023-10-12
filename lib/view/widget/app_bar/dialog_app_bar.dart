@@ -40,8 +40,10 @@ class DialogAppBar extends ConsumerWidget {
           onPressed: () async{
             if(providerName == 'createMultiOrderInvoiceProvider'){
               ref.watch(createMultiOrderInvoiceProvider);
+              context.go('/invoice/invoice_ready');
             }else{
               ref.watch(createShipmentPostProvider);
+              context.go('/order');
             }
           },
           child: Text(

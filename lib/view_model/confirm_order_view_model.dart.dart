@@ -29,8 +29,8 @@ final confirmOrderProvider = FutureProvider.autoDispose((ref) async {
   };
   try {
     response = await apiService.post(url: ApiUrls.confirmOrder, data: _productsAttributes);
-    /* await ref.refresh(getProposalListProvider);
-            ref.read(getProposalListProvider.future); */
+     await ref.refresh(getOrderProvider);
+            ref.read(getOrderProvider.future); 
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {
