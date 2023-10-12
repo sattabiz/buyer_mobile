@@ -54,7 +54,7 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
 
   final TextEditingController _invoiceDate = TextEditingController(
     text: DateFormat('dd-MM-yyyy').format(DateTime.now().add(const Duration(days: 3))),
-  );
+  );  
 
   final TextEditingController _shipDate = TextEditingController(
     text: DateFormat('dd-MM-yyyy')

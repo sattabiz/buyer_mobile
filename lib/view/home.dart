@@ -28,6 +28,7 @@ class Home extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notificationListAsyncValue = ref.watch(getNotificationProvider);
+    final chatId = ref.watch(messageRoomIdProvider);
     return RefreshIndicator(
       onRefresh: () async{
         ref.refresh(getNotificationProvider);
@@ -122,7 +123,7 @@ class Home extends ConsumerWidget {
                       ref.watch(webSocketProvider);
                       context.goNamed('invoice_ready_chat',
                       pathParameters: {
-                        'chatId': '1'
+                        'chatId': '$chatId'
                       });
                   },
     

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../model/order_model.dart';
 import '../../view_model/confirm_order_view_model.dart.dart';
 import '../../view_model/get_order_view_model.dart';
+import '../../view_model/message_controller/get_message_view_model.dart';
 import '../widget/app_bar/top_app_bar_left.dart';
 import '../widget/detail_components/detail_table.dart';
 import 'order_detail_info.dart';
@@ -17,6 +18,7 @@ class OrderDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     //tasarima karar verilecek
     OrderModel? orderAsyncValue = ref.watch(orderIndexProvider);
+    final chatId = ref.watch(messageRoomIdProvider);
 
     double width = MediaQuery.of(context).size.width;
     return Stack(
@@ -29,7 +31,7 @@ class OrderDetail extends ConsumerWidget {
               backRoute: () => context.go('/order'),
               chatRoute: () => context.goNamed('order_chat', pathParameters: {
                 'orderId': orderAsyncValue.id.toString(),
-                'chatId': '1'
+                'chatId': '$chatId'
               }),
             ),
             SingleChildScrollView(
