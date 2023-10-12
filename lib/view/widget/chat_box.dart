@@ -91,8 +91,8 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
         mainAxisAlignment: MainAxisAlignment.end,
         verticalDirection: VerticalDirection.down,
         children: [
-          const TopAppBarCentered(
-            title: "Teklif 1533",
+           TopAppBarCentered(
+            title: ref.watch(chatBoxHeaderProvider)!,
             backRoute: "null",
           ),
           Expanded(

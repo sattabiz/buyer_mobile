@@ -55,6 +55,7 @@ class OrderView extends ConsumerWidget {
               onTap: () async{
                 ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
                 ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
+                ref.read(chatBoxHeaderProvider.notifier).state = "Sipariş No: ${data[index].id}";   //for chat box header name
                 ref.read(orderIdProvider.notifier).state=data[index].id;        //read orderId for confirm order post service
                 ref.read(orderIndexProvider.notifier).state = data[index];            //read index for order-detail page
                 ref.watch(getOrderProvider);                                          //get order data

@@ -127,6 +127,7 @@ class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
                   onPressed: () {
                     ref.read(messageIdProvider.notifier).state = 'shipment_id=${widget.shipmentList.shipmentId}';
                     ref.read(createMessageMapProvider.notifier).state = {'shipment_id': widget.shipmentList.shipmentId};
+                    ref.read(chatBoxHeaderProvider.notifier).state = "Sevkiyat No: ${widget.shipmentList.shipmentId}";
                     ref.watch(getMessageProvider);
                     ref.read(messagePipeProvider.notifier).state = 1;
                     ref.watch(webSocketProvider);
