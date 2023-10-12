@@ -17,12 +17,17 @@ class OfferModel{
 
 final offerModelProvider = Provider((ref) => OfferModel(deliveryTime: 3, validPeriod: 10,));
 
-class ProposalDetail extends ConsumerWidget {
+class ProposalDetail extends ConsumerStatefulWidget {
   final String proposalId;
-  ProposalDetail({
+  const ProposalDetail({
     required this.proposalId,
     Key? key,
   }) : super(key: key);
+
+@override
+  ConsumerState<ConsumerStatefulWidget> createState() => _ProposalDetailState();
+}
+class _ProposalDetailState extends ConsumerState<ProposalDetail> {
 
   final TextEditingController _deliveryDate = TextEditingController(text: '3');
   final TextEditingController _tgs = TextEditingController(text: "10");
@@ -30,7 +35,7 @@ class ProposalDetail extends ConsumerWidget {
       TextEditingController(text: 'Cari Hesap');
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final proposalAsyncValue = ref.watch(proposalIndexProvider);
     ref.read(offerModelProvider).proposalId = proposalAsyncValue!.proposalId;
     List<DropdownMenuEntry<String>> dropDownMenuPaymentType =
@@ -251,7 +256,11 @@ class ProposalDetail extends ConsumerWidget {
                 alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
                     onPressed: () {
-                      ref.watch(createProposalProvider);
+                      if(proposalAsyncValue.updateCounter == 3){
+                      }else{
+                        ref.watch(createProposalProvider);
+                        context.go('/proposal');
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
@@ -259,7 +268,7 @@ class ProposalDetail extends ConsumerWidget {
                       fixedSize: MaterialStateProperty.all<Size>(const Size(180, 30)),
                     ),
                     child: Text(
-                      'Teklif Gonder (0/3)',
+                      'Teklif Gonder (${ref.watch(proposalIndexProvider)!.updateCounter.toString()}/3)',
                       style: Theme.of(context).textTheme.labelMedium!.copyWith(
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
