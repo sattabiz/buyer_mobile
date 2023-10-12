@@ -1,3 +1,4 @@
+import 'package:buyer_mobile/view_model/get_invoice_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -33,6 +34,7 @@ class TopAppBarCentered extends ConsumerWidget implements PreferredSizeWidget {
           backRoute == "null" ? context.pop() : context.go(backRoute!);
           ref.read(messagePipeProvider.notifier).state = 2;
           ref.watch(webSocketProvider);
+          ref.refresh(getInvoicesProvider);
         },
       ),
       title: Text(
