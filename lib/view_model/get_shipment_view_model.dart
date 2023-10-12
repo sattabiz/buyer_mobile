@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../config/api_url.dart';
 import '../service/get_services.dart';
-import 'SupplierGenerateMultiOrder/multi_order_invoice_view_model.dart';
 import 'get_order_view_model.dart';
 
 final getShipmentProvider =
