@@ -48,7 +48,6 @@ class ReadyForShipInvoice extends ConsumerWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    debugPrint(ref.watch(multiOrderProvider).toString());
                     context.go('/invoice/invoice_ready/generate');
                   },
                   style: ButtonStyle(

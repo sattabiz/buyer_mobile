@@ -72,7 +72,6 @@ class _CardTableState extends ConsumerState<CardTable> {
 
   @override
   Widget build(BuildContext context) {
-    // debugPrint(selectedProducts.toString());
     return Table(
       border: TableBorder(
         bottom: BorderSide(

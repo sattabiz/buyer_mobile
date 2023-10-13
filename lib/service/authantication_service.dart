@@ -24,12 +24,11 @@ class AuthenticationService {
         data: data,
       );
 
-    debugPrint(_response.toString());
 
       try {
         LoginModel _result = LoginModel.fromJson(_response.data);
         await jwtStorageService().saveJwtData(_result);
-        debugPrint(_response.toString());
+
         return _result;
       } catch (e) {
         throw Exception("Data parsing error: $e");

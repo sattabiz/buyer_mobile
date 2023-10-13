@@ -17,7 +17,6 @@ final getCurrentUserInfoProvider = FutureProvider.autoDispose<CurrentUserInfoMod
     }
     rethrow;
   }
-  debugPrint(response.toString());
   CurrentUserInfoModel currentUserInfoModel =
           CurrentUserInfoModel.fromMap(response.data);
 

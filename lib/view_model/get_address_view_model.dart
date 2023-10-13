@@ -13,7 +13,6 @@ final getAddressFutureProvider =
   Response response;
   try {
     response = await apiService.get(url: ApiUrls.address);
-    debugPrint(response.data.toString());
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {
@@ -30,6 +29,5 @@ final getAddressFutureProvider =
   }
 
 
-  debugPrint(_addressModelList.toString());
   return _addressModelList;
 });

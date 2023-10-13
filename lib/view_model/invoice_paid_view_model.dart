@@ -10,25 +10,11 @@ import '../service/post_service.dart';
 final invoicePaidProvider = FutureProvider.autoDispose((ref) async {
   final apiService = PostService();
   Response response;
-  /* final proposalProviderAsyncValue =
-       ref.watch(getProposalListProvider).value;
-  final proposalIdValue = ref.watch(proposalIndexProvider);
-  //debugPrint('product proposal id value${proposalIdValue}');
-  Map<String, dynamic> _productsAttributes = {};
-  if(proposalProviderAsyncValue![proposalIdValue!] != null) {
-      _productsAttributes['0'] = {
-        "proposal_id": proposalProviderAsyncValue[proposalIdValue].proposalId.toString(),
-        "product_proposal_ids": proposalProviderAsyncValue[proposalIdValue]
-            .productProposals!
-            .map((product) => product.productProposalId)
-            .toList()
-      };
-  } */
+
   Map<String, dynamic> _productsAttributes = {
     "invoice_id":ref.watch(invoiceIdProvider)
   };
-  debugPrint(ref.watch(invoiceIdProvider).toString());
-  debugPrint(_productsAttributes.toString());
+
   try {
     response = await apiService.post(url: ApiUrls.invoicesPaid, data: _productsAttributes);
      await ref.refresh(getInvoicesProvider);
@@ -39,7 +25,7 @@ final invoicePaidProvider = FutureProvider.autoDispose((ref) async {
     }
     rethrow;
   }
-  debugPrint(response.toString());
+
 
   return response.statusCode;
 });

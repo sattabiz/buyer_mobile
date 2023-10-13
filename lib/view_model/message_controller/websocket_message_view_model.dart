@@ -14,8 +14,8 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
       Uri.parse('wss://test.satta.biz/cable?jwt=$_jwt'));
   int? messageRoomIdAsyncValue = await ref.watch(messageRoomIdProvider);
 
-  print(socket);
-  debugPrint(ref.watch(messagePipeProvider).toString());
+
+
   if (ref.watch(messagePipeProvider) == 1 &&
       ref.watch(messageRoomIdProvider) != 0) {
     //for subscription
@@ -25,9 +25,8 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
     socket.sink.add(json.encode(request));
-    //print(socket.stream);
+
     await for (final message in socket.stream) {
-      print(message);
       if (message.toString().contains('"body"')) {
         WebSocketMessageModel webSocketAsyncValue =
             WebSocketMessageModel.fromMap(json.decode(message!));
@@ -38,8 +37,7 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
           user: webSocketAsyncValue.message!.user,
           userID: webSocketAsyncValue.message!.userId,
         );
-        //debugPrint("------------------------------------------------------");
-        //debugPrint(currentUserInfoModel.message!.body);
+     
         ref.read(liveChatProvider.notifier).addMessage(lastMessage);
         yield socket;
       }
@@ -53,8 +51,7 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
     socket.sink.add(json.encode(request2));
-    //print(socket.stream.toString());
-    /* debugPrint("------------------------------------------------------"); */
+  
   }
 });
 
