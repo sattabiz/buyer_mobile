@@ -12,23 +12,20 @@ final createMessageProvider = FutureProvider.autoDispose((ref) async {
   Response response;
   final createMessageMapAsyncValue =
        ref.watch(createMessageMapProvider);
-  debugPrint(json.encode(createMessageMapAsyncValue));
+
   final readMessageMapAsyncValue =
        ref.watch(readMessageProvider);
-  debugPrint(json.encode(readMessageMapAsyncValue));
+  
 createMessageMapAsyncValue!['body'] = readMessageMapAsyncValue;
 
   try {
-    response = await apiService.post(url: ApiUrls.createMessage, data: createMessageMapAsyncValue);
-    /* await ref.refresh(getMessageProvider);
-            ref.read(getMessageProvider.future); */
-    //debugPrint(response.toString());
+    response = await apiService.post(url: ApiUrls.createMessage, data: createMessageMapAsyncValue);   
   } catch (e) {
     if (e is DioException) {
     }
     rethrow;
   }
-  //debugPrint(response.statusCode.toString());
+
 
   return response.statusCode;
 });

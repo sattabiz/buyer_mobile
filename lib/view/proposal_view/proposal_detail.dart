@@ -211,7 +211,6 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
                               border: const OutlineInputBorder(),
                             ),
                             onChanged: (value) {
-                              debugPrint(value);
                               ref.read(offerModelProvider).validPeriod =
                                   int.parse(value);
                             },

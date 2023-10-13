@@ -50,7 +50,6 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
 
     final liveChats = ref.watch(liveChatProvider).reversed.toList();
     // liveChats.reversed.toList();
-    debugPrint(liveChats.length.toString());
     CurrentUserInfoModel userInfo = ref.watch(userIdProvider);
     return Material(
       child: Column(

@@ -13,8 +13,7 @@ class MessageNotifier extends StateNotifier<List<Message>> {
   // Add methods to modify the state as needed.
   void addMessage(Message message) {
     state = [...state, message];
-   /*  debugPrint(message.body.toString());
-    debugPrint('-----------------------'); */
+
   }
 
   void removeMessage(int messageId) {

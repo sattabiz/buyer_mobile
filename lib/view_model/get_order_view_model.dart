@@ -12,7 +12,7 @@ final getOrderProvider =
   Response response;
   try {
     response = await apiService.get(url: ApiUrls.orders);
-    //debugPrint(response.data.toString());
+
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {
@@ -28,12 +28,6 @@ final getOrderProvider =
         .toList();
   }
 
-  //debugPrint(response.data.toString());
-  /* for (int i = 0; i <= _orderList.length; i++) {
-    debugPrint(
-        '--------------------------------------------------------------------------------------------------------------------------------------------------------------');
-    debugPrint(_orderList[i].toString());
-  } */
   _orderList.sort((a, b) => b.id!.compareTo(a.id!));
   return _orderList;
 });

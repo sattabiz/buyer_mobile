@@ -30,15 +30,11 @@ final createShipmentPostProvider = FutureProvider.autoDispose((
     "products_proposals": _productsAttributes
   };
 
-  debugPrint(data.toString());
-  debugPrint('create shipment service');
-  debugPrint(orderId.toString());
+
  
 
    try {
-    debugPrint("--------------------------------------------");
      response = await apiService.post(url: ApiUrls.createShipment,  data: data ); 
-      debugPrint(response.toString());
       await ref.refresh(getOrderProvider);
       ref.read(getOrderProvider.future);
   } catch (e) {
