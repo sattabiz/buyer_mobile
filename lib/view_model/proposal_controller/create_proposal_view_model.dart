@@ -37,6 +37,7 @@ final createProposalProvider = FutureProvider.autoDispose((
     "id": _contentItems.proposalId,
     "valid_period": _contentItems.validPeriod,
     "delivery_time": _contentItems.deliveryTime,
+    "payment_type": null,
     "products_proposals_attributes": _productsAttributes
   };
   debugPrint('datanin ustu');
