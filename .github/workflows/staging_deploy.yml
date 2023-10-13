@@ -43,7 +43,7 @@ jobs:
     - uses: easingthemes/ssh-deploy@v4.1.8
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SOURCE: "build/app/outputs/apk/release/"
+        SOURCE: "build/app/outputs/apk/debug/"
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
         TARGET: ${{ secrets.REMOTE_TARGET }}
