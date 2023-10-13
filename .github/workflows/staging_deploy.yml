@@ -21,7 +21,7 @@ jobs:
       env:
         API_URL: ${{ secrets.API_URL }}
         CUSTOMER_COMPANY_ID: ${{ secrets.CUSTOMER_COMPANY_ID }}
-    - run: flutter build appbundle --dart-define=API_URL=$API_URL --dart-define=CUSTOMER_COMPANY_ID=$CUSTOMER_COMPANY_ID --debug --split-per-abi 
+    - run: flutter build appbundle --dart-define=API_URL=$API_URL --dart-define=CUSTOMER_COMPANY_ID=$CUSTOMER_COMPANY_ID
       env:
         API_URL: ${{ secrets.API_URL }}
         CUSTOMER_COMPANY_ID: ${{ secrets.CUSTOMER_COMPANY_ID }}
