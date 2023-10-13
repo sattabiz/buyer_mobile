@@ -17,8 +17,14 @@ jobs:
       with:
           flutter-version: '3.7.10'
           channel: 'stable'
-    - run: flutter build apk --split-per-abi
-    - run: flutter build appbundle
+    - run: flutter build apk --dart-define=API_URL=$API_URL --dart-define=CUSTOMER_COMPANY_ID=$CUSTOMER_COMPANY_ID --debug --split-per-abi 
+      env:
+        API_URL: ${{ secrets.API_URL }}
+        CUSTOMER_COMPANY_ID: ${{ secrets.CUSTOMER_COMPANY_ID }}
+    - run: flutter build appbundle --dart-define=API_URL=$API_URL --dart-define=CUSTOMER_COMPANY_ID=$CUSTOMER_COMPANY_ID --debug --split-per-abi 
+      env:
+        API_URL: ${{ secrets.API_URL }}
+        CUSTOMER_COMPANY_ID: ${{ secrets.CUSTOMER_COMPANY_ID }}
     
     - name: Sign App Bundle
       uses: r0adkll/sign-android-release@v1   
