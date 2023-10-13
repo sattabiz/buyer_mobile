@@ -17,12 +17,7 @@ final createProposalProvider = FutureProvider.autoDispose((
 
   Map<String, dynamic> _productsAttributes = {};
 
-  for (int i = 0; i < _formItems.length; i++) {
-    debugPrint(_formItems[i].productId.toString());
-    debugPrint(_formItems[i].note.toString());
-    debugPrint(_formItems[i].price.toString());
-    debugPrint(_formItems.length.toString());
-  }
+
 
   for (int i = 0; i < _formItems.length; i++) {
     _productsAttributes['$i'] = {
@@ -40,18 +35,14 @@ final createProposalProvider = FutureProvider.autoDispose((
     "payment_type": null,
     "products_proposals_attributes": _productsAttributes
   };
-  debugPrint('datanin ustu');
-  debugPrint(data.toString());
+
 
   final formData3 = FormData.fromMap(data);
-  debugPrint('-------------------');
 
-  debugPrint(formData3.toString());
 
    try {
     response = await apiService.postFormdata(
         url: ApiUrls.replyProposal, data: formData3);
-    debugPrint(response.toString());
     await ref.refresh(getProposalProvider);
     ref.read(getProposalProvider.future);
   } catch (e) {

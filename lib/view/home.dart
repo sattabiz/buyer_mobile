@@ -86,7 +86,6 @@ class Home extends ConsumerWidget {
                   },
                 );
               } else if(data[index] is InvoiceModel){
-                debugPrint("-------ASDASFAS-----------");
                 return IndexListTile(
                   title: FlutterI18n.translate(context, 'tr.invoice.${data[index].state}'),
                   subtitle: FlutterI18n.translate(context, 'tr.invoice.invoice_no'),

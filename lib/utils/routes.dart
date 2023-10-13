@@ -30,7 +30,6 @@ final router = GoRouter(
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        debugPrint('${state.path}');
         return Index(
             navigationShell,
             customAppBar(state.matchedLocation, context),

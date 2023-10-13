@@ -16,7 +16,6 @@ final getProposalProvider =
 
   try {
     response = await apiService.get(url: ApiUrls.proposals);
-    debugPrint(response.data.toString());
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {}
@@ -30,11 +29,7 @@ final getProposalProvider =
         .map((e) => ProposalModel.fromMap(e))
         .toList();
   }
-  /* for (int i = 0; i <= _proposalList.length; i++) {
-    debugPrint(
-        '--------------------------------------------------------------------------------------------------------------------------------------------------------------');
-    debugPrint(_proposalList[i].productProposals.toString());
-  } */
+
   _proposalList.sort((a, b) => b.proposalId!.compareTo(a.proposalId!));
   return _proposalList;
 });

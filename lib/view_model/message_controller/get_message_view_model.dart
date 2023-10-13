@@ -21,14 +21,12 @@ final getMessageProvider =
   final messageId = ref.watch(messageIdProvider);
   try {
     response = await apiService.get(url: ApiUrls.getMessage(messageId!));
-    debugPrint(response.data.toString());
   } catch (e) {
     if (e is DioException) {
     }
     rethrow;
   }
 
-  //debugPrint(response.data.toString());
 
 
   GetMessageModel getMessage = GetMessageModel.fromMap(response.data);
@@ -38,8 +36,7 @@ final getMessageProvider =
     }
 
   }
-  //debugPrint(getMessage.messages![0].body.toString());
-  //debugPrint(getMessage.messageRoomId.toString());
+
   ref.read(messageRoomIdProvider.notifier).state = await getMessage.messageRoomId!;
   return getMessage;
 });

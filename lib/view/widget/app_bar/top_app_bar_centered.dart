@@ -21,7 +21,7 @@ class TopAppBarCentered extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // debugPrint("${state.pa}");
+
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       centerTitle: true,

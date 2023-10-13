@@ -21,15 +21,14 @@ final getShipmentProvider =
     }
     rethrow;
   }
-  //debugPrint('_invoicesList[0].products![0].categoryId.toString()');
+
   List<ShipmentModel> _shipmentList = [];
   if (response.data['shipments'] != null) {
     _shipmentList = (response.data['shipments'] as List)
         .map((e) => ShipmentModel.fromMap(e))
         .toList();
   }
-  /* debugPrint('sadasfffasddsadsdsaas');
-  debugPrint(_invoicesList[1].products![0].categoryId.toString()); */
+
   _shipmentList.sort((a, b) => b.shipmentId!.compareTo(a.shipmentId!));
   return _shipmentList;
 });

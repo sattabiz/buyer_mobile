@@ -23,12 +23,7 @@ final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((
 
   Map<String, dynamic> _productsAttributes = {};
 
-  /* for (int i = 0; i < _formItems.length; i++) {
-    debugPrint(_formItems[i].productId.toString());
-    debugPrint(_formItems[i].note.toString());
-    debugPrint(_formItems[i].price.toString());
-    debugPrint(_formItems.length.toString());
-  } */
+
   
   for (int i = 0; i < _formItems.length; i++) {
       _productsAttributes["${_formItems[i].productsProposalShipmentId}"] = _formItems[i].invoiceAmount;
@@ -45,21 +40,16 @@ final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((
     "tracking": _contentItems.tracking.toString(),
     "products_proposal_shipments": _productsAttributes
   };
-  //debugPrint('datanin ustu');
-  debugPrint(data.toString());
-  debugPrint('create invoice service');
+
  
 
    try {
-    debugPrint("--------------------------------------------");
     response = await apiService.post(url: ApiUrls.createMultiOrderInvoice, data: data); 
-    debugPrint(response.toString());
     await ref.refresh(getShipmentProvider);
     ref.read(getShipmentProvider.future);
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {
-        //ref.read(navigatorKeyProvider).currentState!.pushNamed("/login");
       }
     }
     rethrow;
