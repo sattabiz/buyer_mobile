@@ -48,6 +48,7 @@ tr:
     row_2: "Miktar"
     row_3: "Fiyat"
     row_4: "Toplam"
+    row_5: "Sevk"
   detail_info:
     proposal: 
       row_1: "Talep Tarihi:"

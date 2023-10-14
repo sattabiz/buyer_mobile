@@ -37,7 +37,7 @@ class TopAppBarLarge extends StatelessWidget implements PreferredSizeWidget {
           children: [
             IconButton(
               icon: const Icon(
-                Icons.arrow_back,
+                Icons.menu,
                 color: Colors.white,
                 ),
               onPressed: () => context.go('/login')
@@ -55,16 +55,6 @@ class TopAppBarLarge extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
-      actions: [
-        IconButton(
-          icon: Icon(
-            Icons.menu,
-            color: Theme.of(context).colorScheme.onSecondary,
-            ),
-          onPressed: () {
-          },
-        ),
-      ],
     );
   }
 }
