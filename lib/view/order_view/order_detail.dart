@@ -1,4 +1,5 @@
 import 'package:buyer_mobile/view/order_view/ready_for_ship_detail.dart';
+import 'package:buyer_mobile/view/widget/detail_components/detail_table_order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,7 +73,9 @@ class OrderDetail extends ConsumerWidget {
                     Container(
                       width: width,
                       padding: const EdgeInsets.all(5.0),
-                      child: DetailTable(products: orderAsyncValue.products!),
+                      child: orderAsyncValue.state.toString() ==  'order_approved'
+                      ? DetailTable(products: orderAsyncValue.products!)
+                      : DetailTableOrder(products: orderAsyncValue.products!),
                     )
                   ],
                 ),

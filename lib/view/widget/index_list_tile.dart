@@ -67,7 +67,8 @@ class IndexListTile extends ConsumerWidget {
               Text(
                 subtitle4 ?? ' ',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  color: Theme.of(context).colorScheme.onSurfaceVariant),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

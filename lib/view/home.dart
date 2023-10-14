@@ -48,8 +48,7 @@ class Home extends ConsumerWidget {
                       FlutterI18n.translate(context, 'tr.order.order_date'),
                   subtitle4: formattedDate(data[index].orderDate.toString()),
                   width: 30,
-                  svgPath: statusIconMap[data[index].state] ?? '',
-                  trailing: const Icon(Icons.shape_line),
+                  svgPath: 'assets/svg/alert_error.svg',
                   onTap: () async {
                     ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
                     ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
@@ -67,7 +66,7 @@ class Home extends ConsumerWidget {
                 return IndexListTile(
                   title: "Teklif No: ${data[index].proposalId.toString()}",
                   subtitle: 'Subtitle', //proposalName gelecek
-                  svgPath: statusIconMap[data[index].proposalState] ?? '',
+                  svgPath: 'assets/svg/alert_error.svg',
                   // trailing: const Counter(),
                   //onTap: () => context.go('/proposal/detail'),
                   onTap: () async {
@@ -94,7 +93,6 @@ class Home extends ConsumerWidget {
                   subtitle4: formattedDate(data[index].invoiceDate.toString()),
                   width: 100,
                   svgPath: statusIconMap[data[index].state] ?? ' ',
-                  trailing: const Icon(Icons.shape_line),
                   onTap: () async {
                     ref.read(messageIdProvider.notifier).state = 'invoice_id=${data[index].invoiceId}';
                     ref.read(createMessageMapProvider.notifier).state = {'invoice_id': data[index].invoiceId};
@@ -112,7 +110,6 @@ class Home extends ConsumerWidget {
                   subtitle: '--------',                        //duzeltilecek
                   svgPath: 'assets/svg/flare.svg',            //duzeltilecek
                   width: 100,
-                  trailing: const Icon(Icons.shape_line),
                   onTap: () {
                     ref.read(messageIdProvider.notifier).state = 'shipment_id=${data[index].shipmentId}';
                       ref.read(createMessageMapProvider.notifier).state = {'shipment_id': data[index].shipmentId};
