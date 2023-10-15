@@ -29,59 +29,63 @@ class IndexListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      children: [
-        ListTile(
-          leading: Padding(
-            padding: const EdgeInsets.only(top: 8.0, left: 5.0),
-            child: SvgPicture.asset(
-              svgPath,
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+            width: 0.3,
           ),
-          title: Text(
-            title,
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant),
+        ),
+      ),
+      child: ListTile(
+        leading: Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 5.0),
+          child: SvgPicture.asset(
+            svgPath,
           ),
-          subtitle: Row(
-            children: [
-              Text(
+        ),
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant),
+        ),
+        subtitle: Row(
+          children: [
+            Flexible(
+              child: Text(
                 subtitle,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
-              SizedBox(
-                width: width,
-                child: Text(
-                  subtitle2 ?? ' ',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Text(
-                subtitle3 ?? ' ',
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant),
-              ),
-              Text(
+            ),
+            Text(
+              subtitle2 ?? ' ',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant),
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(width: 5.0),
+            Text(
+              subtitle3 ?? ' ',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant),
+            ),
+            Flexible(
+              child: Text(
                 subtitle4 ?? ' ',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant),
                 overflow: TextOverflow.ellipsis,
               ),
-            ],
-          ),
-          trailing: trailing,
-          onTap: () {
-            onTap!();
-          },
+            ),
+          ],
         ),
-        const Divider(
-          height: 1,
-          thickness: 1,
-        ),
-      ],
+        trailing: trailing,
+        onTap: () {
+          onTap!();
+        },
+      ),
     );
   }
 }

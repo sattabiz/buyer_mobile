@@ -20,12 +20,12 @@ class DetailInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Table(
-      columnWidths: const {
-        0: FlexColumnWidth(0.2),
-        1: FlexColumnWidth(0.2),
-        2: FlexColumnWidth(0.1),
-        3: FlexColumnWidth(0.2),
-      },
+      // columnWidths: const {
+      //   0: FlexColumnWidth(0.2),
+      //   1: FlexColumnWidth(0.2),
+      //   2: FlexColumnWidth(0.1),
+      //   3: FlexColumnWidth(0.2),
+      // },
       children: [
         TableRow(
           children: [
@@ -33,20 +33,28 @@ class DetailInfo extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 FlutterI18n.translate(context, 'tr.detail_info.$className.row_1'),
-                style: Theme.of(context).textTheme.bodyMedium
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                row1,
-                style: Theme.of(context).textTheme.bodyMedium
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold
+                )
               ),
             ),
             Container(
               margin: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 FlutterI18n.translate(context, 'tr.detail_info.$className.row_2'),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold
+                )
+              ),
+            ),
+          ]
+        ),
+        TableRow(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                row1,
                 style: Theme.of(context).textTheme.bodyMedium
               ),
             ),
@@ -63,19 +71,33 @@ class DetailInfo extends StatelessWidget {
           children: [
             Text(
               FlutterI18n.translate(context, 'tr.detail_info.$className.row_3'),
-              style: Theme.of(context).textTheme.bodyMedium
-            ),
-            Text(
-              row3,
-              style: Theme.of(context).textTheme.bodyMedium
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold
+              )
             ),
             Text(
               FlutterI18n.translate(context, 'tr.detail_info.$className.row_4'),
-              style: Theme.of(context).textTheme.bodyMedium
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold
+              )
             ),
-            Text(
-              row4,
-              style: Theme.of(context).textTheme.bodyMedium
+          ]
+        ),
+        TableRow(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 5.0),
+              child: Text(
+                row3,
+                style: Theme.of(context).textTheme.bodyMedium
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 5.0),
+              child: Text(
+                row4,
+                style: Theme.of(context).textTheme.bodyMedium
+              ),
             ),
           ]
         )

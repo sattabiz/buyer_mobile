@@ -1,5 +1,3 @@
-
-
 Map<String, String> statusIconMap = {
   'pending': 'assets/svg/alert.svg',
   'replied': 'assets/chat.svg', //degisecek
@@ -18,75 +16,11 @@ Map<String, String> statusIconMap = {
   'invoice_discounted': 'assets/svg/paid.svg', //odendi
 };
 
-Map<int, Map<String, String>> products = {
-  0: {
-    'name': 'Ürün 1',
-    'amount': '1',
-    'price': '110',
-    'total': '100',
-    'taxRate': '20',
-    'currencyCode': 'TRY',
-  },
-  1: {
-    'name': 'Ürün 2',
-    'amount': '10',
-    'price': '110',
-    'total': '100',
-    'taxRate': '10',
-    'currencyCode': 'EUR',
-  },
-  2: {
-    'name': 'Ürün 3',
-    'amount': '1',
-    'price': '110',
-    'total': '100 ',
-    'taxRate': '20',
-    'currencyCode': 'TRY',
-  },
-};
-
 Map<String, String> getTotalCost = {
   "Toplam Tutar:": "100",
   "KDV(%20):": "20",
   "Toplam:": "120",
 };
-
-
-
-List<dynamic> productList = [
-  {
-      "product_proposal_id": 179,
-      "product_files": {},
-      "products_proposal_files": {},
-      "name": "10",
-      "category_id": 1,
-      "category_erp_id": null,
-      "description": "",
-      "amount": 10.0,
-      "sended_amount": null,
-      "unit": "Adet",
-      "price": 10.0,
-      "tax_rate": 20,
-      "currency_code": "TRY",
-      "proposal_note": null
-  },
-  {
-      "product_proposal_id": 179,
-      "product_files": {},
-      "products_proposal_files": {},
-      "name": "10",
-      "category_id": 1,
-      "category_erp_id": null,
-      "description": "",
-      "amount": 20.0,
-      "sended_amount": null,
-      "unit": "Adet",
-      "price": 20.0,
-      "tax_rate": 20,
-      "currency_code": "TRY",
-      "proposal_note": null
-  }
-];
 
 String formattedDate(String date) {
   if (date == 'null') {
@@ -96,6 +30,7 @@ String formattedDate(String date) {
     return "${parsedDate.day}-${parsedDate.month.toString().padLeft(2, '0')}-${parsedDate.year.toString().padLeft(2, '0')}";
   }
 }
+
 String getCurrencySymbol(String currencyCode) {
   switch (currencyCode) {
     case 'TRY':
@@ -106,6 +41,14 @@ String getCurrencySymbol(String currencyCode) {
       return '\$';
     default:
       return currencyCode;
+  }
+}
+
+String? alertIconWithState(String state) {
+  if (state == 'order_approved') {
+    return 'assets/svg/alert_error.svg';
+  } else {
+    return statusIconMap[state];
   }
 }
 

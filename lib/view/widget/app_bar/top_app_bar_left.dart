@@ -10,10 +10,10 @@ import '../chat_box.dart';
 class TopAppBarLeft extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final IconData? icon;
-  void Function()? backRoute;
-  void Function()? chatRoute;
+  final void Function()? backRoute;
+  final void Function()? chatRoute;
 
-  TopAppBarLeft({
+  const TopAppBarLeft({
     Key? key,
     required this.title,
     required this.icon,
