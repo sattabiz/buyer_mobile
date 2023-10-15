@@ -7,7 +7,7 @@ tr:
     success: "Giriş Başarılı"
   proposal:
     proposal_detail: "Teklif Detayları"
-    proposal_period: "Teklif Süresi"
+    proposal_period: "Teslim Süresi"
     payment_type: "Ödeme Şekli"
     products: "Teklif İstenen Ürünler"
   order:

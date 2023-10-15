@@ -35,13 +35,14 @@ class TopAppBarLarge extends StatelessWidget implements PreferredSizeWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
-                ),
-              onPressed: () => context.go('/login')
-            ),
+            const SizedBox(height: 40),
+            // IconButton(
+            //   icon: const Icon(
+            //     Icons.menu,
+            //     color: Colors.white,
+            //     ),
+            //   onPressed: () {} //context.go('/login')
+            // ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(

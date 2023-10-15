@@ -22,6 +22,7 @@ class BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return NavigationBar(
       selectedIndex: widget.currentIndex,
+      animationDuration: const Duration(milliseconds: 300),
       onDestinationSelected: widget.onItemTapped,
       backgroundColor: Theme.of(context).colorScheme.surface,
       destinations: [

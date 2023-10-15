@@ -1,5 +1,7 @@
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../view_model/proposal_controller/create_proposal_view_model.dart';
@@ -25,8 +27,6 @@ class ProposalBody extends ConsumerStatefulWidget {
 class _ProposalBodyState extends ConsumerState<ProposalBody> {
   bool isTextFieldVisible = false;
 
-  String? dropdownValue;
-
   @override
   void initState() {
     super.initState();
@@ -37,15 +37,26 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    List<DropdownMenuItem<String>> dropDownMenuCurrency=
+        ["₺", "€", "\$"].map((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(
+          value.toString(),
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+      );
+    }).toList();
     int productId = 0;
     return SingleChildScrollView(
       child: Container(
         decoration: const BoxDecoration(
           border: Border(
-            top: BorderSide(width: 0.15), 
-            bottom: BorderSide(width: 0.15)
+            top: BorderSide(width: 0.20), 
+            bottom: BorderSide(width: 0.20)
           )
         ),
         child: ExpansionTile(
@@ -55,7 +66,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
           title: Column(
             children: [
               const SizedBox(
-                height: 15,
+                height: 5,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,8 +91,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    flex: 4,
+                  Flexible(
                     child: TextFormField(
                       cursorColor: Theme.of(context).colorScheme.onBackground,
                       decoration: InputDecoration(
@@ -92,7 +102,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                           'Fiyat',
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
-                        constraints: const BoxConstraints(maxHeight: 35),
+                        constraints: const BoxConstraints(maxHeight: 35, maxWidth: 150),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               color:
@@ -121,31 +131,48 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Expanded(
-                    child: TextFormField(
-                      cursorColor: Theme.of(context).colorScheme.onBackground,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).colorScheme.onPrimary,
-                        contentPadding: const EdgeInsets.only(left: 10.0),
-                        label: Text(
-                          'tl  ',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        constraints: const BoxConstraints(maxHeight: 35),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color:
-                                  Theme.of(context).colorScheme.onSurfaceVariant),
-                        ),
-                        border: const OutlineInputBorder(),
+                  DropdownButtonFormField2<String>(
+                    isExpanded: true,
+                    decoration: InputDecoration(
+                      labelStyle: Theme.of(context).textTheme.bodySmall,
+                      floatingLabelStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Lütfen fiyat giriniz.';
-                        }
-                        return null;
-                      },
+                      floatingLabelAlignment: FloatingLabelAlignment.start,
+                      contentPadding: const EdgeInsets.only(
+                          left: 5, bottom: 13, right: 5),
+                      constraints: const BoxConstraints(
+                        maxHeight: 35,
+                        maxWidth: 80,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    items: dropDownMenuCurrency,
+                    value: '₺', //ref.read(offerModelProvider).currencyCode,
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please select gender.';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      // ref.read(offerModelProvider).paymentType = value;
+                    },
+                    iconStyleData: const IconStyleData(
+                      icon: Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black45,
+                      ),
+                      iconSize: 24,
                     ),
                   ),
                 ],
