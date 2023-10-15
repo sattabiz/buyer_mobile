@@ -1,7 +1,7 @@
 class ApiUrls{
-  static const String baseUrl = String.fromEnvironment('API_URL', defaultValue: 'http://localhost:8001/api/v1');
+  static const String baseUrl = String.fromEnvironment('API_URL', defaultValue: 'https://test.satta.biz/api/v1');
 
-  static const String customerCompanyId = String.fromEnvironment('CUSTOMER_COMPANY_ID', defaultValue: 'http://localhost:8001/api/v1');
+  static const String customerCompanyId = String.fromEnvironment('CUSTOMER_COMPANY_ID', defaultValue: '91');
 
   static const String login = "$baseUrl/login.json";
   static const String logout = "$baseUrl/logout.json";
@@ -16,7 +16,7 @@ class ApiUrls{
   static const String confirmOrder = "$baseUrl/supplier_confirm_order.json";
 
   
-  static const String shipment = "$baseUrl/supplier_shipment_list.json?state='order_prepared'&customer_id=$customerCompanyId";
+  static const String shipment = "$baseUrl/supplier_shipment_list.json?state='order_prepared'&customer_company_id=$customerCompanyId";
   static const String createShipment = "$baseUrl/supplier_create_shipment_record.json";
 
 

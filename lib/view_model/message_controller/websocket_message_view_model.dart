@@ -15,7 +15,7 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
   int? messageRoomIdAsyncValue = await ref.watch(messageRoomIdProvider);
 
 
-
+  //print(socket);
   if (ref.watch(messagePipeProvider) == 1 &&
       ref.watch(messageRoomIdProvider) != 0) {
     //for subscription
@@ -25,9 +25,11 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
     socket.sink.add(json.encode(request));
+    //print(socket.stream.toString());
 
     await for (final message in socket.stream) {
       if (message.toString().contains('"body"')) {
+        //print(message);
         WebSocketMessageModel webSocketAsyncValue =
             WebSocketMessageModel.fromMap(json.decode(message!));
         Message lastMessage = Message(
@@ -51,6 +53,8 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
     socket.sink.add(json.encode(request2));
+    //print(socket.stream.toString());
+    //debugPrint("------------------------------------------------------");
   
   }
 });

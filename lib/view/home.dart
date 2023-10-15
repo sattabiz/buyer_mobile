@@ -69,12 +69,12 @@ class Home extends ConsumerWidget {
                       ref.watch(getOrderProvider);
                       ref.watch(getMessageProvider);
                       ref.watch(getNotificationProvider);
+                      ref.read(messagePipeProvider.notifier).state = 1;
+                      ref.watch(webSocketProvider);
                       context.goNamed('order_chat', pathParameters: {                       
                         'orderId': data[index].id.toString(),
                         'chatId': '$chatId'
-                      });
-                      ref.read(messagePipeProvider.notifier).state = 1;
-                      ref.watch(webSocketProvider); 
+                      }); 
                     }
 
                   }, //context.go('/order/detail'),
@@ -104,12 +104,12 @@ class Home extends ConsumerWidget {
                       ref.watch(getListCurrenciesProvider);
                       ref.refresh(formItemProvider);
                       ref.watch(getMessageProvider);
+                      ref.read(messagePipeProvider.notifier).state = 1;
+                      ref.watch(webSocketProvider);
                       context.goNamed('proposal_chat', pathParameters: {
                         'proposalId': data[index].proposalId.toString(),
                         'chatId': '$chatId'
-                      });
-                      ref.read(messagePipeProvider.notifier).state = 1;
-                      ref.watch(webSocketProvider); 
+                      }); 
                     }
                   },
                 );
