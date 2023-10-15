@@ -48,7 +48,7 @@ class Home extends ConsumerWidget {
                       FlutterI18n.translate(context, 'tr.order.order_date'),
                   subtitle4: formattedDate(data[index].orderDate.toString()),
                   width: 30,
-                  svgPath: 'assets/svg/alert_error.svg',
+                  svgPath: alertIconWithState(data[index].state) ?? ' ',
                   onTap: () async {
                     ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
                     ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};

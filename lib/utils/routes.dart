@@ -216,29 +216,26 @@ PreferredSizeWidget? customAppBar(String location, BuildContext context) {
       );
       break;
     case '/proposal':
-      customAppBar = CustomAppBar(
-        height: kToolbarHeight,
-        child: const TopAppBarCentered(
+      customAppBar = const PreferredSize(
+        preferredSize: Size(double.infinity, 110),
+        child:  TopAppBarLarge(
           title: 'Teklif İstekleri',
-          backRoute: '/home',
         ),
       );
       break;
     case '/order':
-      customAppBar = CustomAppBar(
-        height: kToolbarHeight,
-        child: const TopAppBarCentered(
-          title: 'SİPARİŞLER',
-          backRoute: '/proposal',
+      customAppBar = const PreferredSize(
+        preferredSize: Size(double.infinity, 110),
+        child:  TopAppBarLarge(
+          title: 'Siparişler',
         ),
       );
       break;
     case '/invoice':
-      customAppBar = CustomAppBar(
-        height: kToolbarHeight,
-        child: const TopAppBarCentered(
-          title: 'FATURALAR',
-          backRoute: '/order',
+      customAppBar = const PreferredSize(
+        preferredSize: Size(double.infinity, 110),
+        child:  TopAppBarLarge(
+          title: 'Faturalar',
         ),
       );
       break;
