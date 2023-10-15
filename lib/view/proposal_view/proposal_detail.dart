@@ -70,7 +70,7 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
       return DropdownMenuItem<String>(
           value: value.toString(),
           child: Text(
-            value.toString(),
+            '$value İş günü',
             style: Theme.of(context).textTheme.bodyLarge,
           ));
     }).toList();
@@ -99,13 +99,10 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(bottom: 10.0),
                     child: Text(
-                      FlutterI18n.translate(
-                          context, 'tr.proposal.proposal_detail'),
+                      FlutterI18n.translate(context, 'tr.proposal.proposal_detail'),
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSecondaryContainer,
-                          ),
+                        color: Theme.of(context).colorScheme.onSecondaryContainer,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -274,10 +271,8 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
                     child: Text(
                       FlutterI18n.translate(context, 'tr.proposal.products'),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSecondaryContainer,
-                          ),
+                        color: Theme.of(context).colorScheme.onSecondaryContainer,
+                      ),
                     ),
                   ),
                   ListView.builder(
@@ -287,11 +282,10 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
                       return ProposalBody(
                         index: index,
                         productId: proposalAsyncValue
-                            .productProposals![index].productProposalId!,
+                          .productProposals![index].productProposalId!,
                         paletteDimensions: proposalAsyncValue
-                            .productProposals![index].productName!,
-                        itemCount:
-                            proposalAsyncValue.productProposals![index].amount!,
+                          .productProposals![index].productName!,
+                        itemCount: proposalAsyncValue.productProposals![index].amount!,
                       );
                     },
                   ),

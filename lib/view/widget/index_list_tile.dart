@@ -52,12 +52,11 @@ class IndexListTile extends ConsumerWidget {
         ),
         subtitle: Row(
           children: [
-            Flexible(
-              child: Text(
-                subtitle,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant),
-              ),
+            Text(
+              subtitle,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant),
+              maxLines: 1,
             ),
             Text(
               subtitle2 ?? ' ',

@@ -153,6 +153,9 @@ class _LoginState extends ConsumerState<Login> {
                   height: 10,
                 ),
                 InkWell(
+                  hoverColor: Theme.of(context).colorScheme.primary,
+                  overlayColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context).colorScheme.primary),
                   onTap: () async {
                     try {
                       await ref.read(loginProvider.notifier).login(
