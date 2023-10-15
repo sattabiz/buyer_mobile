@@ -19,6 +19,7 @@ class ShipmentModel {
     bool? includeShipmentCost;
     bool? notification;
     bool? messageNotification;
+    bool? messageAppNotification = false;
     List<Product>? products;
 
     ShipmentModel({
@@ -40,6 +41,7 @@ class ShipmentModel {
         this.includeShipmentCost,
         this.notification,
         this.messageNotification,
+        this.messageAppNotification,
         this.products,
     });
 

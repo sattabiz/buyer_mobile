@@ -31,7 +31,7 @@ class _ProposalState extends ConsumerState<ProposalView> {
             itemCount: data.length,
             itemBuilder: (context, index) => IndexListTile(
               title: "Teklif No: ${data[index].proposalId.toString()}",
-              subtitle: 'Subtitle', //proposalName gelecek
+              subtitle: data[index].demandListName!, //proposalName gelecek
               svgPath: statusIconMap[data[index].proposalState] ?? '',
               // trailing: const Counter(),
               //onTap: () => context.go('/proposal/detail'),

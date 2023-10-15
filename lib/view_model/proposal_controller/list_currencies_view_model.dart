@@ -27,7 +27,7 @@ final getListCurrenciesProvider =
  
   
 
-  Map<dynamic, dynamic> jsonResponse = jsonDecode(response.data["currencies"]);
+  //Map<dynamic, dynamic> jsonResponse = jsonDecode(response.data["currencies"]);
 
 
 });

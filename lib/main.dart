@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: [
         FlutterI18nDelegate(
           missingTranslationHandler: (key, locale) {
-            print("--- Missing Key: $key, languageCode: ${locale!.languageCode}");
           },
           translationLoader: FileTranslationLoader(
               fallbackFile: 'tr',

@@ -16,6 +16,7 @@ class InvoiceModel {
     dynamic buyerErpId;
     bool? notification;
     bool? messageNotification;
+    bool? messageAppNotification = false;
     List<Product>? products;
 
     InvoiceModel({
@@ -34,6 +35,7 @@ class InvoiceModel {
         this.buyerErpId,
         this.notification,
         this.messageNotification,
+        this.messageAppNotification,
         this.products,
     });
 
