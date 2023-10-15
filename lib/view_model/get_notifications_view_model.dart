@@ -39,6 +39,9 @@ final getNotificationProvider =
     _proposalList = (response.data['proposals'] as List)
         .map((e) => ProposalModel.fromMap(e))
         .toList();
+    for(ProposalModel _proposalMessage in _proposalList){
+      _proposalMessage.messageAppNotification = false;
+    }
     notificationList.addAll(_proposalList);
   }
 
@@ -47,6 +50,9 @@ final getNotificationProvider =
     _orderList = (response.data['orders'] as List)
         .map((e) => OrderModel.fromMap(e))
         .toList();
+    for(OrderModel _orderMessage in _orderList){
+      _orderMessage.messageAppNotification = false;
+    }
     notificationList.addAll(_orderList);
   }
   List<ProposalModel> _proposalMessageList = [];
