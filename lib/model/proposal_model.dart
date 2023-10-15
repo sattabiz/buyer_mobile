@@ -18,6 +18,8 @@ class ProposalModel {
     int? updateCounter;
     bool? notification;
     bool? messageNotification;
+    String? demandListName;
+    bool? messageAppNotification = false;
     List<ProductProposal>? productProposals;
 
     ProposalModel({
@@ -38,6 +40,8 @@ class ProposalModel {
         this.updateCounter,
         this.notification,
         this.messageNotification,
+        this.demandListName,
+        this.messageAppNotification,
         this.productProposals,
     });
 
@@ -63,6 +67,7 @@ class ProposalModel {
         updateCounter: json["update_counter"],
         notification: json["notification"],
         messageNotification: json["message_notification"],
+        demandListName: json["demand_list_name"],
         productProposals: json["product_proposals"] == null ? [] : List<ProductProposal>.from(json["product_proposals"]!.map((x) => ProductProposal.fromMap(x))),
     );
 

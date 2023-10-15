@@ -19,6 +19,7 @@ final getNotificationProvider =
 
   try {
     response = await apiService.get(url: ApiUrls.notifications);
+    debugPrint(response.data.toString());
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {
@@ -53,6 +54,9 @@ final getNotificationProvider =
     _proposalMessageList = (response.data['message_proposals'] as List)
         .map((e) => ProposalModel.fromMap(e))
         .toList();
+    for(ProposalModel _proposalMessage in _proposalMessageList){
+      _proposalMessage.messageAppNotification = true;
+    }
     notificationList.addAll(_proposalMessageList);
 
   }
@@ -62,10 +66,13 @@ final getNotificationProvider =
     _orderMessageList = (response.data['message_orders'] as List)
         .map((e) => OrderModel.fromMap(e))
         .toList();
+    for(OrderModel _orderMessage in _orderMessageList){
+      _orderMessage.messageAppNotification = true;
+    }
     notificationList.addAll(_orderMessageList);
   }
 
-  _orderList.addAll(_orderMessageList);
+
 
   
 
@@ -74,16 +81,22 @@ final getNotificationProvider =
     _shipmentMessageList = (response.data['message_shipments'] as List)
         .map((e) => ShipmentModel.fromMap(e))
         .toList();
+    for(ShipmentModel _shipmentMessage in _shipmentMessageList){
+      _shipmentMessage.messageAppNotification = true;
+    }
     notificationList.addAll(_shipmentMessageList);
   }
 
 
-  List<InvoiceModel> _invoicesMessageList = [];
+  List<InvoiceModel> _invoiceMessageList = [];
   if (response.data['message_invoices'] != null) {
-    _invoicesMessageList = (response.data['message_invoices'] as List)
+    _invoiceMessageList = (response.data['message_invoices'] as List)
         .map((e) => InvoiceModel.fromMap(e))
         .toList();
-    notificationList.addAll(_invoicesMessageList);
+    for(InvoiceModel _invoiceMessage in _invoiceMessageList){
+      _invoiceMessage.messageAppNotification = true;
+    }
+    notificationList.addAll(_invoiceMessageList);
   }
 
  
