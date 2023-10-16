@@ -88,6 +88,7 @@ class Product {
   String? categoryErpId;
   String? description;
   double? amount;
+  double? sendedAmount;
   String? unit;
   double? price;
   int? taxRate;
@@ -104,6 +105,7 @@ class Product {
     this.categoryErpId,
     this.description,
     this.amount,
+    this.sendedAmount,
     this.unit,
     this.price,
     this.taxRate,
@@ -124,7 +126,8 @@ class Product {
         categoryId: json["category_id"],
         categoryErpId: json["category_erp_id"],
         description: json["description"],
-        amount: json["sended_amount"],
+        amount: json["amount"],
+        sendedAmount: json["sended_amount"],
         unit: json["unit"],
         price: json["price"],
         taxRate: json["tax_rate"],
@@ -138,7 +141,8 @@ class Product {
         "category_id": categoryId,
         "category_erp_id": categoryErpId,
         "description": description,
-        "sended_amount": amount,
+        "amount": amount,
+        "sended_amount": sendedAmount,
         "unit": unit,
         "price": price,
         "tax_rate": taxRate,
