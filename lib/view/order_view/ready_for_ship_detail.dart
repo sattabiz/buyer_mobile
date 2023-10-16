@@ -166,14 +166,21 @@ class _ReadyForShipDetailState extends ConsumerState<ReadyForShipDetail> {
                       Container(
                         width: 150,
                         margin: const EdgeInsets.only(left: 10.0),
-                        child: TextField(
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Lütfen bir sayı girin.';
+                            }else if(int.parse(value) != 0){
+                              return "Lütfen sıfır haricinde bir sayı girin.";
+                            }
+                          },
                           cursorColor: Theme.of(context).colorScheme.onBackground,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Theme.of(context).colorScheme.onPrimary,
                             contentPadding: const EdgeInsets.only(left: 10.0, right: 5.0),
                             label: Text(
-                              'Hazir Miktar',
+                              orderAsyncValue.products![index].sendedAmount == null ? "${orderAsyncValue.products![index].amount} adet"  : "${orderAsyncValue.products![index].amount!-orderAsyncValue.products![index].sendedAmount!} adet",
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                             suffix: Text(orderAsyncValue.products![index].unit!),
