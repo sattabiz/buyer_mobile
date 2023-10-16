@@ -1,4 +1,5 @@
 import 'package:buyer_mobile/model/get_current_user_info_model.dart';
+import 'package:buyer_mobile/view_model/message_controller/websocket_message_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../view_model/current_user_view_model.dart';
@@ -47,6 +48,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    ref.watch(webSocketProvider);
 
     final liveChats = ref.watch(liveChatProvider).reversed.toList();
     // liveChats.reversed.toList();

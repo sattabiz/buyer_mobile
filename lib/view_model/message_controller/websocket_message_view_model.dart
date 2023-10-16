@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../model/message_model.dart';
@@ -15,7 +15,7 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
   int? messageRoomIdAsyncValue = await ref.watch(messageRoomIdProvider);
 
 
-  //print(socket);
+  print(socket);
   if (ref.watch(messagePipeProvider) == 1 &&
       ref.watch(messageRoomIdProvider) != 0) {
     //for subscription
@@ -25,11 +25,12 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
     socket.sink.add(json.encode(request));
-    //print(socket.stream.toString());
+    print('WebSocketProvider: Subscription isteği gönderildi');
 
     await for (final message in socket.stream) {
+      print('Received message: $message');
       if (message.toString().contains('"body"')) {
-        //print(message);
+        print('WebSocketProvider: Mesaj alındı: $message');
         WebSocketMessageModel webSocketAsyncValue =
             WebSocketMessageModel.fromMap(json.decode(message!));
         Message lastMessage = Message(
@@ -46,15 +47,17 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
       yield socket;
     }
   } else if (ref.watch(messagePipeProvider) == 2) {
+    print(ref.watch(messagePipeProvider));
     //for unsubscription
     final request2 = {
       "command": "unsubscribe",
       "identifier":
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
+    print('WebSocketProvider: WebSocket bağlantısı kapatılıyor');
     socket.sink.add(json.encode(request2));
-    //print(socket.stream.toString());
-    //debugPrint("------------------------------------------------------");
+    socket.sink.close();
+    debugPrint("------------------------------------------------------");
   
   }
 });
@@ -63,3 +66,5 @@ final messagePipeProvider = StateProvider<int?>((ref) {
   //for open or close websocketProvider's subscription if-else part
   return 2;
 });
+
+

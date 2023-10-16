@@ -67,10 +67,12 @@ class Home extends ConsumerWidget {
                       ref.read(orderIdProvider.notifier).state=data[index].id;        //read orderId for confirm order post service
                       ref.read(orderIndexProvider.notifier).state = data[index];            //read index for order-detail page
                       ref.watch(getOrderProvider);
-                      ref.watch(getMessageProvider);
                       ref.watch(getNotificationProvider);
+                      await ref.watch(getMessageProvider);
                       ref.read(messagePipeProvider.notifier).state = 1;
-                      ref.watch(webSocketProvider);
+                      //await ref.refresh(webSocketProvider);
+                      await ref.watch(webSocketProvider);
+                      // ignore: use_build_context_synchronously
                       context.goNamed('order_chat', pathParameters: {                       
                         'orderId': data[index].id.toString(),
                         'chatId': '$chatId'
@@ -101,11 +103,11 @@ class Home extends ConsumerWidget {
                       ref.read(createMessageMapProvider.notifier).state = {'proposal_id': data[index].proposalId};
                       ref.read(chatBoxHeaderProvider.notifier).state = "Teklif No: ${data[index].proposalId}";
                       ref.read(proposalIndexProvider.notifier).state = data[index];
-                      ref.watch(getListCurrenciesProvider);
-                      ref.refresh(formItemProvider);
-                      ref.watch(getMessageProvider);
+                      await ref.watch(getMessageProvider);
                       ref.read(messagePipeProvider.notifier).state = 1;
-                      ref.watch(webSocketProvider);
+                      //await ref.refresh(webSocketProvider);
+                      await ref.watch(webSocketProvider);
+                      // ignore: use_build_context_synchronously
                       context.goNamed('proposal_chat', pathParameters: {
                         'proposalId': data[index].proposalId.toString(),
                         'chatId': '$chatId'
@@ -139,13 +141,14 @@ class Home extends ConsumerWidget {
                       ref.watch(getInvoicesProvider);
                       ref.read(invoiceIndexProvider.notifier).state = data[index];
                       ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 
-                      ref.watch(getMessageProvider);
+                      await ref.watch(getMessageProvider);
+                      ref.read(messagePipeProvider.notifier).state = 1;
+                      await ref.watch(webSocketProvider);
+                      // ignore: use_build_context_synchronously
                       context.goNamed('invoice_chat', pathParameters: {
                         'invoiceId' : data[index].invoiceId.toString(),
                         'chatId' : '$chatId'
                       });
-                      ref.read(messagePipeProvider.notifier).state = 1;
-                      ref.watch(webSocketProvider);
                     }
                   },
                 );
@@ -155,13 +158,14 @@ class Home extends ConsumerWidget {
                   subtitle: '--------',                        //duzeltilecek
                   svgPath: data[index].messageAppNotification == true ? "assets/chat.svg" : 'assets/svg/alert_error.svg',            //duzeltilecek
                   width: 100,
-                  onTap: () {
+                  onTap: () async{
                     ref.read(messageIdProvider.notifier).state = 'shipment_id=${data[index].shipmentId}';
                       ref.read(createMessageMapProvider.notifier).state = {'shipment_id': data[index].shipmentId};
                       ref.read(chatBoxHeaderProvider.notifier).state = "Sevkiyat No: ${data[index].shipmentId}";
-                      ref.watch(getMessageProvider);
+                      await ref.watch(getMessageProvider);
                       ref.read(messagePipeProvider.notifier).state = 1;
-                      ref.watch(webSocketProvider);
+                      await ref.watch(webSocketProvider);
+                      // ignore: use_build_context_synchronously
                       context.goNamed('invoice_ready_chat',
                       pathParameters: {
                         'chatId': '$chatId'
