@@ -113,7 +113,7 @@ class DetailTableOrder extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 alignment: Alignment.centerRight,
                 child: Text(
-                  products[i].amount.toString(), //shippedAmount olacak
+                  products[i].sendedAmount == null? "--": products[i].sendedAmount.toString(), 
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )
