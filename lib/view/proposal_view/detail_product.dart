@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
@@ -13,12 +15,13 @@ class ProposalBody extends ConsumerStatefulWidget {
   final int index;
   final String paletteDimensions;
   final double itemCount;
-
+  final double? price;
   ProposalBody(
       {required this.productId,
       required this.index,
       required this.paletteDimensions,
-      required this.itemCount});
+      required this.itemCount,
+      this.price});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ProposalBodyState();
@@ -99,7 +102,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                         fillColor: Theme.of(context).colorScheme.onPrimary,
                         contentPadding: const EdgeInsets.only(left: 10.0),
                         label: Text(
-                          'Fiyat',
+                          widget.price == null ? "Fiyat" : widget.price.toString() ,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         constraints: const BoxConstraints(maxHeight: 35, maxWidth: 150),
