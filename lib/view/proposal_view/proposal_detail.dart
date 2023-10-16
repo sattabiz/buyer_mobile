@@ -286,6 +286,7 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
                         paletteDimensions: proposalAsyncValue
                           .productProposals![index].productName!,
                         itemCount: proposalAsyncValue.productProposals![index].amount!,
+                        price: proposalAsyncValue.productProposals![index].price,
                       );
                     },
                   ),

@@ -1,6 +1,7 @@
 import 'package:buyer_mobile/utils/widget_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../view_model/message_controller/create_message_view_model.dart';
 import '../../view_model/message_controller/get_message_view_model.dart';
@@ -33,7 +34,23 @@ class _ProposalState extends ConsumerState<ProposalView> {
               title: "Teklif No: ${data[index].proposalId.toString()}",
               subtitle: data[index].demandListName!, //proposalName gelecek
               svgPath: statusIconMap[data[index].proposalState] ?? '',
-              // trailing: const Counter(),
+              trailing: (() {                                                                               //for widget notification icons
+                if (data[index].notification == true && data[index].messageNotification == true) {
+                  return SvgPicture.asset(                  
+                    "assets/svg/alert.svg"
+                  );
+                } else if (data[index].notification == true) {
+                  return SvgPicture.asset(                  
+                    "assets/svg/alert.svg"
+                  );
+                } else if (data[index].messageNotification == true) {
+                  return SvgPicture.asset(                  
+                    "assets/chat.svg"
+                  );
+                } else {
+                  return SizedBox();
+                }
+              })(),
               //onTap: () => context.go('/proposal/detail'),
               onTap: () async {
                 ref.read(messageIdProvider.notifier).state = 'proposal_id=${data[index].proposalId}';
