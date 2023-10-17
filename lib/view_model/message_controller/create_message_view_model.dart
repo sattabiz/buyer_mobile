@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/api_url.dart';
 import '../../service/post_service.dart';
 import '../../view/widget/chat_box.dart';
+import '../get_notifications_view_model.dart';
 
 final createMessageProvider = FutureProvider.autoDispose((ref) async {
   final apiService = PostService();
@@ -19,7 +20,8 @@ final createMessageProvider = FutureProvider.autoDispose((ref) async {
 createMessageMapAsyncValue!['body'] = readMessageMapAsyncValue;
 
   try {
-    response = await apiService.post(url: ApiUrls.createMessage, data: createMessageMapAsyncValue);   
+    response = await apiService.post(url: ApiUrls.createMessage, data: createMessageMapAsyncValue);
+    ref.refresh(getNotificationProvider);   
   } catch (e) {
     if (e is DioException) {
     }

@@ -85,7 +85,7 @@ class DetailTable extends ConsumerWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
-                padding: EdgeInsets.only(left: 5.0),
+                padding: const EdgeInsets.only(left: 5.0),
                 child: Text(
                   products[i].name.toString(),
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
