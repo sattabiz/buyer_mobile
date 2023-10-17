@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:buyer_mobile/view_model/get_order_view_model.dart';
 import 'package:buyer_mobile/view_model/get_shipment_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,8 @@ final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((
     response = await apiService.post(url: ApiUrls.createMultiOrderInvoice, data: data); 
     await ref.refresh(getShipmentProvider);
     ref.read(getShipmentProvider.future);
+    await ref.refresh(getOrderProvider);
+    ref.read(getOrderProvider.future);
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {
