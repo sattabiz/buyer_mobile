@@ -119,7 +119,7 @@ class Home extends ConsumerWidget {
                 return IndexListTile(
                   title: "Yeni Mesaj", //FlutterI18n.translate(context, 'tr.invoice.${data[index].state}'),
                   subtitle: FlutterI18n.translate(context, 'tr.invoice.invoice_no'),
-                  subtitle2: data[index].invoiceNo,
+                  subtitle2: data[index].invoiceNo.toString(),
                   subtitle3: FlutterI18n.translate(context, 'tr.invoice.invoice_date'),
                   subtitle4: formattedDate(data[index].invoiceDate.toString()),
                   width: 100,
@@ -154,8 +154,9 @@ class Home extends ConsumerWidget {
                 );
               } else if(data[index] is ShipmentModel){
                 return IndexListTile(
-                  title: FlutterI18n.translate(context, 'tr.shipment.shipment_no ${data[index].shipmentId}'), 
-                  subtitle: '--------',                        //duzeltilecek
+                  title: "Yeni Mesaj", /* FlutterI18n.translate(context, 'tr.shipment.shipment_no ${data[index].shipmentId}'), */ 
+                  subtitle: FlutterI18n.translate(context, 'tr.shipment.shipment_no'),                        //duzeltilecek
+                  subtitle2: data[index].shipmentId.toString(),
                   svgPath: data[index].messageAppNotification == true ? "assets/chat.svg" : 'assets/svg/alert_error.svg',            //duzeltilecek
                   width: 100,
                   onTap: () async{
