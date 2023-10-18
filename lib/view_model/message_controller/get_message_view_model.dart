@@ -1,3 +1,4 @@
+import 'package:buyer_mobile/view_model/get_notifications_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +22,7 @@ final getMessageProvider =
   final messageId = ref.watch(messageIdProvider);
   try {
     response = await apiService.get(url: ApiUrls.getMessage(messageId!));
+    ref.refresh(getNotificationProvider);
   } catch (e) {
     if (e is DioException) {
     }
