@@ -1,7 +1,9 @@
 import 'package:buyer_mobile/view/proposal_view/detail_product.dart';
+import 'package:buyer_mobile/view_model/get_order_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../view_model/get_notifications_view_model.dart';
 import '../../../view_model/message_controller/get_message_view_model.dart';
 import '../../../view_model/message_controller/websocket_message_view_model.dart';
 import '../../../view_model/proposal_controller/create_proposal_view_model.dart';
@@ -36,6 +38,7 @@ class TopAppBarLeft extends ConsumerWidget implements PreferredSizeWidget {
         onPressed: () async{
           backRoute!();
           ref.refresh(formItemProvider);
+          ref.refresh(getOrderProvider);
         },
       ),
       title: Text(

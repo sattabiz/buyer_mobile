@@ -170,8 +170,9 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
                               return null;
                             },
                             onChanged: (value) {
-                              ref.read(offerModelProvider).deliveryTime =
-                                  value as int;
+                              String time = value!.split(" ")[0];
+                              ref.read(offerModelProvider).deliveryTime = int.parse(time);
+                              //debugPrint(value!.split(" ")[0]);        
                             },
                             iconStyleData: const IconStyleData(
                               icon: Icon(

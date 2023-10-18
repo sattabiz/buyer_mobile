@@ -1,3 +1,4 @@
+import 'package:buyer_mobile/view_model/get_notifications_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +19,8 @@ final confirmOrderProvider = FutureProvider.autoDispose((ref) async {
     response = await apiService.post(url: ApiUrls.confirmOrder, data: _productsAttributes);
      await ref.refresh(getOrderProvider);
             ref.read(getOrderProvider.future); 
+     await ref.refresh(getNotificationProvider);
+     ref.read(getNotificationProvider.future);
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {

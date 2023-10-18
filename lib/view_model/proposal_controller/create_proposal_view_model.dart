@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/api_url.dart';
 import '../../service/post_service.dart';
 import '../../view/proposal_view/proposal_detail.dart';
+import '../get_notifications_view_model.dart';
 import 'get_proposal_view_model.dart';
 
 //for 
@@ -23,7 +24,7 @@ final createProposalProvider = FutureProvider.autoDispose((
     _productsAttributes['$i'] = {
       "id": _formItems[i].productId.toString(),
       "price": _formItems[i].price.toString(),
-      "note": _formItems[i].note,
+      "proposal_note": _formItems[i].note,
       "currency_unit": 0,
     };
   }
@@ -45,6 +46,8 @@ final createProposalProvider = FutureProvider.autoDispose((
         url: ApiUrls.replyProposal, data: formData3);
     await ref.refresh(getProposalProvider);
     ref.read(getProposalProvider.future);
+    await ref.refresh(getNotificationProvider);
+     ref.read(getNotificationProvider.future);
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {

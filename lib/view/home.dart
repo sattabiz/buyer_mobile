@@ -47,8 +47,9 @@ class Home extends ConsumerWidget {
                       FlutterI18n.translate(context, 'tr.order.order_date'),
                   subtitle4: formattedDate(data[index].orderDate.toString()),
                   width: 30,
-                  svgPath: data[index].messageAppNotification == true ? "assets/chat.svg" : 'assets/svg/alert_error.svg', //alertIconWithState(data[index].state) ?? ' ',
+                  svgPath: data[index].messageAppNotification == true ? "assets/chat.svg" : 'assets/svg/flare.svg', //alertIconWithState(data[index].state) ?? ' ',
                   onTap: () async {
+                    //ref.watch(getListCurrenciesProvider);
                     if(data[index].messageAppNotification == false){
                       ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
                       ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
@@ -61,6 +62,7 @@ class Home extends ConsumerWidget {
                       context.goNamed('order_detail', 
                       pathParameters: {'orderId' : data[index].id.toString()});
                     }else if(data[index].messageAppNotification == true){
+                      //ref.watch(getListCurrenciesProvider);
                       ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
                       ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
                       ref.read(chatBoxHeaderProvider.notifier).state = "Sipariş No: ${data[index].id}"; 
@@ -84,7 +86,7 @@ class Home extends ConsumerWidget {
               } else if (data[index] is ProposalModel) {
                 return IndexListTile(
                   title: data[index].messageAppNotification == true ? "Yeni Mesaj" : "Teklif No: ${data[index].proposalId.toString()}", //"Teklif No: ${data[index].proposalId.toString()}",
-                  subtitle: data[index].messageAppNotification == true ? "Teklif No: ${data[index].proposalId.toString()}": "Subtitle", //proposalName gelecek
+                  subtitle: data[index].messageAppNotification == true ? "Teklif No: ${data[index].proposalId.toString()}": data[index].demandListName!, //proposalName gelecek
                   svgPath: data[index].messageAppNotification == true ? "assets/chat.svg" : 'assets/svg/alert_error.svg' ,   //'assets/svg/alert_error.svg'
                   // trailing: const Counter(),
                   //onTap: () => context.go('/proposal/detail'),
