@@ -1,9 +1,6 @@
-
-import 'dart:ffi';
-
+import 'package:buyer_mobile/view_model/proposal_controller/list_currencies_view_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../view_model/proposal_controller/create_proposal_view_model.dart';
@@ -43,17 +40,18 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
 
   @override
   Widget build(BuildContext context) {
+    List<CurrencyModel> currencyAsyncValues = ref.watch(currenciesProvider);
     List<DropdownMenuItem<String>> dropDownMenuCurrency=
-        ["₺", "€", "\$"].map((String value) {
+        currencyAsyncValues.map((currencyAsyncValues) {
       return DropdownMenuItem<String>(
-        value: value,
+        value: currencyAsyncValues.symbol,
         child: Text(
-          value.toString(),
+          currencyAsyncValues.symbol.toString(),
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       );
     }).toList();
-    int productId = 0;
+    bool boolean = false;
     return SingleChildScrollView(
       child: Container(
         decoration: const BoxDecoration(
@@ -122,19 +120,18 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                       onChanged: (value) {
                         /* ref.read(formItemProvider.notifier).state[widget.index].price = double.parse(value);
                         ref.read(formItemProvider.notifier).state[widget.index].productId = widget.productId; */
-                        if(productId != widget.productId ){
+                        if(boolean == false){
                           ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
-                          productId = widget.productId;
+                          boolean = true;
                         }
                         ref.read(formItemProvider.notifier).addPrice(widget.productId, double.parse(value));
-    
                       },
                     ),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
-                  DropdownButtonFormField2<String>(
+                  DropdownButtonFormField2<String>(  
                     isExpanded: true,
                     decoration: InputDecoration(
                       labelStyle: Theme.of(context).textTheme.bodySmall,
@@ -168,7 +165,12 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                       return null;
                     },
                     onChanged: (value) {
-                      // ref.read(offerModelProvider).paymentType = value;
+                      if(boolean == false ){
+                          ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
+                          boolean = true;
+                        }
+                        int selectedIndex = dropDownMenuCurrency.indexWhere((item) => item.value == value);
+                        ref.read(formItemProvider.notifier).addCurrencies(widget.productId, selectedIndex);     
                     },
                     iconStyleData: const IconStyleData(
                       icon: Icon(

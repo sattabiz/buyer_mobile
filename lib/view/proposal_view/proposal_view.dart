@@ -22,6 +22,7 @@ class _ProposalState extends ConsumerState<ProposalView> {
   @override
   Widget build(BuildContext context) {
     final proposalListAsyncValue = ref.watch(getProposalProvider);
+    ref.watch(getListCurrenciesProvider);
     return RefreshIndicator(
       onRefresh: () async{
         await ref.refresh(getProposalProvider);        
