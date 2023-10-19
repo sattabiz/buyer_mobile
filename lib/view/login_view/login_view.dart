@@ -119,6 +119,7 @@ class _LoginState extends ConsumerState<Login> {
 
                       if (loginState == LoginState.success) {
                         context.go('/home');
+                        ref.watch(getCurrentUserInfoProvider);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(FlutterI18n.translate(context, 'tr.login.success'),),

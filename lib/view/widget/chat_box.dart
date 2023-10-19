@@ -74,7 +74,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return liveChats[index].userID == 0
+                  return liveChats[index].user == "Sistem"
                       ? Container(
                           margin: const EdgeInsets.only(bottom: 15, top: 15),
                           child: Text(
@@ -88,7 +88,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                           margin: const EdgeInsets.only(bottom: 15),
                           child: Align(
                             alignment:
-                                (liveChats[index].userID == userInfo.company!.id
+                                (liveChats[index].userID == userInfo.currentUser!.id
                                     ? Alignment.topRight
                                     : Alignment.topLeft),
                             child: Container(
@@ -98,17 +98,17 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                                 borderRadius: BorderRadius.only(
                                   topLeft: const Radius.circular(8),
                                   topRight: const Radius.circular(8),
-                                  bottomLeft: (liveChats[index].userID ==
-                                          userInfo.company!.id
+                                  bottomLeft: (liveChats[index].userID !=
+                                          userInfo.currentUser!.id
                                       ? const Radius.circular(10)
                                       : const Radius.circular(0)),
                                   bottomRight: (liveChats[index].userID ==
-                                          userInfo.company!.id
+                                          userInfo.currentUser!.id
                                       ? const Radius.circular(0)
                                       : const Radius.circular(10)),
                                 ),
                                 color: (liveChats[index].userID ==
-                                        userInfo.company!.id
+                                        userInfo.currentUser!.id
                                     ? Theme.of(context)
                                         .colorScheme
                                         .inversePrimary
@@ -130,7 +130,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                                           .copyWith(
                                             fontWeight: FontWeight.bold,
                                             color: liveChats[index].userID ==
-                                                    userInfo.company!.id
+                                                    userInfo.currentUser!.id
                                                 ? Theme.of(context)
                                                     .colorScheme
                                                     .secondary
