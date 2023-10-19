@@ -25,7 +25,7 @@ final createProposalProvider = FutureProvider.autoDispose((
       "id": _formItems[i].productId.toString(),
       "price": _formItems[i].price.toString(),
       "proposal_note": _formItems[i].note,
-      "currency_unit": 0,
+      "currency_unit": _formItems[i].currencies,
     };
   }
 
@@ -57,7 +57,7 @@ final createProposalProvider = FutureProvider.autoDispose((
     rethrow;
   }
 
-  return response; 
+  return response;
 });
 
 //For read value on detail_product widget
@@ -65,12 +65,14 @@ class FormItem {
   int? productId;
   double? price;
   String? note;
-  FormItem({this.productId, this.price, this.note});
-  FormItem copyWith({int? productId, double? price, String? note}) {
+  int? currencies;
+  FormItem({this.productId, this.price, this.note, this.currencies});
+  FormItem copyWith({int? productId, double? price, String? note, int? currencies}) {
     return FormItem(
       productId: productId ?? this.productId,
       price: price ?? this.price,
       note: note ?? this.note,
+      currencies: currencies ?? this.currencies
     );
   }
 }
@@ -84,6 +86,7 @@ class FormItemModelNotifier extends StateNotifier<List<FormItem>> {
   FormItemModelNotifier() : super([]);
   void addFormItem(FormItem form, int productId) {
     form.productId = productId;
+    form.currencies = 0;
     state = [...state, form];
   }
 
@@ -94,6 +97,16 @@ class FormItemModelNotifier extends StateNotifier<List<FormItem>> {
          form.copyWith(price: price)
         else
          form
+    ];
+  }
+
+  void addCurrencies(int productId, int currencies){
+    state = [
+      for(final form in state)
+        if(form.productId == productId)
+          form.copyWith(currencies: currencies)
+        else
+          form
     ];
   }
   void addNote(int productId, String note){
