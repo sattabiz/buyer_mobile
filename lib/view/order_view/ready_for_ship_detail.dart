@@ -139,6 +139,7 @@ class _ReadyForShipDetailState extends ConsumerState<ReadyForShipDetail> {
             title: FlutterI18n.translate(context, 'tr.ready_for_ship.title'),
             route: '/order_detail',
             providerName: 'createShipmentPostProvider',
+            buttonName: FlutterI18n.translate(context, 'tr.order.save'),
           ),
           Flexible(
             child: ListView.builder(

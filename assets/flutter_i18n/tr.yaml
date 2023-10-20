@@ -18,6 +18,8 @@ tr:
     order_delivered: "Teslim Alındı"
     order_no: "Sipariş No: "
     order_date: "Sipariş Tarihi: "
+    ship_btn: "Sevkiyat"
+    save: "Kaydet"
   invoice:
     invoice_sended: "Yolda"
     invoice_goods_delivered: "Onay Bekliyor"
@@ -27,7 +29,9 @@ tr:
     invoice_approved: "Açık Fatura"
     invoice_no: "Fatura: "
     invoice_date: " Tarih: "
-    paid__btn: "Ödendi "  
+    paid__btn: "Ödendi "
+    invoice_btn: "Fatura"
+    send: "Gönder"
     generate_invoice: 
       invoice_no: "Fatura No(zorunlu)"
       invoice_date: "Fatura Tarihi"
@@ -55,6 +59,8 @@ tr:
       row_2: "Termin:"
       row_3: "Ödeme Vadesi:"
       row_4: "Nakliye:"
+      row_5: "Ödeme Şekli:"
+      row_6: "Teklif Geçerlilik Süresi:"
     order:
       row_1: "Sipariş Tarihi:"
       row_2: "Termin:"

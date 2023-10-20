@@ -9,12 +9,14 @@ class DialogAppBar extends ConsumerWidget {
   final String title;
   final String route;
   final String providerName;
+  final String buttonName;
 
   const DialogAppBar({
     Key? key,
     required this.title,
     required this.route,
-    required this.providerName
+    required this.providerName,
+    required this.buttonName,
   }) : super(key: key);
 
   @override
@@ -47,7 +49,7 @@ class DialogAppBar extends ConsumerWidget {
             }
           },
           child: Text(
-            'Kaydet',
+            buttonName,
             style: Theme.of(context)
                 .textTheme
                 .labelMedium!

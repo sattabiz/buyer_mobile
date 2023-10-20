@@ -44,15 +44,15 @@ class TopAppBarCentered extends ConsumerWidget implements PreferredSizeWidget {
             .headlineSmall!
             .copyWith(color: Theme.of(context).colorScheme.onSecondary),
       ),
-      actions: [
-        IconButton(
-          icon: Icon(
-            Icons.menu,
-            color: Theme.of(context).colorScheme.onSecondary,
-          ),
-          onPressed: () {},
-        ),
-      ],
+      // actions: [
+      //   IconButton(
+      //     icon: Icon(
+      //       Icons.menu,
+      //       color: Theme.of(context).colorScheme.onSecondary,
+      //     ),
+      //     onPressed: () {},
+      //   ),
+      // ],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends PreferredSize {
@@ -45,7 +46,14 @@ class TopAppBarLarge extends StatelessWidget implements PreferredSizeWidget {
             // ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
+              child: 
+              title == 'Palet Point'
+              ? SvgPicture.asset(
+                'assets/svg/home_page_logo.svg',
+                // width: 200,
+                // height: 50,
+              )
+              :Text(
                 title,
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: Theme.of(context).colorScheme.onSecondary
