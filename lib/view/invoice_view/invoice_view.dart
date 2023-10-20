@@ -40,17 +40,9 @@ class InvoiceView extends ConsumerWidget {
                   width: 100,
                   svgPath: statusIconMap[data[index].state] ?? ' ',
                   trailing: (() {                                                                               //for widget notification icons
-                    if (data[index].notification == true && data[index].messageNotification == true) {
+                    if (data[index].messageNotification == true) {
                       return SvgPicture.asset(                  
-                        "assets/svg/alert.svg"
-                      );
-                    } else if (data[index].notification == true) {
-                      return SvgPicture.asset(                  
-                        "assets/svg/alert.svg"
-                      );
-                    } else if (data[index].messageNotification == true) {
-                      return SvgPicture.asset(                  
-                        "assets/chat.svg"
+                        "assets/svg/chat.svg"
                       );
                     } else {
                       return SizedBox();
@@ -71,20 +63,24 @@ class InvoiceView extends ConsumerWidget {
               Container(
                 alignment: Alignment.bottomRight,
                 padding: const EdgeInsets.all(20.0),
-                child: FloatingActionButton(
+                child: FloatingActionButton.extended(
+                  label: Text(
+                    FlutterI18n.translate(context, 'tr.invoice.invoice_btn'),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
                   onPressed: () async{
                     ref.watch(getShipmentProvider);
                     ref.read(multiOrderProvider.notifier).removeAllFormItems();
                     ref.watch(getAddressFutureProvider);
                     context.go('/invoice/invoice_ready');
                   },
-                  
-                  //context.go('/invoice_ready'),
                   backgroundColor: Theme.of(context).colorScheme.primary,
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
                 ),
               )
             ],

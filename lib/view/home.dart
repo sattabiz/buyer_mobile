@@ -47,9 +47,8 @@ class Home extends ConsumerWidget {
                       FlutterI18n.translate(context, 'tr.order.order_date'),
                   subtitle4: formattedDate(data[index].orderDate.toString()),
                   width: 30,
-                  svgPath: data[index].messageAppNotification == true ? "assets/chat.svg" : 'assets/svg/flare.svg', //alertIconWithState(data[index].state) ?? ' ',
+                  svgPath: data[index].messageAppNotification == true ? "assets/svg/chat.svg" : 'assets/svg/flare.svg', //alertIconWithState(data[index].state) ?? ' ',
                   onTap: () async {
-                    //ref.watch(getListCurrenciesProvider);
                     if(data[index].messageAppNotification == false){
                       ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
                       ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
@@ -81,15 +80,14 @@ class Home extends ConsumerWidget {
                       }); 
                     }
 
-                  }, //context.go('/order/detail'),
+                  },
                 );
               } else if (data[index] is ProposalModel) {
                 return IndexListTile(
                   title: data[index].messageAppNotification == true ? "Yeni Mesaj" : "Teklif No: ${data[index].proposalId.toString()}", //"Teklif No: ${data[index].proposalId.toString()}",
                   subtitle: data[index].messageAppNotification == true ? "Teklif No: ${data[index].proposalId.toString()}": data[index].demandListName!, //proposalName gelecek
-                  svgPath: data[index].messageAppNotification == true ? "assets/chat.svg" : 'assets/svg/alert_error.svg' ,   //'assets/svg/alert_error.svg'
+                  svgPath: data[index].messageAppNotification == true ? "assets/svg/chat.svg" : 'assets/svg/alert_error.svg' ,   //'assets/svg/alert_error.svg'
                   // trailing: const Counter(),
-                  //onTap: () => context.go('/proposal/detail'),
                   onTap: () async {
                     if(data[index].messageAppNotification == false){
                       ref.read(messageIdProvider.notifier).state = 'proposal_id=${data[index].proposalId}';
@@ -125,7 +123,7 @@ class Home extends ConsumerWidget {
                   subtitle3: FlutterI18n.translate(context, 'tr.invoice.invoice_date'),
                   subtitle4: formattedDate(data[index].invoiceDate.toString()),
                   width: 100,
-                  svgPath: data[index].messageAppNotification == true ? "assets/chat.svg" : 'assets/svg/alert_error.svg',
+                  svgPath: data[index].messageAppNotification == true ? "assets/svg/chat.svg" : 'assets/svg/alert_error.svg',
                   onTap: () async {
                     if(data[index].messageAppNotification == false){
                       ref.read(messageIdProvider.notifier).state = 'invoice_id=${data[index].invoiceId}';
@@ -172,15 +170,10 @@ class Home extends ConsumerWidget {
                       context.goNamed('invoice_ready_chat',
                       pathParameters: {
                         'chatId': '$chatId'
-                      });
+                      }
+                    );
                   },
-    
-    
-    
-    
-                   );
-    
-    
+                );
               }
             },
           );
@@ -194,17 +187,5 @@ class Home extends ConsumerWidget {
         },
       ),
     );
-    /* return Material(
-      child: ListView.builder(
-        itemCount: 4,
-        itemBuilder: (context, index) => 
-          IndexListTile(
-            title: 'Headline',
-            subtitle: 'Subtitle',
-            svgPath: 'assets/svg/alert.svg',
-            onTap: ()  => context.go('/home/detail')
-          ),
-      ),
-    ); */
   }
 }

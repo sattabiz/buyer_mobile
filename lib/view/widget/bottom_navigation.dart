@@ -28,25 +28,25 @@ class BottomNavigationState extends State<BottomNavigation> {
       destinations: [
         NavigationDestination(
           icon: SvgPicture.asset(
-            'assets/home.svg',
+            'assets/svg/home2.svg',
           ),
           label: FlutterI18n.translate(context, 'tr.bottom_navigation_bar.home'),
         ),
         NavigationDestination(
           icon: SvgPicture.asset(
-            'assets/proposal.svg',
+            'assets/svg/proposal_index.svg',
           ),
           label: FlutterI18n.translate(context, 'tr.bottom_navigation_bar.proposal'),
         ),
         NavigationDestination(
           icon: SvgPicture.asset(
-            'assets/order.svg',
+            'assets/svg/order_navigation.svg',
           ),
           label: FlutterI18n.translate(context, 'tr.bottom_navigation_bar.order'),
         ),
         NavigationDestination(
           icon: SvgPicture.asset(
-            'assets/invoice.svg',
+            'assets/svg/invoice_bottom.svg',
           ),
           label: FlutterI18n.translate(context, 'tr.bottom_navigation_bar.invoice'),
         ),

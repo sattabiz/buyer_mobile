@@ -81,6 +81,7 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
             title: FlutterI18n.translate(context, 'tr.ready_for_ship.invoice_info'),
             route: '/invoice_ready',
             providerName: 'createMultiOrderInvoiceProvider',
+            buttonName: FlutterI18n.translate(context, 'tr.invoice.send'),
           ),
           SingleChildScrollView(
             child: Container(

@@ -94,7 +94,7 @@ class ProductProposal {
     int? productProposalId;
     Map? productFiles;
     Map? productsProposalFiles;
-    String? productName;
+    String? name;
     String? productCategory;
     String? productUnit;
     dynamic productErpId;
@@ -115,7 +115,7 @@ class ProductProposal {
         this.productProposalId,
         this.productFiles,
         this.productsProposalFiles,
-        this.productName,
+        this.name,
         this.productCategory,
         this.productUnit,
         this.productErpId,
@@ -141,7 +141,7 @@ class ProductProposal {
         productProposalId: json["product_proposal_id"],
         productFiles: json["product_files"],
         productsProposalFiles: json['products_proposal_files'],
-        productName: json["product_name"],
+        name: json["product_name"],
         productCategory: json["product_category"],
         productUnit: json["product_unit"],
         productErpId: json["product_erp_id"],
@@ -161,7 +161,7 @@ class ProductProposal {
 
     Map<String, dynamic> toMap() => {
         "product_proposal_id": productProposalId,
-        "product_name": productName,
+        "product_name": name,
         "product_category": productCategory,
         "product_unit": productUnit,
         "product_erp_id": productErpId,
@@ -180,7 +180,7 @@ class ProductProposal {
     };
     @override
   String toString() {
-    return 'ProductProposal(productProposalId: $productProposalId, productName: $productName, price: $price, url: $url, description: $description, productId: $productId, status: $status, updateCount: $updateCount, equivalentId: $equivalentId, proposalNote: $proposalNote, taxRate: $taxRate, currencyCode: $currencyCode, amount: $amount, productFiles: $productFiles, productsProposalFiles: $productsProposalFiles)';
+    return 'ProductProposal(productProposalId: $productProposalId, productName: $name, price: $price, url: $url, description: $description, productId: $productId, status: $status, updateCount: $updateCount, equivalentId: $equivalentId, proposalNote: $proposalNote, taxRate: $taxRate, currencyCode: $currencyCode, amount: $amount, productFiles: $productFiles, productsProposalFiles: $productsProposalFiles)';
   }
 }
 
