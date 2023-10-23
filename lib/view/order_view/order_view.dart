@@ -1,4 +1,3 @@
-import 'package:PaletPoint/view_model/get_notifications_view_model.dart';
 import 'package:PaletPoint/view_model/get_order_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';

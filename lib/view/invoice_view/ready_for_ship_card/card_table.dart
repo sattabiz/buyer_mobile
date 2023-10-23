@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../model/shipment_model.dart';
-import '../../../view_model/SupplierGenerateMultiOrder/multi_order_invoice_view_model.dart';
+import '../../../view_model/generate_multi_order_controller/multi_order_invoice_view_model.dart';
 
 class CardTable extends ConsumerStatefulWidget {
   List<Product> shipmentProduct;

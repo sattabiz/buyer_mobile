@@ -5,6 +5,7 @@ class ApiUrls{
 
   static const String login = "$baseUrl/login.json";
   static const String logout = "$baseUrl/logout.json";
+  static const String forgotPassword = "$baseUrl/forgot_password.json";
 
 
   static const String proposals = "$baseUrl/supplier_proposals_by_state.json?proposal_state='pending','replied','proposal_stvs','last_offer'&customer_company_id=$customerCompanyId";
