@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../view_model/SupplierGenerateMultiOrder/create_multi_order_invoice_view_model.dart';
+import '../../../view_model/generate_multi_order_controller/create_multi_order_invoice_view_model.dart';
 import '../../../view_model/create_shipment_record_view_model.dart';
 
 class DialogAppBar extends ConsumerWidget {

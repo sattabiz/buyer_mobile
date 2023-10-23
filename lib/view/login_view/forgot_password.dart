@@ -1,3 +1,4 @@
+import 'package:PaletPoint/view_model/forgot_password_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,6 +29,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
+    String? email;
     return Material(
       child: Container(
         color: Theme.of(context).colorScheme.secondary,
@@ -66,6 +68,9 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                 TextField(
                   cursorColor: Theme.of(context).colorScheme.onBackground,
                   controller: _emailController,
+                  onChanged: (value) async{
+                    email = value;
+                  },
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Theme.of(context).colorScheme.onPrimary,
@@ -91,7 +96,14 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                   height: 60,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async{
+                    await ref.read(forgotPasswordProvider.notifier).forgotPassword(email: email);
+                    final responseData = ref.watch(forgotPasswordProvider);
+                    if(responseData["status"]== 200){
+                      context.go('/login'); 
+                    }
+                    const SnackBar(content: Text("Bir sorun oluştu."));
+                  },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
                         Theme.of(context).colorScheme.primary),
