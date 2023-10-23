@@ -38,29 +38,33 @@ class TopAppBarLarge extends ConsumerWidget implements PreferredSizeWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 35),
-            // IconButton(
-            //   icon: const Icon(
-            //     Icons.menu,
-            //     color: Colors.white,
-            //     ),
-            //   onPressed: () {} //context.go('/login')
-            // ),
-            InkWell(
-              onTap: () async{
-                final logoutViewModel =ref.read(logoutViewModelProvider.notifier);
-                await logoutViewModel.logout();
-                context.go('/login');
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: SvgPicture.asset(
-                  'assets/svg/home_page_logo.svg',
-                )
-              ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: SvgPicture.asset(
+                'assets/svg/home_page_logo.svg',
+              )
             ),
           ],
         ),
       ),
+      actions: [
+        SubmenuButton(
+          menuChildren: [
+            MenuItemButton(
+              onPressed: () async {
+                final logoutViewModel =ref.read(logoutViewModelProvider.notifier);
+                await logoutViewModel.logout();
+                context.go('/login');
+              },
+              child: const MenuAcceleratorLabel('&Çıkış'),
+            ),
+          ], 
+          child:const Icon(
+            Icons.menu,
+              color: Colors.white,
+          ),
+        )
+      ],
     );
   }
 }
