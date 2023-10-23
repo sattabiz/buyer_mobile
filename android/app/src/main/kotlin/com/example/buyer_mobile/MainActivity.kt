@@ -1,4 +1,4 @@
-package com.example.buyer_mobile
+package com.satta.paletPointApp
 
 import io.flutter.embedding.android.FlutterActivity
 

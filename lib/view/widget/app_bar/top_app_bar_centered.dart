@@ -1,4 +1,4 @@
-import 'package:buyer_mobile/view_model/get_invoice_view_model.dart';
+import 'package:PaletPoint/view_model/get_invoice_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

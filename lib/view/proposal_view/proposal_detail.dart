@@ -1,6 +1,6 @@
-import 'package:buyer_mobile/view/proposal_view/edit_proposal.dart';
-import 'package:buyer_mobile/view/proposal_view/show_proposal.dart';
-import 'package:buyer_mobile/view_model/proposal_controller/get_proposal_view_model.dart';
+import 'package:PaletPoint/view/proposal_view/edit_proposal.dart';
+import 'package:PaletPoint/view/proposal_view/show_proposal.dart';
+import 'package:PaletPoint/view_model/proposal_controller/get_proposal_view_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';

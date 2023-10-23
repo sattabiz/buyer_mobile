@@ -1,5 +1,5 @@
-import 'package:buyer_mobile/view_model/get_invoice_view_model.dart';
-import 'package:buyer_mobile/view_model/invoice_paid_view_model.dart';
+import 'package:PaletPoint/view_model/get_invoice_view_model.dart';
+import 'package:PaletPoint/view_model/invoice_paid_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

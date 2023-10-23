@@ -1,4 +1,4 @@
-import 'package:buyer_mobile/view/invoice_view/ready_for_ship_card/ready_for_ship_card.dart';
+import 'package:PaletPoint/view/invoice_view/ready_for_ship_card/ready_for_ship_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,4 +1,4 @@
-import 'package:buyer_mobile/view/proposal_view/proposal_detail.dart';
+import 'package:PaletPoint/view/proposal_view/proposal_detail.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';

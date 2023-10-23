@@ -1,8 +1,8 @@
-import 'package:buyer_mobile/model/invoice_model.dart';
-import 'package:buyer_mobile/model/proposal_model.dart';
-import 'package:buyer_mobile/model/shipment_model.dart';
-import 'package:buyer_mobile/view/proposal_view/proposal_view.dart';
-import 'package:buyer_mobile/view_model/get_notifications_view_model.dart';
+import 'package:PaletPoint/model/invoice_model.dart';
+import 'package:PaletPoint/model/proposal_model.dart';
+import 'package:PaletPoint/model/shipment_model.dart';
+import 'package:PaletPoint/view/proposal_view/proposal_view.dart';
+import 'package:PaletPoint/view_model/get_notifications_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

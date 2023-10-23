@@ -1,6 +1,6 @@
 {
-    "name": "buyer_mobile",
-    "short_name": "buyer_mobile",
+    "name": "PaletPoint",
+    "short_name": "PaletPoint",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

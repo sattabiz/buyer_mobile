@@ -1,8 +1,8 @@
-import 'package:buyer_mobile/utils/widget_helper.dart';
-import 'package:buyer_mobile/view_model/SupplierGenerateMultiOrder/multi_order_invoice_view_model.dart';
-import 'package:buyer_mobile/view_model/get_address_view_model.dart';
-import 'package:buyer_mobile/view_model/get_shipment_view_model.dart';
-import 'package:buyer_mobile/view_model/invoice_paid_view_model.dart';
+import 'package:PaletPoint/utils/widget_helper.dart';
+import 'package:PaletPoint/view_model/SupplierGenerateMultiOrder/multi_order_invoice_view_model.dart';
+import 'package:PaletPoint/view_model/get_address_view_model.dart';
+import 'package:PaletPoint/view_model/get_shipment_view_model.dart';
+import 'package:PaletPoint/view_model/invoice_paid_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

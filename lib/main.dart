@@ -1,5 +1,5 @@
-import 'package:buyer_mobile/theme/theme.dart';
-import 'package:buyer_mobile/utils/routes.dart';
+import 'package:PaletPoint/theme/theme.dart';
+import 'package:PaletPoint/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';

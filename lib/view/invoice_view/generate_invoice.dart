@@ -1,5 +1,5 @@
-import 'package:buyer_mobile/model/address_model.dart';
-import 'package:buyer_mobile/view_model/get_address_view_model.dart';
+import 'package:PaletPoint/model/address_model.dart';
+import 'package:PaletPoint/view_model/get_address_view_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';

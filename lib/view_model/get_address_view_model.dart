@@ -1,5 +1,5 @@
 
-import 'package:buyer_mobile/model/address_model.dart';
+import 'package:PaletPoint/model/address_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

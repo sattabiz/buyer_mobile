@@ -1,5 +1,5 @@
-import 'package:buyer_mobile/view/proposal_view/detail_product.dart';
-import 'package:buyer_mobile/view_model/get_order_view_model.dart';
+import 'package:PaletPoint/view/proposal_view/detail_product.dart';
+import 'package:PaletPoint/view_model/get_order_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';

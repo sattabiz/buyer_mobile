@@ -1,4 +1,4 @@
-import 'package:buyer_mobile/view_model/get_order_view_model.dart';
+import 'package:PaletPoint/view_model/get_order_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
