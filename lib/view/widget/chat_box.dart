@@ -181,7 +181,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
               height: 80,
               color: Theme.of(context).colorScheme.secondaryContainer,
               padding: const EdgeInsets.only(
-                  top: 15.0, bottom: 15.0, right: 5.0, left: 20.0),
+                  top: 15.0, bottom: 20.0, right: 5.0, left: 20.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

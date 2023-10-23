@@ -45,7 +45,7 @@ class InvoiceView extends ConsumerWidget {
                         "assets/svg/chat.svg"
                       );
                     } else {
-                      return SizedBox();
+                      return const SizedBox();
                     }
                   })(),
                   onTap: () async {
@@ -66,13 +66,13 @@ class InvoiceView extends ConsumerWidget {
                 child: FloatingActionButton.extended(
                   label: Text(
                     FlutterI18n.translate(context, 'tr.invoice.invoice_btn'),
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Colors.white,
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.add,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                   onPressed: () async{
                     ref.watch(getShipmentProvider);
