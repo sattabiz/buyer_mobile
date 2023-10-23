@@ -5,6 +5,8 @@ tr:
     login_btn: "Giriş Yap"
     forgot_password: "Şifremi Unuttum"
     success: "Giriş Başarılı"
+    send_btn: "Gönder"
+    reset_password: "Yeni Şifre İsteği"
   proposal:
     proposal_detail: "Teklif Detayları"
     proposal_period: "Teslim Süresi"

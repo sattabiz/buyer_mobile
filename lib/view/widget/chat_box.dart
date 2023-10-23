@@ -178,20 +178,17 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
           SingleChildScrollView(
             child: Container(
               width: width,
-              height: 90,
+              height: 80,
               color: Theme.of(context).colorScheme.secondaryContainer,
               padding: const EdgeInsets.only(
-                  top: 15.0, bottom: 15.0, right: 5.0, left: 5.0),
+                  top: 15.0, bottom: 15.0, right: 5.0, left: 20.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(
-                    width: width * 0.8,
+                  Expanded(
                     child: TextField(
                       controller: textEditingController,
-                      // focusNode: focusNode,
-                      // autofocus: true,
                       cursorColor: Theme.of(context).colorScheme.onBackground,
                       decoration: InputDecoration(
                         filled: true,
