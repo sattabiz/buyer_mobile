@@ -13,11 +13,9 @@ final getShipmentProvider =
   Response response;
   try {
     response = await apiService.get(url: ApiUrls.shipment);
-  } catch (error) {
-    if (error is DioException) {
-      if (error.response?.statusCode != 200) {
-        ref.read(navigatorKeyProvider).currentState!.pushNamed("/login");
-      }
+  } catch (e) {
+    if (e is DioException) {
+      rethrow;
     }
     rethrow;
   }

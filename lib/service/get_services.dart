@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import '../storage/jwt_storage.dart';
 
@@ -7,7 +8,6 @@ class ApiService {
   Future<Response> get({required String url}) async {
     try {
       final _jwt = await jwtStorageService().getJwtData();
-      
       var response = await _dio.get(
         url,
         options: Options(
@@ -16,10 +16,13 @@ class ApiService {
           },
         ),
       );
-      if (response.statusCode != 200) {
+      Map<String, dynamic> responseData = json.decode(response.toString());
+      int status = responseData['status'];      
+      if (status != 200) {
         throw DioException(
-            requestOptions: response.requestOptions,
-            error: 'HTTP status error: ${response.statusCode}');
+          requestOptions: response.requestOptions,
+          response: response,
+        );
       }
       return response;
     } catch (e) {

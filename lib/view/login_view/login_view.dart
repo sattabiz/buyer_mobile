@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../view_model/current_user_view_model.dart';
+import '../../view_model/get_notifications_view_model.dart';
 import '../../view_model/login_view_model.dart';
 
 class Login extends ConsumerStatefulWidget {
@@ -144,7 +145,8 @@ class _LoginState extends ConsumerState<Login> {
                           email: _emailController.text,
                           password: _passwordController.text);
                       final loginState = ref.watch(loginProvider);
-
+                      ref.watch(getCurrentUserInfoProvider);
+                      ref.watch(getNotificationProvider);
                       if (loginState == LoginState.success) {
                         context.go('/home');
                         ref.watch(getCurrentUserInfoProvider);

@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
 import '../model/order_model.dart';
 import '../utils/widget_helper.dart';
 import '../view_model/confirm_order_view_model.dart.dart';
+import '../view_model/current_user_view_model.dart';
 import '../view_model/get_invoice_view_model.dart';
 import '../view_model/get_order_view_model.dart';
 import '../view_model/invoice_paid_view_model.dart';
@@ -29,6 +29,7 @@ class Home extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notificationListAsyncValue = ref.watch(getNotificationProvider);
     final chatId = ref.watch(messageRoomIdProvider);
+    ref.watch(getCurrentUserInfoProvider);
     return RefreshIndicator(
       onRefresh: () async{
         ref.refresh(getNotificationProvider);
@@ -50,6 +51,7 @@ class Home extends ConsumerWidget {
                   svgPath: data[index].messageAppNotification == true ? "assets/svg/chat.svg" : 'assets/svg/flare.svg', //alertIconWithState(data[index].state) ?? ' ',
                   onTap: () async {
                     if(data[index].messageAppNotification == false){
+                      ref.watch(getListCurrenciesProvider);
                       ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
                       ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
                       ref.read(chatBoxHeaderProvider.notifier).state = "Sipariş No: ${data[index].id}"; 
@@ -58,10 +60,13 @@ class Home extends ConsumerWidget {
                       ref.watch(getOrderProvider);
                       ref.watch(getMessageProvider);
                       ref.watch(getNotificationProvider);
+/*                       final logoutViewModel =
+                      ref.read(logoutViewModelProvider.notifier);
+                      await logoutViewModel.logout(); */
                       context.goNamed('order_detail', 
                       pathParameters: {'orderId' : data[index].id.toString()});
                     }else if(data[index].messageAppNotification == true){
-                      //ref.watch(getListCurrenciesProvider);
+                      ref.watch(getListCurrenciesProvider);
                       ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
                       ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
                       ref.read(chatBoxHeaderProvider.notifier).state = "Sipariş No: ${data[index].id}"; 
@@ -181,7 +186,7 @@ class Home extends ConsumerWidget {
         loading: () => Container(),
         error: (error, stack) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.go('/login');
+            context.go('/login');  
           });
           return Text('An error occurred: $error');
         },
