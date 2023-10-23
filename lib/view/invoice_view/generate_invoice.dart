@@ -1,11 +1,12 @@
-import 'package:PaletPoint/model/address_model.dart';
-import 'package:PaletPoint/view_model/get_address_view_model.dart';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import '../../model/address_model.dart';
+import '../../view_model/get_address_view_model.dart';
 import '../widget/app_bar/dialog_app_bar.dart';
 
   enum MenuEntry {
@@ -107,6 +108,9 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
+                    onTap: () {
+                      ref.read(invoiceTableProvider).contactInformationId = data[0].id ;
+                    },
                     onChanged: (value) {
                       ref.read(invoiceTableProvider).invoiceNo = value;
                     },
@@ -336,10 +340,10 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
       },
       loading: () => Container(),
       error: (error, stack) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          context.go('/login');
-        });
-        return Text('An error occurred: $error');
+         WidgetsBinding.instance.addPostFrameCallback((_) {
+           context.go('/login');  
+         });
+         return Text('An error occurred: $error');
       },
     );
   }

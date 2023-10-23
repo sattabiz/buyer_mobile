@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../view_model/logout_view_model.dart';
 
-class TopAppBarLarge extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends PreferredSize {
+  @override
+  final Widget child;
+  final double height;
+
+  CustomAppBar({
+    super.key, 
+    required this.height,
+    required this.child,
+  }) : super(child: child, preferredSize: Size.fromHeight(AppBar().preferredSize.height));
+}
+
+class TopAppBarLarge extends ConsumerWidget implements PreferredSizeWidget {
   const TopAppBarLarge({ 
     Key? key,
   }) : super(key: key);
@@ -12,7 +26,7 @@ class TopAppBarLarge extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context, WidgetRef ref){
     return AppBar(
       toolbarHeight: 110,
       leadingWidth: 300,
@@ -31,11 +45,18 @@ class TopAppBarLarge extends StatelessWidget implements PreferredSizeWidget {
             //     ),
             //   onPressed: () {} //context.go('/login')
             // ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: SvgPicture.asset(
-                'assets/svg/home_page_logo.svg',
-              )
+            InkWell(
+              onTap: () async{
+                final logoutViewModel =ref.read(logoutViewModelProvider.notifier);
+                await logoutViewModel.logout();
+                context.go('/login');
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: SvgPicture.asset(
+                  'assets/svg/home_page_logo.svg',
+                )
+              ),
             ),
           ],
         ),

@@ -19,12 +19,9 @@ final getNotificationProvider =
 
   try {
     response = await apiService.get(url: ApiUrls.notifications);
-    debugPrint(response.data.toString());
   } catch (e) {
     if (e is DioException) {
-      if (e.response?.statusCode != 200) {
-        print('${e.response?.statusCode}');
-      }
+      rethrow;
     }
     rethrow;
   }
@@ -43,6 +40,7 @@ final getNotificationProvider =
       _proposalMessage.messageAppNotification = false;
     }
     notificationList.addAll(_proposalList);
+
   }
 
   List<OrderModel> _orderList = [];

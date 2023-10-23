@@ -66,7 +66,7 @@ class _ProposalState extends ConsumerState<ProposalView> {
         loading: () => Container(),
         error: (error, stack) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushNamed(context, '/login');
+            context.go('/login');  
           });
           return Text('An error occurred: $error');
         },

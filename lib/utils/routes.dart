@@ -2,6 +2,7 @@ import 'package:PaletPoint/view/login_view/forgot_password.dart';
 import 'package:PaletPoint/view/login_view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../storage/jwt_storage.dart';
 import '../view/home.dart';
 import '../view/index.dart';
 import '../view/invoice_view/generate_invoice.dart';
@@ -13,7 +14,6 @@ import '../view/order_view/order_view.dart';
 import '../view/order_view/ready_for_ship_detail.dart';
 import '../view/proposal_view/proposal_detail.dart';
 import '../view/proposal_view/proposal_view.dart';
-import '../view/widget/app_bar/top_app_bar_centered.dart';
 import '../view/widget/app_bar/top_app_bar_large.dart';
 import '../view/widget/bottom_navigation.dart';
 import '../view/widget/chat_box.dart';
@@ -22,8 +22,16 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _sectionNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
+  redirect: (context, state) async{
+    final _jwt = await jwtStorageService().getJwtData();
+    if(_jwt.isEmpty == true){
+      return '/login';
+    }else{
+      return null;
+    }
+  },
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/login',
+  initialLocation: '/home',
   routes: <RouteBase>[
     GoRoute(
       path: '/login',

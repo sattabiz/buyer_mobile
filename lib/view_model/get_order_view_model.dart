@@ -15,9 +15,7 @@ final getOrderProvider =
 
   } catch (e) {
     if (e is DioException) {
-      if (e.response?.statusCode != 200) {
-        print('${e.response?.statusCode}');
-      }
+      rethrow;
     }
     rethrow;
   }

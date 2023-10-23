@@ -77,7 +77,6 @@ class InvoiceView extends ConsumerWidget {
                   onPressed: () async{
                     ref.watch(getShipmentProvider);
                     ref.read(multiOrderProvider.notifier).removeAllFormItems();
-                    ref.watch(getAddressFutureProvider);
                     context.go('/invoice/invoice_ready');
                   },
                   backgroundColor: Theme.of(context).colorScheme.primary,
@@ -89,7 +88,7 @@ class InvoiceView extends ConsumerWidget {
         loading: () => Container(),
         error: (error, stack) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushNamed(context, '/login');
+            context.go('/login');  
           });
           return Text('An error occurred: $error');
         },

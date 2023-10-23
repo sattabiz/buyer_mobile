@@ -13,7 +13,7 @@ final getListCurrenciesProvider = FutureProvider((ref) async {
     response = await apiService.get(url: ApiUrls.currencies);
   } catch (e) {
     if (e is DioException) {
-      if (e.response?.statusCode != 200) {}
+      rethrow;
     }
     rethrow;
   }
