@@ -23,7 +23,9 @@ class InvoiceDetail extends ConsumerWidget {
       children: [
         TopAppBarLeft(
           title: 'Fatura: ${invoiceList.invoiceNo}',
-          icon: Icons.chat_bubble_outline,
+          icon: invoiceList.messageNotification == true
+              ? 'assets/svg/chat_bubble_unread.svg'
+              : 'assets/svg/chat_bubble.svg',
           backRoute: () => context.go('/invoice'),
           chatRoute: () => context.goNamed('invoice_chat', pathParameters: {
             'invoiceId' : invoiceList.invoiceId.toString(),

@@ -22,6 +22,7 @@ class _ProposalState extends ConsumerState<ProposalView> {
   @override
   Widget build(BuildContext context) {
     final proposalListAsyncValue = ref.watch(getProposalProvider);
+    ref.watch(getListCurrenciesProvider);
     return RefreshIndicator(
       onRefresh: () async{
         await ref.refresh(getProposalProvider);        
@@ -37,15 +38,7 @@ class _ProposalState extends ConsumerState<ProposalView> {
               trailing: (() {                                                                               //for widget notification icons
                 if (data[index].notification == true && data[index].messageNotification == true) {
                   return SvgPicture.asset(                  
-                    "assets/svg/alert.svg"
-                  );
-                } else if (data[index].notification == true) {
-                  return SvgPicture.asset(                  
-                    "assets/svg/alert.svg"
-                  );
-                } else if (data[index].messageNotification == true) {
-                  return SvgPicture.asset(                  
-                    "assets/chat.svg"
+                    "assets/svg/chat.svg"
                   );
                 } else {
                   return SizedBox();
@@ -59,7 +52,7 @@ class _ProposalState extends ConsumerState<ProposalView> {
                 ref.read(proposalIndexProvider.notifier).state = data[index];
                 ref.watch(getListCurrenciesProvider);
                 ref.refresh(formItemProvider);
-                ref.watch(getMessageProvider);
+                // ref.watch(getMessageProvider);
                 context.goNamed('proposal_detail', pathParameters: {'proposalId' : data[index].proposalId.toString()});
                 /* if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
                   context.go('/proposal');

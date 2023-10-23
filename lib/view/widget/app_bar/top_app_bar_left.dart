@@ -2,6 +2,7 @@ import 'package:buyer_mobile/view/proposal_view/detail_product.dart';
 import 'package:buyer_mobile/view_model/get_order_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../view_model/get_notifications_view_model.dart';
 import '../../../view_model/message_controller/get_message_view_model.dart';
@@ -11,7 +12,7 @@ import '../chat_box.dart';
 
 class TopAppBarLeft extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
-  final IconData? icon;
+  final String? icon;
   final void Function()? backRoute;
   final void Function()? chatRoute;
 
@@ -50,9 +51,8 @@ class TopAppBarLeft extends ConsumerWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: Icon(
-            icon,
-            color: Theme.of(context).colorScheme.onSecondary,
+          icon: SvgPicture.asset(
+            icon!,
           ),
           onPressed: () async{
             chatRoute!();

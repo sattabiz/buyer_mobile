@@ -1,5 +1,4 @@
 import 'package:buyer_mobile/view/invoice_view/ready_for_ship_card/ready_for_ship_card.dart';
-import 'package:buyer_mobile/view_model/SupplierGenerateMultiOrder/multi_order_invoice_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -95,55 +94,5 @@ class ReadyForShipInvoice extends ConsumerWidget {
         },
       ),
     );
-
-    /* Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
-        child: TopAppBarCentered(
-          title: FlutterI18n.translate(context, 'tr.ready_for_ship.title'),
-          route: '/invoice',
-        ),
-      ),
-      body: ListView.builder(
-        controller: _scrollController,
-        itemCount: products.length,                                //Bu products nereden geliyor
-        shrinkWrap: true,
-        itemBuilder: (context, index) => ReadyForShipCard(),
-      ),
-      floatingActionButton: ElevatedButton(
-        onPressed: () => context.go('/invoice/invoice_ready/generate'),
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(
-            Theme.of(context).colorScheme.primary,
-          ),
-          fixedSize: MaterialStateProperty.all<Size>(
-            const Size(180.0, 60.0),
-          ),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-          ),
-        ), 
-        child:  Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SvgPicture.asset(
-              'assets/Shape.svg',
-              width: 40,
-              height: 30,
-              fit: BoxFit.cover,
-            ),
-            Text(
-              FlutterI18n.translate(context, 'tr.ready_for_ship.generate_invoice'),
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: Colors.white,
-              ),
-            )
-          ],
-        ),
-      ),
-    ); */
   }
 }

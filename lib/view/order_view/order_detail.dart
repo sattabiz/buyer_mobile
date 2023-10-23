@@ -28,7 +28,9 @@ class OrderDetail extends ConsumerWidget {
           children: [
             TopAppBarLeft(
               title: "Sipariş No: ${orderAsyncValue!.id.toString()}",
-              icon: Icons.chat_bubble_outline,
+              icon: orderAsyncValue.messageNotification == true
+                  ? 'assets/svg/chat_bubble_unread.svg'
+                  : 'assets/svg/chat_bubble.svg',
               backRoute: () => context.go('/order'),
               chatRoute: () => context.goNamed('order_chat', pathParameters: {
                 'orderId': orderAsyncValue.id.toString(),
@@ -88,7 +90,17 @@ class OrderDetail extends ConsumerWidget {
         ? Container(
             alignment: Alignment.bottomRight,
             padding: const EdgeInsets.all(20.0),
-            child: FloatingActionButton(
+            child: FloatingActionButton.extended(
+              label: Text(
+                FlutterI18n.translate(context, 'tr.order.ship_btn'),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+              icon: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
               onPressed: () async{
                 context.go('/order/detail/${orderAsyncValue.id}/ready');
                 ref.read(createShipmentFormProvider.notifier).removeAllFormItems();
@@ -98,16 +110,8 @@ class OrderDetail extends ConsumerWidget {
                    model.productsProposalId = orderAsyncValue.products![i].productProposalId;
                    ref.read(createShipmentFormProvider.notifier).addFormItem(model);
                 }
-              },
-              /* ProductProposalsModel model = ProductProposalsModel();
-                ref.read(createShipmentFormProvider.notifier).addFormItem(model); */
-              // print();
-                  
+              },                  
               backgroundColor: Theme.of(context).colorScheme.primary,
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
             ),
           )
         : const SizedBox(width: 0,),

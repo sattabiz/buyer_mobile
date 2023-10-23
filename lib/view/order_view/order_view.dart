@@ -38,15 +38,7 @@ class OrderView extends ConsumerWidget {
               trailing: (() {                                                                               //for widget notification icons
                 if (data[index].notification == true && data[index].messageNotification == true) {
                   return SvgPicture.asset(                  
-                    "assets/svg/alert.svg"
-                  );
-                } else if (data[index].notification == true) {
-                  return SvgPicture.asset(                  
-                    "assets/svg/alert.svg"
-                  );
-                } else if (data[index].messageNotification == true) {
-                  return SvgPicture.asset(                  
-                    "assets/chat.svg"
+                    "assets/svg/chat.svg"
                   );
                 } else {
                   return SizedBox();
