@@ -99,13 +99,16 @@ class _LoginState extends ConsumerState<Login> {
                     label: Text(
                       FlutterI18n.translate(context, 'tr.login.email'),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
                     ),
-                    constraints: const BoxConstraints(maxWidth: 300, maxHeight: 50),
+                    constraints:
+                        const BoxConstraints(maxWidth: 300, maxHeight: 50),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant),
+                          color:
+                              Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                     border: const OutlineInputBorder(),
                   ),
@@ -124,13 +127,16 @@ class _LoginState extends ConsumerState<Login> {
                     label: Text(
                       FlutterI18n.translate(context, 'tr.login.password'),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
                     ),
-                    constraints: const BoxConstraints(maxWidth: 300, maxHeight: 50),
+                    constraints:
+                        const BoxConstraints(maxWidth: 300, maxHeight: 50),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant),
+                          color:
+                              Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                     border: const OutlineInputBorder(),
                   ),
@@ -152,7 +158,10 @@ class _LoginState extends ConsumerState<Login> {
                         ref.watch(getCurrentUserInfoProvider);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(FlutterI18n.translate(context, 'tr.login.success'),),
+                            content: Text(
+                              FlutterI18n.translate(
+                                  context, 'tr.login.success'),
+                            ),
                           ),
                         );
                         //context.go('/home');
@@ -187,39 +196,16 @@ class _LoginState extends ConsumerState<Login> {
                   hoverColor: Theme.of(context).colorScheme.primary,
                   overlayColor: MaterialStateProperty.all<Color>(
                       Theme.of(context).colorScheme.primary),
-                  onTap: () => context.go('/login/forgot_password'),
-                  //   try {
-                  //     await ref.read(loginProvider.notifier).login(
-                  //       email: "alperburat@gmail.com", password: "deneme123");
-                  //     final loginState = ref.watch(loginProvider);
-
-                  //     if (loginState == LoginState.success) {
-                  //       context.go('/home');
-                  //       ref.watch(getCurrentUserInfoProvider);
-                  //       ScaffoldMessenger.of(context).showSnackBar(
-                  //         const SnackBar(
-                  //           content: Text("Basarili giris"),
-                  //         ),
-                  //       );
-                  //       //context.go('/home');
-                  //     } else if (loginState == LoginState.failure) {
-                  //       ScaffoldMessenger.of(context).showSnackBar(
-                  //         const SnackBar(
-                  //           content: Text("Hata"),
-                  //         ),
-                  //       );
-                  //     }
-                  //   } catch (e) {
-                  //     // print(e);
-                  //   }
-                  // },
+                  onTap: () {
+                    context.push('/forgot_password');
+                  },
                   child: Text(
                     FlutterI18n.translate(context, 'tr.login.forgot_password'),
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.outline,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Theme.of(context).colorScheme.shadow,
-                    ),
+                          color: Theme.of(context).colorScheme.outline,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Theme.of(context).colorScheme.shadow,
+                        ),
                   ),
                 ),
               ],
