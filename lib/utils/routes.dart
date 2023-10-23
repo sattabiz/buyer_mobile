@@ -1,3 +1,4 @@
+import 'package:PaletPoint/view/login_view/forgot_password.dart';
 import 'package:PaletPoint/view/login_view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -27,6 +28,12 @@ final router = GoRouter(
     GoRoute(
       path: '/login',
       builder: (context, state) => const Login(),
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'forgot_password',
+          builder: (context, state) => const ForgotPassword(),
+        )
+      ],
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -42,17 +49,6 @@ final router = GoRouter(
             GoRoute(
               path: '/home',
               builder: (context, state) => const Home(),
-              routes: <RouteBase>[
-                GoRoute(
-                  path: 'detail',
-                  pageBuilder: (context, state) => MaterialPage(
-                    child: Container(
-                      key: state.pageKey,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
             ),
           ],
         ),
@@ -64,22 +60,10 @@ final router = GoRouter(
               GoRoute(
                   name: 'proposal_detail',
                   path: 'detail/:proposalId',
-                  pageBuilder: (context, state) {
-                    return CustomTransitionPage(
-                      child: ProposalDetail(
-                        key: state.pageKey,
-                        proposalId: state.pathParameters['proposalId']!,
-                      ),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        return FadeTransition(
-                          opacity: CurveTween(curve: Curves.easeIn)
-                              .animate(animation),
-                          child: child,
-                        );
-                      },
-                    );
-                  },
+                  builder: (context, state) => ProposalDetail(
+                    key: state.pageKey,
+                    proposalId: state.pathParameters['proposalId']!,
+                  ),
                   routes: [
                     GoRoute(
                       name: 'proposal_chat',
@@ -101,7 +85,10 @@ final router = GoRouter(
               GoRoute(
                   name: 'order_detail',
                   path: 'detail/:orderId',
-                  builder: (context, state) => OrderDetail(),
+                  builder: (context, state) => OrderDetail(
+                    key: state.pageKey,
+                    orderId: state.pathParameters['orderId']!,
+                  ),
                   routes: [
                     GoRoute(
                       name: 'order_chat',

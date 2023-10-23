@@ -53,9 +53,37 @@ class _LoginState extends ConsumerState<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  'assets/login_logo.svg',
-                  fit: BoxFit.cover,
+                InkWell(
+                  onTap: () async {
+                    try {
+                      await ref.read(loginProvider.notifier).login(
+                          email: "alperburat@gmail.com", password: "deneme123");
+                      final loginState = ref.watch(loginProvider);
+
+                      if (loginState == LoginState.success) {
+                        context.go('/home');
+                        ref.watch(getCurrentUserInfoProvider);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Basarili giris"),
+                          ),
+                        );
+                        //context.go('/home');
+                      } else if (loginState == LoginState.failure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Hata"),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      // print(e);
+                    }
+                  },
+                  child: SvgPicture.asset(
+                    'assets/login_logo.svg',
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 const SizedBox(
                   height: 60,
@@ -157,32 +185,32 @@ class _LoginState extends ConsumerState<Login> {
                   hoverColor: Theme.of(context).colorScheme.primary,
                   overlayColor: MaterialStateProperty.all<Color>(
                       Theme.of(context).colorScheme.primary),
-                  onTap: () async {
-                    try {
-                      await ref.read(loginProvider.notifier).login(
-                        email: "alperburat@gmail.com", password: "deneme123");
-                      final loginState = ref.watch(loginProvider);
+                  onTap: () => context.go('/login/forgot_password'),
+                  //   try {
+                  //     await ref.read(loginProvider.notifier).login(
+                  //       email: "alperburat@gmail.com", password: "deneme123");
+                  //     final loginState = ref.watch(loginProvider);
 
-                      if (loginState == LoginState.success) {
-                        context.go('/home');
-                        ref.watch(getCurrentUserInfoProvider);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Basarili giris"),
-                          ),
-                        );
-                        //context.go('/home');
-                      } else if (loginState == LoginState.failure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Hata"),
-                          ),
-                        );
-                      }
-                    } catch (e) {
-                      // print(e);
-                    }
-                  },
+                  //     if (loginState == LoginState.success) {
+                  //       context.go('/home');
+                  //       ref.watch(getCurrentUserInfoProvider);
+                  //       ScaffoldMessenger.of(context).showSnackBar(
+                  //         const SnackBar(
+                  //           content: Text("Basarili giris"),
+                  //         ),
+                  //       );
+                  //       //context.go('/home');
+                  //     } else if (loginState == LoginState.failure) {
+                  //       ScaffoldMessenger.of(context).showSnackBar(
+                  //         const SnackBar(
+                  //           content: Text("Hata"),
+                  //         ),
+                  //       );
+                  //     }
+                  //   } catch (e) {
+                  //     // print(e);
+                  //   }
+                  // },
                   child: Text(
                     FlutterI18n.translate(context, 'tr.login.forgot_password'),
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
