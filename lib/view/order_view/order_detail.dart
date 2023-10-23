@@ -13,7 +13,11 @@ import '../widget/detail_components/detail_table.dart';
 import 'order_detail_info.dart';
 
 class OrderDetail extends ConsumerWidget {
-  const OrderDetail({Key? key}) : super(key: key);
+  final String orderId;
+  const OrderDetail({
+    Key? key,
+    required this.orderId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
