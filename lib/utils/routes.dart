@@ -22,26 +22,24 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _sectionNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
-  redirect: (context, state) async{
-    final _jwt = await jwtStorageService().getJwtData();
-    if(_jwt.isEmpty == true){
-      return '/login';
-    }else{
-      return null;
-    }
-  },
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/home',
+  initialLocation: '/login',
   routes: <RouteBase>[
     GoRoute(
       path: '/login',
+      redirect: (context, state) async {
+        final _jwt = await jwtStorageService().getJwtData();
+        if(_jwt.isEmpty == true){
+          return '/login';
+        }else{
+          return '/home';
+        }
+      },
       builder: (context, state) => const Login(),
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'forgot_password',
-          builder: (context, state) => const ForgotPassword(),
-        )
-      ],
+    ),
+    GoRoute(
+      path: '/forgot_password',
+      builder: (context, state) => const ForgotPassword(),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
