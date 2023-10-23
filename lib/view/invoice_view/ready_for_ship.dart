@@ -26,7 +26,6 @@ class ReadyForShipInvoice extends ConsumerWidget {
           return Stack(
             children: [
               Column(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   TopAppBarCentered(
                     title: FlutterI18n.translate(context, 'tr.ready_for_ship.title'),
@@ -44,42 +43,21 @@ class ReadyForShipInvoice extends ConsumerWidget {
               ),
               Container(
                 alignment: Alignment.bottomRight,
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
+                padding: const EdgeInsets.all(25.0),
+                child: FloatingActionButton.extended(
+                  label: Text(
+                    FlutterI18n.translate(context, 'tr.ready_for_ship.generate_invoice'),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
+                  icon: SvgPicture.asset(
+                        'assets/Shape.svg',
+                      ),
                   onPressed: () {
                     context.go('/invoice/invoice_ready/generate');
                   },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      Theme.of(context).colorScheme.primary,
-                    ),
-                    fixedSize: MaterialStateProperty.all<Size>(
-                      const Size(180.0, 60.0),
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/Shape.svg',
-                        width: 40,
-                        height: 30,
-                        fit: BoxFit.cover,
-                      ),
-                      Text(
-                        FlutterI18n.translate(context, 'tr.ready_for_ship.generate_invoice'),
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ],

@@ -36,7 +36,7 @@ class OrderView extends ConsumerWidget {
               width: 30,
               svgPath: statusIconMap[data[index].state] ?? '',
               trailing: (() {                                                                               //for widget notification icons
-                if (data[index].notification == true && data[index].messageNotification == true) {
+                if (data[index].messageNotification == true) {
                   return SvgPicture.asset(                  
                     "assets/svg/chat.svg"
                   );

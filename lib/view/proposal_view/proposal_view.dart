@@ -36,7 +36,7 @@ class _ProposalState extends ConsumerState<ProposalView> {
               subtitle: data[index].demandListName!, //proposalName gelecek
               svgPath: statusIconMap[data[index].proposalState] ?? '',
               trailing: (() {                                                                               //for widget notification icons
-                if (data[index].notification == true && data[index].messageNotification == true) {
+                if (data[index].messageNotification == true) {
                   return SvgPicture.asset(                  
                     "assets/svg/chat.svg"
                   );
