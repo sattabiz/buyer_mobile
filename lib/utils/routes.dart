@@ -198,55 +198,10 @@ Widget? bottomNavigatonBar(
 
 PreferredSizeWidget? customAppBar(String location, BuildContext context) {
   PreferredSizeWidget? customAppBar;
-  switch (location) {
-    case '/home':
-      customAppBar = const PreferredSize(
-        preferredSize: Size(double.infinity, 110),
-        child: TopAppBarLarge(
-          title: 'Palet Point',
-        ),
-      );
-      break;
-    case '/home/detail':
-      customAppBar = const PreferredSize(
-        preferredSize: Size(double.infinity, 110),
-        child: TopAppBarLarge(
-          title: 'Palet Point',
-        ),
-      );
-      break;
-    case '/proposal':
-      customAppBar = const PreferredSize(
-        preferredSize: Size(double.infinity, 110),
-        child:  TopAppBarLarge(
-          title: 'Teklif İstekleri',
-        ),
-      );
-      break;
-    case '/order':
-      customAppBar = const PreferredSize(
-        preferredSize: Size(double.infinity, 110),
-        child:  TopAppBarLarge(
-          title: 'Siparişler',
-        ),
-      );
-      break;
-    case '/invoice':
-      customAppBar = const PreferredSize(
-        preferredSize: Size(double.infinity, 110),
-        child:  TopAppBarLarge(
-          title: 'Faturalar',
-        ),
-      );
-      break;
-    default:
-      customAppBar = CustomAppBar(
-        height: 110,
-        child: const TopAppBarLarge(
-          title: 'Palet Point',
-        ),
-      );
-  }
+  customAppBar = const PreferredSize(
+    preferredSize: Size(double.infinity, 100),
+    child: TopAppBarLarge(),
+  );
   if (location == '/home' ||
       location == '/proposal' ||
       location == '/order' ||
