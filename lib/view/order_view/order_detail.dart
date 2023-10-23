@@ -10,6 +10,7 @@ import '../../view_model/get_order_view_model.dart';
 import '../../view_model/message_controller/get_message_view_model.dart';
 import '../widget/app_bar/top_app_bar_left.dart';
 import '../widget/detail_components/detail_table.dart';
+import '../widget/detail_components/detail_table_panel.dart';
 import 'order_detail_info.dart';
 
 class OrderDetail extends ConsumerWidget {
@@ -78,6 +79,14 @@ class OrderDetail extends ConsumerWidget {
                       child: orderAsyncValue.state.toString() ==  'order_approved'
                       ? DetailTable(products: orderAsyncValue.products!)
                       : DetailTableOrder(products: orderAsyncValue.products!),
+                    ),
+                    SizedBox(
+                      width: width,
+                      child: DetailTablePanel(
+                        productList: orderAsyncValue.products!,
+                        isFileAttached: false,
+                        isPending: false,
+                      ),
                     )
                   ],
                 ),

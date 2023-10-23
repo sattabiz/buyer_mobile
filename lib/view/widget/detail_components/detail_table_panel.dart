@@ -16,7 +16,7 @@ class DetailTablePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> keys = getTotalCost
+    List<Widget> keys = calculateTaxRate(productList)
         .entries
         .map((entry) => Container(
               margin: const EdgeInsets.only(top: 5.0),
@@ -30,7 +30,7 @@ class DetailTablePanel extends StatelessWidget {
             ))
         .toList();
 
-    List<Widget> values = getTotalCost
+    List<Widget> values = calculateTaxRate(productList)
         .entries
         .map((entry) => Container(
               margin: const EdgeInsets.only(top: 5.0),
@@ -46,7 +46,8 @@ class DetailTablePanel extends StatelessWidget {
               ),
             ))
         .toList();
-
+    
+    // debugPrint("keys: ${}");
     return SingleChildScrollView(
       child: Container(
         margin: const EdgeInsets.only(top: 5.0, right: 10.0, bottom: 10.0),
