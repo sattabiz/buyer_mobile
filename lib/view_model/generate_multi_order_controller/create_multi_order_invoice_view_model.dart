@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:PaletPoint/view_model/get_order_view_model.dart';
 import 'package:PaletPoint/view_model/get_shipment_view_model.dart';
 import 'package:dio/dio.dart';
@@ -11,7 +9,6 @@ import '../../config/api_url.dart';
 import '../../model/shipment_model.dart';
 import '../../service/post_service.dart';
 import '../../view/invoice_view/generate_invoice.dart';
-import '../proposal_controller/create_proposal_view_model.dart';
 import 'multi_order_invoice_view_model.dart';
 
 final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((
@@ -51,6 +48,7 @@ final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((
     ref.read(getShipmentProvider.future);
     await ref.refresh(getOrderProvider);
     ref.read(getOrderProvider.future);
+    await ref.refresh(getOrderProvider);
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {

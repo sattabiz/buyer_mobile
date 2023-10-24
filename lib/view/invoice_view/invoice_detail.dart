@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../utils/widget_helper.dart';
 import '../../view_model/message_controller/get_message_view_model.dart';
 import '../widget/app_bar/top_app_bar_left.dart';
 import '../widget/detail_components/detail_info.dart';
@@ -23,14 +22,15 @@ class InvoiceDetail extends ConsumerWidget {
       children: [
         TopAppBarLeft(
           title: 'Fatura: ${invoiceList.invoiceNo}',
-          icon: invoiceList.messageNotification == true
-              ? 'assets/svg/chat_bubble_unread.svg'
-              : 'assets/svg/chat_bubble.svg',
           backRoute: () => context.go('/invoice'),
           chatRoute: () => context.goNamed('invoice_chat', pathParameters: {
             'invoiceId' : invoiceList.invoiceId.toString(),
             'chatId' : '$chatId'
           }),
+          refreshProvider: () async{
+            ref.refresh(getInvoicesProvider);
+            ref.refresh(getInvoicesProvider.future);
+          },
         ),
         SingleChildScrollView(
           child: Container(

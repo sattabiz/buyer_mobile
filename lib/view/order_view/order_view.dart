@@ -9,6 +9,7 @@ import '../../view_model/confirm_order_view_model.dart.dart';
 import '../../view_model/message_controller/create_message_view_model.dart';
 import '../../view_model/message_controller/get_message_view_model.dart';
 import '../proposal_view/proposal_view.dart';
+import '../widget/app_bar/top_app_bar_left.dart';
 import '../widget/index_list_tile.dart';
 
 
@@ -52,6 +53,7 @@ class OrderView extends ConsumerWidget {
                 ref.watch(getOrderProvider);                                          //get order data
                 ref.watch(getMessageProvider);                                        //get order messages
                 context.goNamed('order_detail', pathParameters: {'orderId' : data[index].id.toString()});
+                ref.read(messageIconProvider.notifier).state = data[index].messageNotification; //for product detail view' s Icon provider
               }, //context.go('/order/detail'),
             ),
           );

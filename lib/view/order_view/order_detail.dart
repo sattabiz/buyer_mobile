@@ -32,14 +32,15 @@ class OrderDetail extends ConsumerWidget {
           children: [
             TopAppBarLeft(
               title: "Sipariş No: ${orderAsyncValue!.id.toString()}",
-              icon: orderAsyncValue.messageNotification == true
-                  ? 'assets/svg/chat_bubble_unread.svg'
-                  : 'assets/svg/chat_bubble.svg',
               backRoute: () => context.go('/order'),
               chatRoute: () => context.goNamed('order_chat', pathParameters: {
                 'orderId': orderAsyncValue.id.toString(),
                 'chatId': '$chatId'
               }),
+              refreshProvider: () async{
+                ref.refresh(getOrderProvider);
+                ref.refresh(getOrderProvider.future);
+              },
             ),
             SingleChildScrollView(
               child: Container(

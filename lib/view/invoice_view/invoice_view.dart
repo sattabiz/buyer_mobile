@@ -11,6 +11,7 @@ import '../../view_model/get_invoice_view_model.dart';
 import '../../view_model/message_controller/create_message_view_model.dart';
 import '../../view_model/message_controller/get_message_view_model.dart';
 import '../proposal_view/proposal_view.dart';
+import '../widget/app_bar/top_app_bar_left.dart';
 import '../widget/index_list_tile.dart';
 
 class InvoiceView extends ConsumerWidget {
@@ -55,6 +56,7 @@ class InvoiceView extends ConsumerWidget {
                     ref.read(invoiceIndexProvider.notifier).state = data[index];
                     ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 
                     ref.watch(getMessageProvider);
+                    ref.read(messageIconProvider.notifier).state = data[index].messageNotification;
                     context.goNamed('invoice_detail', pathParameters: {'invoiceId' : data[index].invoiceId.toString()});
                   },
                 ),
