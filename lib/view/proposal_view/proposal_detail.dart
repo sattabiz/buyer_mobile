@@ -82,14 +82,15 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
         children: [
           TopAppBarLeft(
             title: 'Teklif No: ${proposalAsyncValue.proposalId}',
-            icon: proposalAsyncValue.messageNotification == true
-                ? 'assets/svg/chat_bubble_unread.svg'
-                : 'assets/svg/chat_bubble.svg',
             backRoute: () => context.go('/proposal'),
             chatRoute: () => context.goNamed('proposal_chat', pathParameters: {
               'proposalId': proposalAsyncValue.proposalId.toString(),
               'chatId': '$chatId'
             }),
+            refreshProvider: () async{
+              ref.refresh(getProposalProvider);   
+              ref.refresh(getProposalProvider.future);
+            },
           ),
           proposalAsyncValue.proposalState == 'last_offer' || proposalAsyncValue.proposalState == 'proposal_stvs'
           ? const ShowProposal()
