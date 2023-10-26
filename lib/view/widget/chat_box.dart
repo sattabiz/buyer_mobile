@@ -2,6 +2,8 @@ import 'package:PaletPoint/model/get_current_user_info_model.dart';
 import 'package:PaletPoint/view_model/message_controller/websocket_message_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:swipe/swipe.dart';
 import '../../view_model/current_user_view_model.dart';
 import '../../view_model/message_controller/create_message_view_model.dart';
 import '../../view_model/message_controller/list_messages_view_model.dart';
@@ -54,188 +56,198 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
     // liveChats.reversed.toList();
     CurrentUserInfoModel userInfo = ref.watch(userIdProvider);
     return Material(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        verticalDirection: VerticalDirection.down,
-        children: [
-          TopAppBarCentered(
-            title: ref.watch(chatBoxHeaderProvider)!,
-            backRoute: "null",
-          ),
-          Expanded(
-            child: Container(
-              color: Theme.of(context).colorScheme.onPrimary,
-              padding: const EdgeInsets.only(right: 15, left: 15),
-              child: ListView.builder(
-                controller: messageController,
-                reverse: true,
-                itemCount: liveChats.length,
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return liveChats[index].user == "Sistem"
-                      ? Container(
-                          margin: const EdgeInsets.only(bottom: 15, top: 15),
-                          child: Text(
-                            "${liveChats[index].createdAt.toString()}   ${liveChats[index].body.toString()}",
-                            style:
-                                Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                          ))
-                      : Container(
-                          margin: const EdgeInsets.only(bottom: 15),
-                          child: Align(
-                            alignment:
-                                (liveChats[index].userID == userInfo.currentUser!.id
-                                    ? Alignment.topRight
-                                    : Alignment.topLeft),
-                            child: Container(
-                              constraints:
-                                  BoxConstraints.tightFor(width: width * 0.6),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: const Radius.circular(8),
-                                  topRight: const Radius.circular(8),
-                                  bottomLeft: (liveChats[index].userID !=
+      child: Swipe(
+        onSwipeRight: () => context.pop(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          verticalDirection: VerticalDirection.down,
+          children: [
+            TopAppBarCentered(
+              title: ref.watch(chatBoxHeaderProvider)!,
+              backRoute: "null",
+            ),
+            Expanded(
+              child: Container(
+                color: Theme.of(context).colorScheme.onPrimary,
+                padding: const EdgeInsets.only(right: 15, left: 15),
+                child: ListView.builder(
+                  controller: messageController,
+                  reverse: true,
+                  itemCount: liveChats.length,
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return liveChats[index].user == "Sistem"
+                        ? Container(
+                            margin: const EdgeInsets.only(bottom: 15, top: 15),
+                            child: Text(
+                              "${liveChats[index].createdAt.toString()}   ${liveChats[index].body.toString()}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                            ))
+                        : Container(
+                            margin: const EdgeInsets.only(bottom: 15),
+                            child: Align(
+                              alignment: (liveChats[index].userID ==
+                                      userInfo.currentUser!.id
+                                  ? Alignment.topRight
+                                  : Alignment.topLeft),
+                              child: Container(
+                                constraints:
+                                    BoxConstraints.tightFor(width: width * 0.6),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: const Radius.circular(8),
+                                    topRight: const Radius.circular(8),
+                                    bottomLeft: (liveChats[index].userID !=
+                                            userInfo.currentUser!.id
+                                        ? const Radius.circular(10)
+                                        : const Radius.circular(0)),
+                                    bottomRight: (liveChats[index].userID ==
+                                            userInfo.currentUser!.id
+                                        ? const Radius.circular(0)
+                                        : const Radius.circular(10)),
+                                  ),
+                                  color: (liveChats[index].userID ==
                                           userInfo.currentUser!.id
-                                      ? const Radius.circular(10)
-                                      : const Radius.circular(0)),
-                                  bottomRight: (liveChats[index].userID ==
-                                          userInfo.currentUser!.id
-                                      ? const Radius.circular(0)
-                                      : const Radius.circular(10)),
+                                      ? Theme.of(context)
+                                          .colorScheme
+                                          .inversePrimary
+                                          .withOpacity(0.4)
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .surfaceVariant),
                                 ),
-                                color: (liveChats[index].userID ==
-                                        userInfo.currentUser!.id
-                                    ? Theme.of(context)
-                                        .colorScheme
-                                        .inversePrimary
-                                        .withOpacity(0.4)
-                                    : Theme.of(context)
-                                        .colorScheme
-                                        .surfaceVariant),
-                              ),
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      liveChats[index].user.toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: liveChats[index].userID ==
-                                                    userInfo.currentUser!.id
-                                                ? Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary
-                                                : Theme.of(context)
-                                                    .colorScheme
-                                                    .onSurfaceVariant,
-                                          ),
-                                      maxLines: 1,
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        liveChats[index].user.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: liveChats[index].userID ==
+                                                      userInfo.currentUser!.id
+                                                  ? Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary
+                                                  : Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurfaceVariant,
+                                            ),
+                                        maxLines: 1,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 3),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      liveChats[index].body.toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            letterSpacing: 0.2,
-                                            height: 1.5,
-                                          ),
-                                      maxLines: double.maxFinite.floor(),
+                                    const SizedBox(height: 3),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        liveChats[index].body.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              letterSpacing: 0.2,
+                                              height: 1.5,
+                                            ),
+                                        maxLines: double.maxFinite.floor(),
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 3),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text(
-                                      liveChats[index].createdAt.toString(),
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
+                                    const SizedBox(height: 3),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Text(
+                                        liveChats[index].createdAt.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                },
+                          );
+                  },
+                ),
               ),
             ),
-          ),
-          SingleChildScrollView(
-            child: Container(
-              width: width,
-              height: 80,
-              color: Theme.of(context).colorScheme.secondaryContainer,
-              padding: const EdgeInsets.only(
-                  top: 15.0, bottom: 20.0, right: 5.0, left: 20.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: textEditingController,
-                      cursorColor: Theme.of(context).colorScheme.onBackground,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).colorScheme.onPrimary,
-                        constraints: const BoxConstraints(maxHeight: 48),
-                        hintText: "Bir Mesaj Yazın...",
-                        hintStyle:
-                            Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                  color: Theme.of(context).colorScheme.outline,
-                                ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
+            SingleChildScrollView(
+              child: Container(
+                width: width,
+                height: 80,
+                color: Theme.of(context).colorScheme.secondaryContainer,
+                padding: const EdgeInsets.only(
+                    top: 15.0, bottom: 20.0, right: 5.0, left: 20.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: textEditingController,
+                        cursorColor: Theme.of(context).colorScheme.onBackground,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Theme.of(context).colorScheme.onPrimary,
+                          constraints: const BoxConstraints(maxHeight: 48),
+                          hintText: "Bir Mesaj Yazın...",
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.outline,
+                              ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                            ),
                           ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                            ),
                           ),
+                          contentPadding:
+                              const EdgeInsets.only(left: 10, right: 10),
                         ),
-                        contentPadding:
-                            const EdgeInsets.only(left: 10, right: 10),
                       ),
                     ),
-                  ),
-                  IconButton(
-                    padding: const EdgeInsets.all(0),
-                    icon: Icon(
-                      Icons.send,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      size: 35,
+                    IconButton(
+                      padding: const EdgeInsets.all(0),
+                      icon: Icon(
+                        Icons.send,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        size: 35,
+                      ),
+                      onPressed: () async {
+                        if (textEditingController.text != "") {
+                          onSubmitted(textEditingController.text);
+                        }
+                      },
                     ),
-                    onPressed: () async {
-                      if (textEditingController.text != "") {
-                        onSubmitted(textEditingController.text);
-                      }
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

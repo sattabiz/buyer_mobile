@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swipe/swipe.dart';
 import '../../view_model/message_controller/get_message_view_model.dart';
 import '../widget/app_bar/top_app_bar_left.dart';
 import '../widget/detail_components/detail_info.dart';
@@ -18,95 +19,104 @@ class InvoiceDetail extends ConsumerWidget {
     double width = MediaQuery.of(context).size.width;
     final invoiceList = ref.watch(invoiceIndexProvider);
     final chatId = ref.watch(messageRoomIdProvider);
-    return Column(
-      children: [
-        TopAppBarLeft(
-          title: 'Fatura: ${invoiceList.invoiceNo}',
-          backRoute: () => context.go('/invoice'),
-          chatRoute: () => context.goNamed('invoice_chat', pathParameters: {
-            'invoiceId' : invoiceList.invoiceId.toString(),
-            'chatId' : '$chatId'
-          }),
-          refreshProvider: () async{
-            ref.refresh(getInvoicesProvider);
-            ref.refresh(getInvoicesProvider.future);
-          },
-        ),
-        SingleChildScrollView(
-          child: Container(
-            color: Theme.of(context).colorScheme.onSecondary,
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(bottom: 10.0),
-                  child: Text(
-                    FlutterI18n.translate(
-                        context, 'tr.invoice.${invoiceList.state}'),
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color:
-                          Theme.of(context).colorScheme.onSecondaryContainer,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: width,
-                  child: DetailInfo(
-                    className: 'invoice',
-                    row1: invoiceList.invoiceDate.toString().split('T')[0],
-                    row2: invoiceList.paymentDate.toString().split('T')[0],
-                    row3: invoiceList.orderId.toString(),
-                    row4: invoiceList.paymentType ?? 'null deger',
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                Container(
-                  width: width,
-                  padding: const EdgeInsets.all(5.0),
-                  child: DetailTable(
-                    products: invoiceList.products!
-                  ),
-                ),
-                SizedBox(
-                  width: width,
-                  height: 100,
-                  child: DetailTablePanel(
-                    productList: invoiceList.products!, 
-                    isFileAttached: false, 
-                    isPending: true
-                  ),
-                ),
-                invoiceList.state == 'invoice_approved'
-                ? Container(
-                    alignment: Alignment.bottomLeft,
-                    padding: const EdgeInsets.all(20.0),
-                    child: ElevatedButton(
-                      onPressed: ()  {
-                        ref.watch(invoicePaidProvider);
-                        context.go('/invoice');
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Theme.of(context).colorScheme.primary),
-                        fixedSize:
-                            MaterialStateProperty.all<Size>(const Size(100, 30)),
-                      ),
-                      child: Text(
-                        FlutterI18n.translate(context, 'tr.invoice.paid__btn'),
-                        style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
+    return Swipe(
+      onSwipeRight: () {
+        context.go('/invoice');
+      },
+      onSwipeLeft: () => context.goNamed('invoice_chat', pathParameters: {
+        'invoiceId': invoiceList.invoiceId.toString(),
+        'chatId': '$chatId'
+      }),
+      child: Column(
+        children: [
+          TopAppBarLeft(
+            title: 'Fatura: ${invoiceList.invoiceNo}',
+            backRoute: () => context.go('/invoice'),
+            chatRoute: () => context.goNamed('invoice_chat', pathParameters: {
+              'invoiceId' : invoiceList.invoiceId.toString(),
+              'chatId' : '$chatId'
+            }),
+            refreshProvider: () async{
+              ref.refresh(getInvoicesProvider);
+              ref.refresh(getInvoicesProvider.future);
+            },
+          ),
+          SingleChildScrollView(
+            child: Container(
+              color: Theme.of(context).colorScheme.onSecondary,
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(bottom: 10.0),
+                    child: Text(
+                      FlutterI18n.translate(
+                          context, 'tr.invoice.${invoiceList.state}'),
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
                       ),
                     ),
-                )
-                : const SizedBox(),
-              ],
+                  ),
+                  SizedBox(
+                    width: width,
+                    child: DetailInfo(
+                      className: 'invoice',
+                      row1: invoiceList.invoiceDate.toString().split('T')[0],
+                      row2: invoiceList.paymentDate.toString().split('T')[0],
+                      row3: invoiceList.orderId.toString(),
+                      row4: invoiceList.paymentType ?? 'null deger',
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  Container(
+                    width: width,
+                    padding: const EdgeInsets.all(5.0),
+                    child: DetailTable(
+                      products: invoiceList.products!
+                    ),
+                  ),
+                  SizedBox(
+                    width: width,
+                    height: 100,
+                    child: DetailTablePanel(
+                      productList: invoiceList.products!, 
+                      isFileAttached: false, 
+                      isPending: true
+                    ),
+                  ),
+                  invoiceList.state == 'invoice_approved'
+                  ? Container(
+                      alignment: Alignment.bottomLeft,
+                      padding: const EdgeInsets.all(20.0),
+                      child: ElevatedButton(
+                        onPressed: ()  {
+                          ref.watch(invoicePaidProvider);
+                          context.go('/invoice');
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Theme.of(context).colorScheme.primary),
+                          fixedSize:
+                              MaterialStateProperty.all<Size>(const Size(100, 30)),
+                        ),
+                        child: Text(
+                          FlutterI18n.translate(context, 'tr.invoice.paid__btn'),
+                          style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                        ),
+                      ),
+                  )
+                  : const SizedBox(),
+                ],
+              ),
             ),
           ),
-        ),
-
-      ],
+    
+        ],
+      ),
     );
   }
 }

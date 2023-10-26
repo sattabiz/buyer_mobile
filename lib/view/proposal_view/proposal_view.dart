@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swipe/swipe.dart';
 import '../../view_model/message_controller/create_message_view_model.dart';
 import '../../view_model/proposal_controller/create_proposal_view_model.dart';
 import '../../view_model/proposal_controller/get_proposal_view_model.dart';
@@ -23,47 +24,53 @@ class _ProposalState extends ConsumerState<ProposalView> {
   Widget build(BuildContext context) {
     final proposalListAsyncValue = ref.watch(getProposalProvider);
     ref.watch(getListCurrenciesProvider);
-    return RefreshIndicator(
-      onRefresh: () async{
-        await ref.refresh(getProposalProvider);        
+    return Swipe(
+      onSwipeLeft: () {
+        context.go('/order');
       },
-      child: proposalListAsyncValue.when(
-        data: (data) {
-          return ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (context, index) => IndexListTile(
-              title: "Teklif No: ${data[index].proposalId.toString()}",
-              subtitle: data[index].demandListName!, //proposalName gelecek
-              svgPath: statusIconMap[data[index].proposalState] ?? '',
-              trailing: (() {                                                                               //for widget notification icons
-                if (data[index].messageNotification == true) {
-                  return SvgPicture.asset(                  
-                    "assets/svg/chat.svg"
-                  );
-                } else {
-                  return SizedBox();
-                }
-              })(),
-              onTap: () async {
-                ref.read(messageIdProvider.notifier).state = 'proposal_id=${data[index].proposalId}';
-                ref.read(createMessageMapProvider.notifier).state = {'proposal_id': data[index].proposalId};
-                ref.read(chatBoxHeaderProvider.notifier).state = "Teklif No: ${data[index].proposalId}";
-                ref.read(proposalIndexProvider.notifier).state = data[index];
-                ref.watch(getListCurrenciesProvider);
-                ref.refresh(formItemProvider);
-                ref.read(messageIconProvider.notifier).state = data[index].messageNotification;
-                context.goNamed('proposal_detail', pathParameters: {'proposalId' : data[index].proposalId.toString()});
-              },
-            ),
-          );
+      onSwipeRight: () => context.go('/home'),
+      child: RefreshIndicator(
+        onRefresh: () async{
+          await ref.refresh(getProposalProvider);        
         },
-        loading: () => Container(),
-        error: (error, stack) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.go('/login');  
-          });
-          return Text('An error occurred: $error');
-        },
+        child: proposalListAsyncValue.when(
+          data: (data) {
+            return ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) => IndexListTile(
+                title: "Teklif No: ${data[index].proposalId.toString()}",
+                subtitle: data[index].demandListName!, //proposalName gelecek
+                svgPath: statusIconMap[data[index].proposalState] ?? '',
+                trailing: (() {                                                                               //for widget notification icons
+                  if (data[index].messageNotification == true) {
+                    return SvgPicture.asset(                  
+                      "assets/svg/chat.svg"
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                })(),
+                onTap: () async {
+                  ref.read(messageIdProvider.notifier).state = 'proposal_id=${data[index].proposalId}';
+                  ref.read(createMessageMapProvider.notifier).state = {'proposal_id': data[index].proposalId};
+                  ref.read(chatBoxHeaderProvider.notifier).state = "Teklif No: ${data[index].proposalId}";
+                  ref.read(proposalIndexProvider.notifier).state = data[index];
+                  ref.watch(getListCurrenciesProvider);
+                  ref.refresh(formItemProvider);
+                  ref.read(messageIconProvider.notifier).state = data[index].messageNotification;
+                  context.goNamed('proposal_detail', pathParameters: {'proposalId' : data[index].proposalId.toString()});
+                },
+              ),
+            );
+          },
+          loading: () => Container(),
+          error: (error, stack) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.go('/login');  
+            });
+            return Text('An error occurred: $error');
+          },
+        ),
       ),
     );
 
