@@ -44,9 +44,9 @@ final router = GoRouter(
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return Index(
-            navigationShell,
-            customAppBar(state.matchedLocation, context),
-            bottomNavigatonBar(state.matchedLocation, navigationShell));
+          navigationShell,
+          customAppBar(state.matchedLocation, context),
+          bottomNavigatonBar(state.matchedLocation, navigationShell));
       },
       branches: [
         StatefulShellBranch(
@@ -64,22 +64,23 @@ final router = GoRouter(
             builder: (context, state) => const ProposalView(),
             routes: <RouteBase>[
               GoRoute(
-                  name: 'proposal_detail',
-                  path: 'detail/:proposalId',
-                  builder: (context, state) => ProposalDetail(
-                    key: state.pageKey,
-                    proposalId: state.pathParameters['proposalId']!,
-                  ),
-                  routes: [
-                    GoRoute(
-                      name: 'proposal_chat',
-                      path: 'chat/:chatId', //messageId ile degistirilecek
-                      builder: (context, state) => ChatBox(
-                        key: state.pageKey,
-                        id: state.pathParameters['chatId']!,
-                      ),
-                    )
-                  ]),
+                name: 'proposal_detail',
+                path: 'detail/:proposalId',
+                builder: (context, state) => ProposalDetail(
+                  key: state.pageKey,
+                  proposalId: state.pathParameters['proposalId']!,
+                ),
+                routes: [
+                  GoRoute(
+                    name: 'proposal_chat',
+                    path: 'chat/:chatId', //messageId ile degistirilecek
+                    builder: (context, state) => ChatBox(
+                      key: state.pageKey,
+                      id: state.pathParameters['chatId']!,
+                    ),
+                  )
+                ]
+              ),
             ],
           ),
         ]),
@@ -89,29 +90,30 @@ final router = GoRouter(
             builder: (context, state) => const OrderView(),
             routes: <RouteBase>[
               GoRoute(
-                  name: 'order_detail',
-                  path: 'detail/:orderId',
-                  builder: (context, state) => OrderDetail(
-                    key: state.pageKey,
-                    orderId: state.pathParameters['orderId']!,
+                name: 'order_detail',
+                path: 'detail/:orderId',
+                builder: (context, state) => OrderDetail(
+                  key: state.pageKey,
+                  orderId: state.pathParameters['orderId']!,
+                ),
+                routes: [
+                  GoRoute(
+                    name: 'order_chat',
+                    path: 'chat/:chatId', //message id ile degistirilecek
+                    builder: (context, state) => ChatBox(
+                      key: state.pageKey,
+                      id: state.pathParameters['chatId']!,
+                    ),
                   ),
-                  routes: [
-                    GoRoute(
-                      name: 'order_chat',
-                      path: 'chat/:chatId', //message id ile degistirilecek
-                      builder: (context, state) => ChatBox(
-                        key: state.pageKey,
-                        id: state.pathParameters['chatId']!,
-                      ),
+                  GoRoute(
+                    // name: 'order_ready',
+                    path: 'ready',
+                    builder: (context, state) => ReadyForShipDetail(
+                      key: state.pageKey,
                     ),
-                    GoRoute(
-                      // name: 'order_ready',
-                      path: 'ready',
-                      builder: (context, state) => ReadyForShipDetail(
-                        key: state.pageKey,
-                      ),
-                    ),
-                  ]),
+                  ),
+                ]
+              ),
             ],
           ),
         ]),
@@ -123,41 +125,44 @@ final router = GoRouter(
             ),
             routes: <RouteBase>[
               GoRoute(
-                  name: 'invoice_detail',
-                  path: 'detail/:invoiceId',
-                  builder: (context, state) => InvoiceDetail(
-                        key: state.pageKey,
-                      ),
-                  routes: [
-                    GoRoute(
-                      name: 'invoice_chat',
-                      path: 'chat/:chatId', //messageId ile degistirilecek
-                      builder: (context, state) => ChatBox(
-                        key: state.pageKey,
-                        id: state.pathParameters['chatId']!,
-                      ),
+                name: 'invoice_detail',
+                path: 'detail/:invoiceId',
+                builder: (context, state) => InvoiceDetail(
+                  key: state.pageKey,
+                ),
+                routes: [
+                  GoRoute(
+                    name: 'invoice_chat',
+                    path: 'chat/:chatId', //messageId ile degistirilecek
+                    builder: (context, state) => ChatBox(
+                      key: state.pageKey,
+                      id: state.pathParameters['chatId']!,
                     ),
-                  ]),
+                  ),
+                ]
+              ),
               GoRoute(
-                  path: 'invoice_ready',
-                  builder: (context, state) => ReadyForShipInvoice(
-                        key: state.pageKey,
-                      ),
-                  routes: [
-                    GoRoute(
-                        name: 'invoice_ready_chat',
-                        path: 'chat/:chatId', //messageId ile degistirilecek
-                        builder: (context, state) => ChatBox(
-                              key: state.pageKey,
-                              id: state.pathParameters['chatId']!,
-                            )),
-                    GoRoute(
-                      path: 'generate',
-                      builder: (context, state) => GenerateInvoice(
-                        key: state.pageKey,
-                      ),
+                path: 'invoice_ready',
+                builder: (context, state) => ReadyForShipInvoice(
+                  key: state.pageKey,
+                ),
+                routes: [
+                  GoRoute(
+                    name: 'invoice_ready_chat',
+                    path: 'chat/:chatId', //messageId ile degistirilecek
+                    builder: (context, state) => ChatBox(
+                      key: state.pageKey,
+                      id: state.pathParameters['chatId']!,
+                    )
+                  ),
+                  GoRoute(
+                    path: 'generate',
+                    builder: (context, state) => GenerateInvoice(
+                      key: state.pageKey,
                     ),
-                  ]),
+                  ),
+                ]
+              ),
             ],
           ),
         ])
@@ -167,26 +172,26 @@ final router = GoRouter(
 );
 
 Widget? bottomNavigatonBar(
-    String location, StatefulNavigationShell navigationShell) {
-  int currentIndex = navigationShell.currentIndex;
-  Widget? bottomNavigation;
-  void onTap(index) {
-    navigationShell.goBranch(
-      index,
-      initialLocation: index == navigationShell.currentIndex,
-    );
-  }
+  String location, StatefulNavigationShell navigationShell) {
+    int currentIndex = navigationShell.currentIndex;
+    Widget? bottomNavigation;
+    void onTap(index) {
+      navigationShell.goBranch(
+        index,
+        initialLocation: index == navigationShell.currentIndex,
+      );
+    }
 
-  if (location == '/home' ||
-      location == '/proposal' ||
-      location == '/order' ||
-      location == '/invoice') {
-    bottomNavigation =
-        BottomNavigation(currentIndex: currentIndex, onItemTapped: onTap);
-  } else {
-    bottomNavigation = null;
-  }
-  return bottomNavigation;
+    if (location == '/home' ||
+        location == '/proposal' ||
+        location == '/order' ||
+        location == '/invoice') {
+      bottomNavigation =
+          BottomNavigation(currentIndex: currentIndex, onItemTapped: onTap);
+    } else {
+      bottomNavigation = null;
+    }
+    return bottomNavigation;
 }
 
 PreferredSizeWidget? customAppBar(String location, BuildContext context) {

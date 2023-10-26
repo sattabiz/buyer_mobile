@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swipe/swipe.dart';
 import '../../model/order_model.dart';
 import '../../view_model/confirm_order_view_model.dart.dart';
 import '../../view_model/get_order_view_model.dart';
@@ -42,53 +43,62 @@ class OrderDetail extends ConsumerWidget {
                 ref.refresh(getOrderProvider.future);
               },
             ),
-            SingleChildScrollView(
-              child: Container(
-                color: Theme.of(context).colorScheme.onSecondary,
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(bottom: 10.0),
-                      child: Text(
-                        FlutterI18n.translate(
-                            context, 'tr.order.${orderAsyncValue.state}'),
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSecondaryContainer,
-                            ),
+            Swipe(
+              onSwipeRight: () {
+                context.go('/order');
+              },
+              onSwipeLeft: () => context.goNamed('order_chat', pathParameters: {
+                'orderId': orderAsyncValue.id.toString(),
+                'chatId': '$chatId'
+              }),
+              child: SingleChildScrollView(
+                child: Container(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(bottom: 10.0),
+                        child: Text(
+                          FlutterI18n.translate(
+                              context, 'tr.order.${orderAsyncValue.state}'),
+                          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer,
+                              ),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: width,
-                      child: OrderDetailInfo(
-                        row1: orderAsyncValue.orderDate.toString().split('T')[0],
-                        row2: orderAsyncValue.deliveryDate
-                            .toString()
-                            .split('T')[0], //null gelmesine gore ayarlamak lazim
-                        row3: orderAsyncValue.paymentDueDate.toString(),
-                        row4: orderAsyncValue.includeShipmentCost == true
-                            ? "Alıcı"
-                            : "Satıcı",
-                        row5: orderAsyncValue.paymentType ??
-                            "API Null deger", //null gelmesine gore ayarlamak lazim
+                      SizedBox(
+                        width: width,
+                        child: OrderDetailInfo(
+                          row1: orderAsyncValue.orderDate.toString().split('T')[0],
+                          row2: orderAsyncValue.deliveryDate
+                              .toString()
+                              .split('T')[0], //null gelmesine gore ayarlamak lazim
+                          row3: orderAsyncValue.paymentDueDate.toString(),
+                          row4: orderAsyncValue.includeShipmentCost == true
+                              ? "Alıcı"
+                              : "Satıcı",
+                          row5: orderAsyncValue.paymentType ??
+                              "API Null deger", //null gelmesine gore ayarlamak lazim
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20.0),
-                    Container(
-                      width: width,
-                      padding: const EdgeInsets.all(5.0),
-                      child: orderAsyncValue.state.toString() ==  'order_approved'
-                      ? DetailTable(products: orderAsyncValue.products!)
-                      : DetailTableOrder(products: orderAsyncValue.products!),
-                    )
-                  ],
+                      const SizedBox(height: 20.0),
+                      Container(
+                        width: width,
+                        padding: const EdgeInsets.all(5.0),
+                        child: orderAsyncValue.state.toString() ==  'order_approved'
+                        ? DetailTable(products: orderAsyncValue.products!)
+                        : DetailTableOrder(products: orderAsyncValue.products!),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-
+    
           ],
         ),
         orderAsyncValue.state == 'order_confirmed'
