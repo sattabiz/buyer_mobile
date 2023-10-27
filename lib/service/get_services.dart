@@ -6,6 +6,7 @@ class ApiService {
   final Dio _dio = Dio();
 
   Future<Response> get({required String url}) async {
+    final jwtStorageService _jwtStorage = jwtStorageService();
     try {
       final _jwt = await jwtStorageService().getJwtData();
       var response = await _dio.get(
@@ -19,6 +20,7 @@ class ApiService {
       Map<String, dynamic> responseData = json.decode(response.toString());
       int status = responseData['status'];      
       if (status != 200) {
+        await _jwtStorage.deleteJwtData();
         throw DioException(
           requestOptions: response.requestOptions,
           response: response,
