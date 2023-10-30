@@ -46,7 +46,7 @@ class Home extends ConsumerWidget {
               return Container(
                 color: Colors.white,
                 child: const Center(
-                      child: Text("Yeni bildirim yok.")
+                      child: Text("Yeni bildiriminiz yok.")
                   ),
               );
             }else{
