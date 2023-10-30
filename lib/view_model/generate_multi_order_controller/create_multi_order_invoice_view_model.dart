@@ -9,6 +9,7 @@ import '../../config/api_url.dart';
 import '../../model/shipment_model.dart';
 import '../../service/post_service.dart';
 import '../../view/invoice_view/generate_invoice.dart';
+import '../get_invoice_view_model.dart';
 import 'multi_order_invoice_view_model.dart';
 
 final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((
@@ -48,7 +49,8 @@ final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((
     ref.read(getShipmentProvider.future);
     await ref.refresh(getOrderProvider);
     ref.read(getOrderProvider.future);
-    await ref.refresh(getOrderProvider);
+    await ref.refresh(getInvoicesProvider);
+    ref.read(getInvoicesProvider);
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {
