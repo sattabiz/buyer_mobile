@@ -1,4 +1,6 @@
 import 'package:PaletPoint/utils/widget_helper.dart';
+import 'package:PaletPoint/view_model/get_notifications_view_model.dart';
+import 'package:PaletPoint/view_model/get_order_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,10 +27,14 @@ class _ProposalState extends ConsumerState<ProposalView> {
     final proposalListAsyncValue = ref.watch(getProposalProvider);
     ref.watch(getListCurrenciesProvider);
     return Swipe(
-      onSwipeLeft: () {
+      onSwipeLeft: () async{
+        ref.refresh(getOrderProvider);
         context.go('/order');
       },
-      onSwipeRight: () => context.go('/home'),
+      onSwipeRight:() async{
+        ref.refresh(getNotificationProvider);
+        context.go('/home');
+      },
       child: RefreshIndicator(
         onRefresh: () async{
           await ref.refresh(getProposalProvider);        

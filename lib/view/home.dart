@@ -32,7 +32,8 @@ class Home extends ConsumerWidget {
     final chatId = ref.watch(messageRoomIdProvider);
     ref.watch(getCurrentUserInfoProvider);
     return Swipe(
-      onSwipeLeft: () {
+      onSwipeLeft: () async{
+        ref.refresh(getProposalProvider);
         context.go('/proposal');
       },
       child: RefreshIndicator(
@@ -41,7 +42,15 @@ class Home extends ConsumerWidget {
         },
         child: notificationListAsyncValue.when(
           data: (data) {
-            return ListView.builder(
+            if(data.isEmpty){
+              return Container(
+                color: Colors.white,
+                child: const Center(
+                      child: Text("Yeni bildirim yok.")
+                  ),
+              );
+            }else{
+              return ListView.builder(
               itemCount: data.length,
               itemBuilder: (context, index) {
                 if (data[index] is OrderModel) {
@@ -186,7 +195,8 @@ class Home extends ConsumerWidget {
                   );
                 }
               },
-            );
+             );
+            }
           },
           loading: () => Container(),
           error: (error, stack) {
