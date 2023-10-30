@@ -31,7 +31,6 @@ class Home extends ConsumerWidget {
     final notificationListAsyncValue = ref.watch(getNotificationProvider);
     final chatId = ref.watch(messageRoomIdProvider);
     ref.watch(getCurrentUserInfoProvider);
-    double witdh = MediaQuery.of(context).size.width;
     return Swipe(
       onSwipeLeft: () async{
         ref.refresh(getProposalProvider);
@@ -45,13 +44,11 @@ class Home extends ConsumerWidget {
           data: (data) {
             if(data.isEmpty){
               return Container(
-                  width: witdh,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  alignment: Alignment.center,
-                  child: Text(
-                    FlutterI18n.translate(context, 'tr.home.empty_notification'),
-                  )
-                );
+                color: Colors.white,
+                child: const Center(
+                      child: Text("Yeni bildiriminiz yok.")
+                  ),
+              );
             }else{
               return ListView.builder(
               itemCount: data.length,
