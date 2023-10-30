@@ -1,5 +1,6 @@
 import 'package:PaletPoint/view/order_view/ready_for_ship_detail.dart';
 import 'package:PaletPoint/view/widget/detail_components/detail_table_order.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,13 +62,12 @@ class OrderDetail extends ConsumerWidget {
                         alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.only(bottom: 10.0),
                         child: Text(
-                          FlutterI18n.translate(
-                              context, 'tr.order.${orderAsyncValue.state}'),
+                          FlutterI18n.translate(context, 'tr.order.${orderAsyncValue.state}'),
                           style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSecondaryContainer,
-                              ),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer,
+                          ),
                         ),
                       ),
                       SizedBox(

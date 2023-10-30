@@ -7,7 +7,7 @@ import '../../view/proposal_view/proposal_detail.dart';
 import '../get_notifications_view_model.dart';
 import 'get_proposal_view_model.dart';
 
-//for 
+//for
 final createProposalProvider = FutureProvider.autoDispose((
   ref,
 ) async {
@@ -18,14 +18,13 @@ final createProposalProvider = FutureProvider.autoDispose((
 
   Map<String, dynamic> _productsAttributes = {};
 
-
-
   for (int i = 0; i < _formItems.length; i++) {
     _productsAttributes['$i'] = {
       "id": _formItems[i].productId.toString(),
       "price": _formItems[i].price.toString(),
       "proposal_note": _formItems[i].note,
       "currency_unit": _formItems[i].currencies,
+      // "products_proposal_files": _formItems[i].image,
     };
   }
 
@@ -37,17 +36,15 @@ final createProposalProvider = FutureProvider.autoDispose((
     "products_proposals_attributes": _productsAttributes
   };
 
-
   final formData3 = FormData.fromMap(data);
 
-
-   try {
+  try {
     response = await apiService.postFormdata(
         url: ApiUrls.replyProposal, data: formData3);
     await ref.refresh(getProposalProvider);
     ref.read(getProposalProvider.future);
     await ref.refresh(getNotificationProvider);
-     ref.read(getNotificationProvider.future);
+    ref.read(getNotificationProvider.future);
   } catch (e) {
     if (e is DioException) {
       if (e.response?.statusCode != 200) {
@@ -66,14 +63,21 @@ class FormItem {
   double? price;
   String? note;
   int? currencies;
-  FormItem({this.productId, this.price, this.note, this.currencies});
-  FormItem copyWith({int? productId, double? price, String? note, int? currencies}) {
+  MultipartFile? image;
+  FormItem(
+      {this.productId, this.price, this.note, this.currencies, this.image});
+  FormItem copyWith(
+      {int? productId,
+      double? price,
+      String? note,
+      int? currencies,
+      MultipartFile? image}) {
     return FormItem(
-      productId: productId ?? this.productId,
-      price: price ?? this.price,
-      note: note ?? this.note,
-      currencies: currencies ?? this.currencies
-    );
+        productId: productId ?? this.productId,
+        price: price ?? this.price,
+        note: note ?? this.note,
+        currencies: currencies ?? this.currencies,
+        image: image ?? this.image);
   }
 }
 
@@ -90,33 +94,37 @@ class FormItemModelNotifier extends StateNotifier<List<FormItem>> {
     state = [...state, form];
   }
 
-  void addPrice(int productId, double price) {
+  void addImage(int productId, MultipartFile image) {
     state = [
       for (final form in state)
         if (form.productId == productId)
-         form.copyWith(price: price)
-        else
-         form
+          form.copyWith(image: image)
+        else 
+          form
     ];
   }
 
-  void addCurrencies(int productId, int currencies){
+  void addPrice(int productId, double price) {
     state = [
-      for(final form in state)
-        if(form.productId == productId)
+      for (final form in state)
+        if (form.productId == productId) form.copyWith(price: price) else form
+    ];
+  }
+
+  void addCurrencies(int productId, int currencies) {
+    state = [
+      for (final form in state)
+        if (form.productId == productId)
           form.copyWith(currencies: currencies)
         else
           form
     ];
   }
-  void addNote(int productId, String note){
-    state = [
-      for(final form in state)
-        if(form.productId == productId)
-          form.copyWith(note: note)
-        else
-         form
 
+  void addNote(int productId, String note) {
+    state = [
+      for (final form in state)
+        if (form.productId == productId) form.copyWith(note: note) else form
     ];
   }
 }

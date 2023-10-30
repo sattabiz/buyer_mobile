@@ -52,7 +52,7 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final proposalAsyncValue = ref.watch(proposalIndexProvider);
+    final proposalAsyncValue = ref.watch(proposalIndexProvider);  
     final chatId = ref.watch(messageRoomIdProvider);
     ref.read(offerModelProvider).proposalId = proposalAsyncValue!.proposalId;
     List<DropdownMenuItem<String>> dropDownMenuPaymentType =
@@ -77,7 +77,7 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
     }).toList();
 
     double width = MediaQuery.of(context).size.width;
-
+    debugPrint(proposalAsyncValue.productProposals.toString());
     return Swipe(
       onSwipeRight: () {
         context.go('/proposal');
