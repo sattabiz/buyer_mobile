@@ -1,5 +1,6 @@
 import 'package:PaletPoint/utils/widget_helper.dart';
 import 'package:PaletPoint/view_model/generate_multi_order_controller/multi_order_invoice_view_model.dart';
+import 'package:PaletPoint/view_model/get_order_view_model.dart';
 import 'package:PaletPoint/view_model/get_shipment_view_model.dart';
 import 'package:PaletPoint/view_model/invoice_paid_view_model.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,10 @@ class InvoiceView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final invoiceListAsyncValue = ref.watch(getInvoicesProvider);
     return Swipe(
-      onSwipeRight: () => context.go('/order'),
+      onSwipeRight: () async{
+        ref.refresh(getOrderProvider);
+        context.go('/order');
+      },
       child: RefreshIndicator(
         onRefresh: () async{
           ref.refresh(getInvoicesProvider);

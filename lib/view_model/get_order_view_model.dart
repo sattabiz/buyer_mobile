@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../config/api_url.dart';
 import '../model/order_model.dart';
 import '../service/get_services.dart';
@@ -12,7 +11,6 @@ final getOrderProvider =
   Response response;
   try {
     response = await apiService.get(url: ApiUrls.orders);
-
   } catch (e) {
     if (e is DioException) {
       rethrow;

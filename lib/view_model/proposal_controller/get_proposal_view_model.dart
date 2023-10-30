@@ -1,9 +1,5 @@
-
-
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../config/api_url.dart';
 import '../../model/proposal_model.dart';
 import '../../service/get_services.dart';
