@@ -1,5 +1,7 @@
 import 'package:PaletPoint/view_model/proposal_controller/list_currencies_view_model.dart';
+import 'package:dio/dio.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -180,6 +182,29 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                       iconSize: 24,
                     ),
                   ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  // IconButton(
+                  //   padding: const EdgeInsets.only(bottom: 15),
+                  //   onPressed: () async {
+                  //     FilePickerResult? result = await FilePicker.platform.pickFiles();
+                  //     if (result != null) {
+                  //       PlatformFile file = result.files.first;
+                  //       MultipartFile filetoMultipart = await MultipartFile.fromFile(
+                  //         file.path!,
+                  //         filename: file.name,
+                  //       );
+                  //       ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart);
+                  //     } else {
+                  //       return;
+                  //     }
+                  //   },
+                  //   icon: Icon(
+                  //     Icons.attach_file_outlined,
+                  //     color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  //   )
+                  // ),
                 ],
               ),
               const SizedBox(
