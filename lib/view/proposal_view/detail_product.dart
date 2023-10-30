@@ -1,7 +1,5 @@
 import 'package:PaletPoint/view_model/proposal_controller/list_currencies_view_model.dart';
-import 'package:dio/dio.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
