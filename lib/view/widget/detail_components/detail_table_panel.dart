@@ -5,18 +5,16 @@ import '../../../utils/widget_helper.dart';
 class DetailTablePanel extends StatelessWidget {
   final List<dynamic> productList;
   final bool isFileAttached;
-  final bool isPending;
 
   const DetailTablePanel({
     Key? key,
     required this.productList,
     required this.isFileAttached,
-    required this.isPending,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> keys = getTotalCost
+    List<Widget> keys = calculateTaxRate(productList)
         .entries
         .map((entry) => Container(
               margin: const EdgeInsets.only(top: 5.0),
@@ -30,14 +28,14 @@ class DetailTablePanel extends StatelessWidget {
             ))
         .toList();
 
-    List<Widget> values = getTotalCost
+    List<Widget> values = calculateTaxRate(productList)
         .entries
         .map((entry) => Container(
               margin: const EdgeInsets.only(top: 5.0),
               alignment: Alignment.centerRight,
               width: 50,
               child: Text(
-                isPending ? "-" : entry.value,
+                entry.value,
                 maxLines: 1,
                 style: Theme.of(context)
                     .textTheme

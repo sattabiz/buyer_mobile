@@ -39,6 +39,8 @@ String getCurrencySymbol(String currencyCode) {
       return '€';
     case 'USD':
       return '\$';
+    case 'GBP':
+      return '£';
     default:
       return currencyCode;
   }
@@ -60,7 +62,7 @@ Map<String, String> calculateTaxRate(List<dynamic> productList) {
   Map<String, double> taxRateMap = {};
   Map<String, String> getTotalCost = {};
   late double total;
-  late double taxRate;
+  late int taxRate;
   late double totalWithoutTax;
   late double totalPrice;
   totalPrice = 0.0;

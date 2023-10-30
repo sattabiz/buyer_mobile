@@ -1,3 +1,4 @@
+import 'package:PaletPoint/utils/widget_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -94,7 +95,7 @@ class DetailTableOrder extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 alignment: Alignment.centerRight,
                 child: Text(
-                  products[i].price.toString(),
+                  "${products[i].price.toString()} ${getCurrencySymbol(products[i].currencyCode.toString())}",
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )

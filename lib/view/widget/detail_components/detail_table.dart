@@ -107,7 +107,7 @@ class DetailTable extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                 alignment: Alignment.centerRight,
                 child: Text(
-                  products[i].price.toString(),
+                   "${products[i].price.toString()} ${getCurrencySymbol(products[i].currencyCode.toString())}",
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   )
