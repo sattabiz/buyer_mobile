@@ -22,7 +22,7 @@ class InvoiceView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final invoiceListAsyncValue = ref.watch(getInvoicesProvider);
     return Swipe(
-      onSwipeRight: () => context.go('/home'),
+      onSwipeRight: () => context.go('/order'),
       child: RefreshIndicator(
         onRefresh: () async{
           ref.refresh(getInvoicesProvider);
