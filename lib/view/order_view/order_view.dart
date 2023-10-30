@@ -24,7 +24,7 @@ class OrderView extends ConsumerWidget {
       onSwipeLeft: () {
         context.go('/invoice');
       },
-      onSwipeRight: () => context.go('/home'),
+      onSwipeRight: () => context.go('/proposal'),
       child: RefreshIndicator(
         onRefresh: () async{
           ref.refresh(getOrderProvider);
