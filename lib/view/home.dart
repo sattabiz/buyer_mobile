@@ -23,6 +23,7 @@ import '../view_model/proposal_controller/get_proposal_view_model.dart';
 import '../view_model/proposal_controller/list_currencies_view_model.dart';
 import 'widget/index_list_tile.dart';
 
+
 class Home extends ConsumerWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -35,6 +36,10 @@ class Home extends ConsumerWidget {
       onSwipeLeft: () async{
         ref.refresh(getProposalProvider);
         context.go('/proposal');
+      },
+      onSwipeDown: () async{
+        ref.refresh(getNotificationProvider);
+        debugPrint("response");
       },
       child: RefreshIndicator(
         onRefresh: () async{
