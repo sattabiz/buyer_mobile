@@ -84,13 +84,15 @@ class OrderDetail extends ConsumerWidget {
                       ? DetailTable(products: orderAsyncValue.products!)
                       : DetailTableOrder(products: orderAsyncValue.products!),
                     ),
-                    SizedBox(
-                      width: width,
-                      child: DetailTablePanel(
-                        productList: orderAsyncValue.products!,
-                        isFileAttached: false,
-                      ),
-                    )
+                    orderAsyncValue.state.toString() ==  'order_approved'
+                     ? SizedBox(
+                         width: width,
+                         child: DetailTablePanel(
+                           productList: orderAsyncValue.products!,
+                           isFileAttached: false,
+                         )
+                       )
+                     : const SizedBox()
                   ],
                 ),
               ),
