@@ -6,9 +6,7 @@ import '../config/api_url.dart';
 import '../service/post_service.dart';
 import '../view/order_view/ready_for_ship_detail.dart';
 
-final createShipmentPostProvider = FutureProvider.autoDispose((
-  ref,
-) async {
+final createShipmentPostProvider = FutureProvider.autoDispose((ref) async {
   final apiService = PostService();
   Response response;
 
@@ -24,12 +22,11 @@ final createShipmentPostProvider = FutureProvider.autoDispose((
       "ready_amount": productList[i].readyAmount.toString(),
     };
   }
+  
   Map<String, dynamic> data = {
     "order_id": orderId,
     "products_proposals": _productsAttributes
   };
-
-
  
 
    try {

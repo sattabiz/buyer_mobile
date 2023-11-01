@@ -12,9 +12,7 @@ final getCurrentUserInfoProvider = FutureProvider.autoDispose<CurrentUserInfoMod
   } catch (e) {
     rethrow;
   }
-  CurrentUserInfoModel currentUserInfoModel =
-          CurrentUserInfoModel.fromMap(response.data);
-
+  CurrentUserInfoModel currentUserInfoModel = CurrentUserInfoModel.fromMap(response.data);
   ref.read(userIdProvider.notifier).state = currentUserInfoModel;
 
   return currentUserInfoModel;

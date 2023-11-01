@@ -1,21 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../config/api_url.dart';
 import '../../service/post_service.dart';
 import '../../view/widget/chat_box.dart';
 import '../get_notifications_view_model.dart';
 
 final createMessageProvider = FutureProvider.autoDispose((ref) async {
+
   final apiService = PostService();
   Response response;
-  final createMessageMapAsyncValue =
-       ref.watch(createMessageMapProvider);
 
-  final readMessageMapAsyncValue =
-       ref.watch(readMessageProvider);
+  final createMessageMapAsyncValue = ref.watch(createMessageMapProvider); //user message room value
+  final readMessageMapAsyncValue = ref.watch(readMessageProvider);       //user' s messsage read provider
   
-createMessageMapAsyncValue!['body'] = readMessageMapAsyncValue;
+  createMessageMapAsyncValue!['body'] = readMessageMapAsyncValue;
 
   try {
     response = await apiService.post(url: ApiUrls.createMessage, data: createMessageMapAsyncValue);
@@ -29,4 +27,5 @@ createMessageMapAsyncValue!['body'] = readMessageMapAsyncValue;
 });
 
 final createMessageMapProvider = StateProvider<Map?>((ref) => {})  ;
+
 final chatBoxHeaderProvider = StateProvider<String?>((ref) => "")  ;

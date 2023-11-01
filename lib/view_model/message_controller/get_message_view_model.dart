@@ -1,15 +1,15 @@
 import 'package:PaletPoint/view_model/get_notifications_view_model.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../config/api_url.dart';
 import '../../model/message_model.dart';
 import '../../service/get_services.dart';
 import '../../view/proposal_view/proposal_view.dart';
 import 'list_messages_view_model.dart';
-final messageRoomIdProvider = StateProvider<int>(
-  (ref) {
+
+
+
+final messageRoomIdProvider = StateProvider<int>((ref) {
     return 0;
   },
 );
@@ -34,9 +34,9 @@ final getMessageProvider =
     for(Message message in getMessage.messages!){
       ref.read(liveChatProvider.notifier).addMessage(message);
     }
-
   }
 
-  ref.read(messageRoomIdProvider.notifier).state = await getMessage.messageRoomId!;
+  ref.read(messageRoomIdProvider.notifier).state = await getMessage.messageRoomId!;   //read message room id
+
   return getMessage;
 });

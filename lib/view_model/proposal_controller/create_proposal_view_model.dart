@@ -6,10 +6,8 @@ import '../../view/proposal_view/proposal_detail.dart';
 import '../get_notifications_view_model.dart';
 import 'get_proposal_view_model.dart';
 
-//for
-final createProposalProvider = FutureProvider.autoDispose((
-  ref,
-) async {
+
+final createProposalProvider = FutureProvider.autoDispose((ref) async {
   final apiService = PostService();
   Response response;
   List<FormItem> _formItems = await ref.watch(formItemProvider);
@@ -35,11 +33,10 @@ final createProposalProvider = FutureProvider.autoDispose((
     "products_proposals_attributes": _productsAttributes
   };
 
-  final formData3 = FormData.fromMap(data);
+  final formData = FormData.fromMap(data);
 
   try {
-    response = await apiService.postFormdata(
-        url: ApiUrls.replyProposal, data: formData3);
+    response = await apiService.postFormdata(url: ApiUrls.replyProposal, data: formData);
     await ref.refresh(getProposalProvider);
     ref.read(getProposalProvider.future);
     await ref.refresh(getNotificationProvider);
@@ -58,14 +55,9 @@ class FormItem {
   String? note;
   int? currencies;
   MultipartFile? image;
-  FormItem(
-      {this.productId, this.price, this.note, this.currencies, this.image});
-  FormItem copyWith(
-      {int? productId,
-      double? price,
-      String? note,
-      int? currencies,
-      MultipartFile? image}) {
+  FormItem({this.productId, this.price, this.note, this.currencies, this.image});
+
+  FormItem copyWith({int? productId, double? price, String? note, int? currencies, MultipartFile? image}) {
     return FormItem(
         productId: productId ?? this.productId,
         price: price ?? this.price,
@@ -75,13 +67,13 @@ class FormItem {
   }
 }
 
-final formItemProvider =
-    StateNotifierProvider<FormItemModelNotifier, List<FormItem>>((ref) {
+final formItemProvider = StateNotifierProvider<FormItemModelNotifier, List<FormItem>>((ref) {
   return FormItemModelNotifier();
 });
 
 class FormItemModelNotifier extends StateNotifier<List<FormItem>> {
   FormItemModelNotifier() : super([]);
+  
   void addFormItem(FormItem form, int productId) {
     form.productId = productId;
     form.currencies = 0;

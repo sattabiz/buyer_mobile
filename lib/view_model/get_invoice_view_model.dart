@@ -3,10 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/api_url.dart';
 import '../model/invoice_model.dart';
 import '../service/get_services.dart';
-import 'get_order_view_model.dart';
 
-final getInvoicesProvider =
-    FutureProvider.autoDispose<List<InvoiceModel>>((ref) async {
+final getInvoicesProvider = FutureProvider.autoDispose<List<InvoiceModel>>((ref) async {
   final apiService = ApiService();
   Response response;
   try {

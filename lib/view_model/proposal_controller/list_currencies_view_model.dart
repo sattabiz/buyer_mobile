@@ -7,7 +7,6 @@ import '../../service/get_services.dart';
 
 final getListCurrenciesProvider = FutureProvider((ref) async {
   final apiService = ApiService();
-
   Response response;
 
   try {
@@ -29,9 +28,6 @@ final getListCurrenciesProvider = FutureProvider((ref) async {
     currencyModelList.add(currencyModel);
   });
 
-  /* currencyModels.forEach((model) {
-    print('Model: ${model.toString()}');
-  }); */
   if (currencyModelList == []) {
     CurrencyModel currency = CurrencyModel(
       name: 'Türk Lirası',
@@ -40,7 +36,9 @@ final getListCurrenciesProvider = FutureProvider((ref) async {
       source: 'TCMB',
       active: true,
     );
+
     ref.read(currenciesProvider.notifier).state = [currency];
+
   }else{
     ref.read(currenciesProvider.notifier).state = currencyModelList;
   }

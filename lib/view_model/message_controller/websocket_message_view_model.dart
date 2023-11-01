@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../model/message_model.dart';
@@ -21,7 +20,7 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
       "identifier":
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
-    
+
     socket.sink.add(json.encode(request));
 
     await for (final message in socket.stream) {      
@@ -49,10 +48,10 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
       "identifier":
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
-    print('WebSocketProvider: WebSocket bağlantısı kapatılıyor');
+    
     socket.sink.add(json.encode(request2));
     socket.sink.close();
-    debugPrint("------------------------------------------------------");
+  
   
   }
 });
