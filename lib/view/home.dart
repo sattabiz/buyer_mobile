@@ -47,7 +47,7 @@ class Home extends ConsumerWidget {
               return ListView(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height*0.73,
+                    height: MediaQuery.of(context).size.height*0.65,
                     color: Colors.white,
                     alignment: Alignment.center,
                     child: const Text("Yeni bildiriminiz yok."),
