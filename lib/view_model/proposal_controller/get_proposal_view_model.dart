@@ -4,8 +4,7 @@ import '../../config/api_url.dart';
 import '../../model/proposal_model.dart';
 import '../../service/get_services.dart';
 
-final getProposalProvider =
-    FutureProvider.autoDispose<List<ProposalModel>>((ref) async {
+final getProposalProvider = FutureProvider.autoDispose<List<ProposalModel>>((ref) async {
   final apiService = ApiService();
 
   Response response;

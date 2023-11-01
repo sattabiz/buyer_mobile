@@ -7,8 +7,7 @@ import '../model/proposal_model.dart';
 import '../model/shipment_model.dart';
 import '../service/get_services.dart';
 
-final getNotificationProvider =
-    FutureProvider.autoDispose<List<dynamic>>((ref) async {
+final getNotificationProvider = FutureProvider.autoDispose<List<dynamic>>((ref) async {
   final apiService = ApiService();
   Response response;
 

@@ -5,8 +5,7 @@ import '../config/api_url.dart';
 import '../model/order_model.dart';
 import '../service/get_services.dart';
 
-final getOrderProvider =
-    FutureProvider.autoDispose<List<OrderModel>>((ref) async {
+final getOrderProvider = FutureProvider.autoDispose<List<OrderModel>>((ref) async {
   final apiService = ApiService();
   Response response;
   try {
@@ -25,8 +24,5 @@ final getOrderProvider =
   return _orderList;
 });
 
-final navigatorKeyProvider = Provider<GlobalKey<NavigatorState>>((ref) {
-  return GlobalKey<NavigatorState>();
-});
 
 final orderIndexProvider = StateProvider<OrderModel?>((ref) => OrderModel());

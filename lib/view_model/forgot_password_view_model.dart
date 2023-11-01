@@ -10,7 +10,6 @@ class ForgotPasswordNotifier extends StateNotifier<Map<String, dynamic>> {
   Response? response;
 
 
-
   Future<void> forgotPassword({String? email}) async {
     final autService = AuthenticationService();
     Map<String, dynamic> _forgotPasswordData = {    
@@ -18,9 +17,9 @@ class ForgotPasswordNotifier extends StateNotifier<Map<String, dynamic>> {
         "email": email
       }
     };
+
     try {
       response = await autService.forgotPassword(forgotPasswordData: _forgotPasswordData);
-      debugPrint(response!.data.toString());
       Map<String, dynamic> responseData = jsonDecode(response.toString());
       state = responseData;
     } catch (e) {
@@ -29,7 +28,5 @@ class ForgotPasswordNotifier extends StateNotifier<Map<String, dynamic>> {
   }
 }
 
-final forgotPasswordProvider =
-    StateNotifierProvider<ForgotPasswordNotifier, Map<String, dynamic>>(
-        (ref) => ForgotPasswordNotifier());
+final forgotPasswordProvider =StateNotifierProvider<ForgotPasswordNotifier, Map<String, dynamic>>((ref) => ForgotPasswordNotifier());
 

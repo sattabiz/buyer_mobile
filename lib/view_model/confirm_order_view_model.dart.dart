@@ -13,10 +13,11 @@ final confirmOrderProvider = FutureProvider.autoDispose((ref) async {
   Map<String, dynamic> _productsAttributes = {
     "order_id":ref.watch(orderIdProvider)
   };
+  
   try {
     response = await apiService.post(url: ApiUrls.confirmOrder, data: _productsAttributes);
      await ref.refresh(getOrderProvider);
-            ref.read(getOrderProvider.future); 
+     ref.read(getOrderProvider.future); 
      await ref.refresh(getNotificationProvider);
      ref.read(getNotificationProvider.future);
   } catch (e) {
