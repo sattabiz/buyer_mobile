@@ -20,9 +20,6 @@ final invoicePaidProvider = FutureProvider.autoDispose((ref) async {
      await ref.refresh(getInvoicesProvider);
      ref.read(getInvoicesProvider.future); 
   } catch (e) {
-    if (e is DioException) {
-
-    }
     rethrow;
   }
 

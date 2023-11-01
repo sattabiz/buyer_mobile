@@ -24,8 +24,6 @@ final getMessageProvider =
     response = await apiService.get(url: ApiUrls.getMessage(messageId!));
     ref.refresh(getNotificationProvider);
   } catch (e) {
-    if (e is DioException) {
-    }
     rethrow;
   }
 

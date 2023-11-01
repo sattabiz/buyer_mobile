@@ -14,9 +14,6 @@ final getAddressFutureProvider =
   try {
     response = await apiService.get(url: ApiUrls.address);
   } catch (e) {
-    if (e is DioException) {
-      rethrow;
-    }
     rethrow;
   }
   List<AddressModel> _addressModelList = [];

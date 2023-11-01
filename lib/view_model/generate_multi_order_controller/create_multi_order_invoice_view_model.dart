@@ -3,8 +3,6 @@ import 'package:PaletPoint/view_model/get_shipment_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-
 import '../../config/api_url.dart';
 import '../../model/shipment_model.dart';
 import '../../service/post_service.dart';
@@ -52,10 +50,6 @@ final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((
     await ref.refresh(getInvoicesProvider);
     ref.read(getInvoicesProvider);
   } catch (e) {
-    if (e is DioException) {
-      if (e.response?.statusCode != 200) {
-      }
-    }
     rethrow;
   }
 

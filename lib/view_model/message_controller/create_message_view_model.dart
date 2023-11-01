@@ -21,8 +21,6 @@ createMessageMapAsyncValue!['body'] = readMessageMapAsyncValue;
     response = await apiService.post(url: ApiUrls.createMessage, data: createMessageMapAsyncValue);
     ref.refresh(getNotificationProvider);   
   } catch (e) {
-    if (e is DioException) {
-    }
     rethrow;
   }
 

@@ -14,21 +14,17 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
       Uri.parse('wss://test.satta.biz/cable?jwt=$_jwt'));
   int? messageRoomIdAsyncValue = await ref.watch(messageRoomIdProvider);
 
-
-  print(socket);
-  if (ref.watch(messagePipeProvider) == 1 &&
-      ref.watch(messageRoomIdProvider) != 0) {
+  if (ref.watch(messagePipeProvider) == 1 && ref.watch(messageRoomIdProvider) != 0) {
     //for subscription
     final request = {
       "command": "subscribe",
       "identifier":
           "{\"channel\":\"MessageRoomChannel\",\"message_room_id\":$messageRoomIdAsyncValue}"
     };
+    
     socket.sink.add(json.encode(request));
-    print('WebSocketProvider: Subscription isteği gönderildi');
 
-    await for (final message in socket.stream) {
-      print('Received message: $message');
+    await for (final message in socket.stream) {      
       if (message.toString().contains('"body"')) {
         print('WebSocketProvider: Mesaj alındı: $message');
         WebSocketMessageModel webSocketAsyncValue =
@@ -47,7 +43,6 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
       yield socket;
     }
   } else if (ref.watch(messagePipeProvider) == 2) {
-    print(ref.watch(messagePipeProvider));
     //for unsubscription
     final request2 = {
       "command": "unsubscribe",

@@ -12,9 +12,6 @@ final getInvoicesProvider =
   try {
     response = await apiService.get(url: ApiUrls.invoices);
   } catch (e) {
-    if (e is DioException) {
-      rethrow;
-    }
     rethrow;
   }
 

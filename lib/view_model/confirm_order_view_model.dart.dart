@@ -1,10 +1,8 @@
 import 'package:PaletPoint/view_model/get_notifications_view_model.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/api_url.dart';
 import '../service/post_service.dart';
-import '../view/order_view/order_view.dart';
 import 'get_order_view_model.dart';
 
 
@@ -22,11 +20,6 @@ final confirmOrderProvider = FutureProvider.autoDispose((ref) async {
      await ref.refresh(getNotificationProvider);
      ref.read(getNotificationProvider.future);
   } catch (e) {
-    if (e is DioException) {
-      if (e.response?.statusCode != 200) {
-        ref.read(navigatorKeyProvider).currentState!.pushNamed("/login");
-      }
-    }
     rethrow;
   }
 
