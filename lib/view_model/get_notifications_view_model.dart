@@ -15,9 +15,7 @@ final getNotificationProvider =
   try {
     response = await apiService.get(url: ApiUrls.notifications);
   } catch (e) {
-    if (e is DioException) {
-      rethrow;
-    }
+
     rethrow;
   }
 

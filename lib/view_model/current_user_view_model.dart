@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/api_url.dart';
 import '../model/get_current_user_info_model.dart';
@@ -11,9 +10,6 @@ final getCurrentUserInfoProvider = FutureProvider.autoDispose<CurrentUserInfoMod
   try {
     response = await apiService.get(url: ApiUrls.userInfo);
   } catch (e) {
-    if (e is DioException) {
-      rethrow;
-    }
     rethrow;
   }
   CurrentUserInfoModel currentUserInfoModel =

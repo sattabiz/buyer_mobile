@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/api_url.dart';
 import '../../service/post_service.dart';
@@ -46,11 +45,6 @@ final createProposalProvider = FutureProvider.autoDispose((
     await ref.refresh(getNotificationProvider);
     ref.read(getNotificationProvider.future);
   } catch (e) {
-    if (e is DioException) {
-      if (e.response?.statusCode != 200) {
-        //ref.read(navigatorKeyProvider).currentState!.pushNamed("/login");
-      }
-    }
     rethrow;
   }
 

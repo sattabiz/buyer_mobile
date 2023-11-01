@@ -13,9 +13,6 @@ final getProposalProvider =
   try {
     response = await apiService.get(url: ApiUrls.proposals);
   } catch (e) {
-    if (e is DioException) {
-      rethrow;
-    }
     rethrow;
   }
 

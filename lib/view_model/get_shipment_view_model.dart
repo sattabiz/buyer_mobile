@@ -14,9 +14,6 @@ final getShipmentProvider =
   try {
     response = await apiService.get(url: ApiUrls.shipment);
   } catch (e) {
-    if (e is DioException) {
-      rethrow;
-    }
     rethrow;
   }
 

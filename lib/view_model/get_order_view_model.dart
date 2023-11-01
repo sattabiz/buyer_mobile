@@ -12,9 +12,6 @@ final getOrderProvider =
   try {
     response = await apiService.get(url: ApiUrls.orders);
   } catch (e) {
-    if (e is DioException) {
-      rethrow;
-    }
     rethrow;
   }
   List<OrderModel> _orderList = [];

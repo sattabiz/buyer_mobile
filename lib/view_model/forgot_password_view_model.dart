@@ -24,9 +24,7 @@ class ForgotPasswordNotifier extends StateNotifier<Map<String, dynamic>> {
       Map<String, dynamic> responseData = jsonDecode(response.toString());
       state = responseData;
     } catch (e) {
-      if (e is DioException) {
       rethrow;
-    }
     }
   }
 }
