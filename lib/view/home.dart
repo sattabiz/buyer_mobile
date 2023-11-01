@@ -37,10 +37,6 @@ class Home extends ConsumerWidget {
         ref.refresh(getProposalProvider);
         context.go('/proposal');
       },
-      onSwipeDown: () async{
-        ref.refresh(getNotificationProvider);
-        debugPrint("response");
-      },
       child: RefreshIndicator(
         onRefresh: () async{
           ref.refresh(getNotificationProvider);
@@ -48,11 +44,15 @@ class Home extends ConsumerWidget {
         child: notificationListAsyncValue.when(
           data: (data) {
             if(data.isEmpty){
-              return Container(
-                color: Colors.white,
-                child: const Center(
-                      child: Text("Yeni bildiriminiz yok.")
+              return ListView(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height*0.75,
+                    color: Colors.white,
+                    alignment: Alignment.center,
+                    child: const Text("Yeni bildiriminiz yok."),
                   ),
+                ],
               );
             }else{
               return ListView.builder(
