@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../model/shipment_model.dart';
@@ -138,7 +139,16 @@ class _CardTableState extends ConsumerState<CardTable> {
                 alignment: Alignment.center,
                 child: TextFormField(
                   initialValue: widget.shipmentProduct[i].invoiceAmount!.toString(),
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true, signed: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(
+                        //r'^[-]{0,1}[0-9]*[,]?[0-9]*', //signed regex
+                        r'^[0-9]*[,]?[0-9]*',
+                      ),
+                    ),
+                  ],
                   textAlign: TextAlign.right,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant),

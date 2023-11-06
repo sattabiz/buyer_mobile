@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -127,7 +128,16 @@ class _ReadyForShipDetailState extends ConsumerState<ReadyForShipDetail> {
                             //   }
                             // },
                             cursorColor: Theme.of(context).colorScheme.onBackground,
-                            keyboardType: TextInputType.number,
+                            keyboardType:const TextInputType.numberWithOptions(
+                               decimal: true, signed: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(
+                                  //r'^[-]{0,1}[0-9]*[,]?[0-9]*', //signed regex
+                                  r'^[0-9]*[,]?[0-9]*',
+                                ),
+                              ),
+                            ],
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Theme.of(context).colorScheme.onPrimary,
