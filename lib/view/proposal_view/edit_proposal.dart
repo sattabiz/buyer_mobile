@@ -1,3 +1,4 @@
+import 'package:PaletPoint/utils/widget_helper.dart';
 import 'package:PaletPoint/view/proposal_view/proposal_detail.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -78,11 +79,8 @@ class _EditProposalState extends ConsumerState<EditProposal> {
             width: width,
             child: DetailInfo(
                 className: 'proposal',
-                row1: proposalAsyncValue.proposalCreatedAt
-                    .toString()
-                    .split('T')[0],
-                row2:
-                    proposalAsyncValue.deliveryDate.toString().split('T')[0],
+                row1: formattedDate(proposalAsyncValue.proposalCreatedAt.toString()),
+                row2: formattedDate(proposalAsyncValue.deliveryDate.toString()),
                 row3: proposalAsyncValue.paymentDueDate.toString(),
                 row4: proposalAsyncValue.includeShipmentCost == true
                     ? "Satıcı"
@@ -127,7 +125,6 @@ class _EditProposalState extends ConsumerState<EditProposal> {
                       String time = value!.split(" ")[0];
                       ref.read(offerModelProvider).deliveryTime =
                           int.parse(time);
-                      //debugPrint(value!.split(" ")[0]);
                     },
                     iconStyleData: const IconStyleData(
                       icon: Icon(
@@ -213,6 +210,7 @@ class _EditProposalState extends ConsumerState<EditProposal> {
                 ),
               ),
               items: dropDownMenuPaymentType,
+              value: dropDownMenuPaymentType[0].value,
               validator: (value) {
                 if (value == null) {
                   return  FlutterI18n.translate(context, 'tr.validations.payment_type');
