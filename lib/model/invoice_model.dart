@@ -17,6 +17,7 @@ class InvoiceModel {
   bool? notification;
   bool? messageNotification;
   bool? messageAppNotification = false;
+  List<int>? shipmentIds;
   List<Product>? products;
 
   InvoiceModel({
@@ -36,6 +37,7 @@ class InvoiceModel {
     this.notification,
     this.messageNotification,
     this.messageAppNotification,
+    this.shipmentIds,
     this.products,
   });
 
@@ -60,6 +62,7 @@ class InvoiceModel {
         buyerErpId: json["buyer_erp_id"],
         notification: json["notification"],
         messageNotification: json["message_notification"],
+        shipmentIds: List<int>.from(json['shipment_ids']),
         products: json["products"] == null
             ? []
             : List<Product>.from(

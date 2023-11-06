@@ -56,9 +56,15 @@ class InvoiceView extends ConsumerWidget {
                       }
                     })(),
                     onTap: () async {
-                      ref.read(messageIdProvider.notifier).state = 'invoice_id=${data[index].invoiceId}';
-                      ref.read(createMessageMapProvider.notifier).state = {'invoice_id': data[index].invoiceId};
-                      ref.read(chatBoxHeaderProvider.notifier).state = "Fatura No: ${data[index].invoiceId}";
+                      if(data[index].state == "invoice_sended"){
+                        ref.read(messageIdProvider.notifier).state = 'shipment_id=${data[index].shipmentIds![0]}';
+                        ref.read(createMessageMapProvider.notifier).state = {'shipment_id': data[index].shipmentIds![0]};
+                        ref.read(chatBoxHeaderProvider.notifier).state = "Sevkiyat No: ${data[index].shipmentIds![0]}";
+                      }else{
+                        ref.read(messageIdProvider.notifier).state = 'invoice_id=${data[index].invoiceId}';
+                        ref.read(createMessageMapProvider.notifier).state = {'invoice_id': data[index].invoiceId};
+                        ref.read(chatBoxHeaderProvider.notifier).state = "Fatura No: ${data[index].invoiceId}";
+                      }
                       ref.watch(getInvoicesProvider);
                       ref.read(invoiceIndexProvider.notifier).state = data[index];
                       ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 
