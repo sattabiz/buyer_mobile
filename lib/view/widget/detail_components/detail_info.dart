@@ -20,12 +20,6 @@ class DetailInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Table(
-      // columnWidths: const {
-      //   0: FlexColumnWidth(0.2),
-      //   1: FlexColumnWidth(0.2),
-      //   2: FlexColumnWidth(0.1),
-      //   3: FlexColumnWidth(0.2),
-      // },
       children: [
         TableRow(
           children: [

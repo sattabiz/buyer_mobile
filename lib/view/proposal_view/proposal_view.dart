@@ -79,20 +79,5 @@ class _ProposalState extends ConsumerState<ProposalView> {
         ),
       ),
     );
-
-    /* ListView.builder(
-      itemCount: 4,
-      itemBuilder: (context, index) => IndexListTile(
-        title: 'Headline',
-        subtitle: 'Subtitle',
-        svgPath: 'assets/alert.svg',
-        // trailing: const Counter(),
-        //onTap: () => context.go('/proposal/detail'),
-        onTap: () async {
-          ref.watch(getProposalProvider);
-          context.go('/proposal/detail');
-        },
-      ),
-    ); */
   }
 }
