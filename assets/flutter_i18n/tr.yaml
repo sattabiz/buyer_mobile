@@ -89,5 +89,10 @@ tr:
     generate_invoice: "Faturala"
     invoice_info: "Fatura Bilgileri"
     message: "Mesaj"
+  validations:
+    tgs: "Teklif geçerlilik süresi boş bırakılamaz."
+    payment_type: "Ödeme şekli boş bırakılamaz."
+    price: "Lütfen fiyat giriniz."
+    invoice_no: "Fatura no boş bırakılamaz."
       
 

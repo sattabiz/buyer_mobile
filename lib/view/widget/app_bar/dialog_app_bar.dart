@@ -10,6 +10,7 @@ class DialogAppBar extends ConsumerWidget {
   final String route;
   final String providerName;
   final String buttonName;
+  final Function? onPressed;
 
   const DialogAppBar({
     Key? key,
@@ -17,6 +18,7 @@ class DialogAppBar extends ConsumerWidget {
     required this.route,
     required this.providerName,
     required this.buttonName,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -39,15 +41,7 @@ class DialogAppBar extends ConsumerWidget {
       ),
       actions: [
         TextButton(
-          onPressed: () async{
-            if(providerName == 'createMultiOrderInvoiceProvider'){
-              ref.watch(createMultiOrderInvoiceProvider);
-              context.go('/invoice');
-            }else{
-              ref.watch(createShipmentPostProvider);
-              context.go('/order');
-            }
-          },
+          onPressed: () => onPressed!(),
           child: Text(
             buttonName,
             style: Theme.of(context)

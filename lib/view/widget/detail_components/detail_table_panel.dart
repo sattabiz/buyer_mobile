@@ -19,7 +19,7 @@ class DetailTablePanel extends StatelessWidget {
         .map((entry) => Container(
               margin: const EdgeInsets.only(top: 5.0),
               alignment: Alignment.centerRight,
-              width: 100,
+              // width: 50,
               child: Text(
                 entry.key,
                 style: Theme.of(context).textTheme.labelMedium,
@@ -33,7 +33,7 @@ class DetailTablePanel extends StatelessWidget {
         .map((entry) => Container(
               margin: const EdgeInsets.only(top: 5.0),
               alignment: Alignment.centerRight,
-              width: 50,
+              // width: 50,
               child: Text(
                 entry.value,
                 maxLines: 1,
@@ -45,20 +45,19 @@ class DetailTablePanel extends StatelessWidget {
             ))
         .toList();
 
-    return SingleChildScrollView(
-      child: Container(
-        margin: const EdgeInsets.only(top: 5.0, right: 10.0, bottom: 10.0),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Flexible(child: Column(children: keys)),
-              Flexible(child: Column(children: values)),
-              isFileAttached == true
-                  ? const SizedBox(width: 10)
-                  : const SizedBox(width: 0),
-            ]),
-      ),
+    return Container(
+      margin: const EdgeInsets.only(top: 5.0, right: 10.0, bottom: 10.0),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            const Spacer(flex:2),
+            Flexible(child: Column(children: keys)),
+            Flexible(child: Column(children: values)),
+            isFileAttached == true
+                ? const SizedBox(width: 10)
+                : const SizedBox(width: 0),
+          ]),
     );
   }
 }
