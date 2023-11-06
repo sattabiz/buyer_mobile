@@ -13,61 +13,7 @@ class CardTable extends ConsumerStatefulWidget {
 }
 
 class _CardTableState extends ConsumerState<CardTable> {
-  Map<int, Map<String, String>> products = {
-    0: {
-      'name': 'Ürün 1',
-      'amount': '1 adet',
-      'price': '110 ₺',
-      'total': '100 ₺',
-      'shippedAmount': "100",
-    },
-    1: {
-      'name': 'Ürün 2',
-      'amount': '10 adet',
-      'price': '110 ₺',
-      'total': '100 ₺',
-      'shippedAmount': "20",
-    },
-    2: {
-      'name': 'Ürün 3',
-      'amount': '1 adet',
-      'price': '110 ₺',
-      'total': '100 ₺ ',
-      'shippedAmount': "100",
-    },
-    3: {
-      'name': 'Ürün 4',
-      'amount': '1 adet',
-      'price': '110 ₺',
-      'total': '100 ₺ ',
-      'shippedAmount': "100",
-    },
-    4: {
-      'name': 'Ürün 5',
-      'amount': '1 adet',
-      'price': '110 ₺',
-      'total': '100 ₺ ',
-      'shippedAmount': "100",
-    },
-  };
-
   bool _isAllSelected = false;
-
-  List selectedProducts = [];
-
-  bool selected = false;
-
-  void onSelected(bool selected, int index, bool isAllSelected) {
-    if ((selected == true) || (isAllSelected == true)) {
-      selectedProducts.add(index);
-    }
-    else if (index == -1) {
-      selectedProducts.addAll(products.keys.toList());
-    }
-    else {
-      selectedProducts.remove(index);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,6 +138,7 @@ class _CardTableState extends ConsumerState<CardTable> {
                 alignment: Alignment.center,
                 child: TextFormField(
                   initialValue: widget.shipmentProduct[i].invoiceAmount!.toString(),
+                  keyboardType: TextInputType.number,
                   textAlign: TextAlign.right,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant),

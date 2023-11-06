@@ -1,6 +1,7 @@
 import 'package:PaletPoint/view_model/proposal_controller/list_currencies_view_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../model/currency_model.dart';
@@ -14,12 +15,15 @@ class ProposalBody extends ConsumerStatefulWidget {
   final String paletteDimensions;
   final double itemCount;
   final double? price;
-  ProposalBody(
-      {required this.productId,
-      required this.index,
-      required this.paletteDimensions,
-      required this.itemCount,
-      this.price});
+
+  const ProposalBody({
+    super.key,
+    required this.productId,
+    required this.index,
+    required this.paletteDimensions,
+    required this.itemCount,
+    this.price
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ProposalBodyState();
@@ -93,41 +97,47 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Flexible(
-                    child: TextFormField(
-                      cursorColor: Theme.of(context).colorScheme.onBackground,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).colorScheme.onPrimary,
-                        contentPadding: const EdgeInsets.only(left: 10.0),
-                        label: Text(
-                          widget.price == null ? "Fiyat" : widget.price.toString() ,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        constraints: const BoxConstraints(maxHeight: 35, maxWidth: 150),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color:
-                                  Theme.of(context).colorScheme.onSurfaceVariant),
-                        ),
-                        border: const OutlineInputBorder(),
+                  TextFormField(
+                    // key: widget.formKey,
+                    cursorColor: Theme.of(context).colorScheme.onBackground,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Theme.of(context).colorScheme.onPrimary,
+                      contentPadding: const EdgeInsets.only(left: 10.0, bottom: 10),
+                      label: Text(
+                        widget.price == null ? "Fiyat" : widget.price.toString() ,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Lütfen fiyat giriniz.';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        /* ref.read(formItemProvider.notifier).state[widget.index].price = double.parse(value);
-                        ref.read(formItemProvider.notifier).state[widget.index].productId = widget.productId; */
-                        if(boolean == false){
-                          ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
-                          boolean = true;
-                        }
-                        ref.read(formItemProvider.notifier).addPrice(widget.productId, double.parse(value));
-                      },
+                      constraints: const BoxConstraints(maxWidth: 150),
+                      isDense: true,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant),
+                      ),
+                      border: const OutlineInputBorder(),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      ),
                     ),
+                    
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return FlutterI18n.translate(context, 'tr.validations.price');
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      /* ref.read(formItemProvider.notifier).state[widget.index].price = double.parse(value);
+                      ref.read(formItemProvider.notifier).state[widget.index].productId = widget.productId; */
+                      if(boolean == false){
+                        ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
+                        boolean = true;
+                      }
+                      ref.read(formItemProvider.notifier).addPrice(widget.productId, double.parse(value));
+                    },
                   ),
                   const SizedBox(
                     width: 10,
@@ -159,12 +169,6 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                     ),
                     items: dropDownMenuCurrency,
                     value: '₺', //ref.read(offerModelProvider).currencyCode,
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please select gender.';
-                      }
-                      return null;
-                    },
                     onChanged: (value) {
                       if(boolean == false ){
                           ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
@@ -215,6 +219,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
             Padding(
               padding: const EdgeInsets.only(right: 40.0, bottom: 10.0),
               child: TextFormField(
+                // key: widget.formKey,
                 cursorColor: Theme.of(context).colorScheme.onBackground,
                 decoration: InputDecoration(
                   filled: true,
