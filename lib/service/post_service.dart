@@ -5,8 +5,7 @@ class PostService {
   static var dio = Dio();
 
 
-  Future<Response> post(
-      {required String url, required Map<dynamic, dynamic> data}) async {
+  Future<Response> post({required String url, Map<dynamic, dynamic>? data}) async {
     final dio = Dio();
     dio.options.responseType =
         ResponseType.json; //this code can make more secure

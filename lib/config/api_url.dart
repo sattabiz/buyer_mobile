@@ -19,6 +19,9 @@ class ApiUrls{
   
   static const String shipment = "$baseUrl/supplier_shipment_list.json?state='order_prepared'&customer_id=$customerCompanyId";
   static const String createShipment = "$baseUrl/supplier_create_shipment_record.json";
+  static String cancelPreparedShipment (String id){
+    return "$baseUrl/supplier_cancel_prepared_shipment.json?shipment_id=$id";
+  }
 
 
   static const String invoices = "$baseUrl/supplier_invoice_list_by_state.json?state='invoice_sended','invoice_approved','invoice_approved_dbs','invoice_collecting','invoice_discounted','invoice_goods_delivered'&customer_company_id=$customerCompanyId";
