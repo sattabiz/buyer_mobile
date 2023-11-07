@@ -1,3 +1,4 @@
+import 'package:PaletPoint/view_model/get_order_view_model.dart';
 import 'package:PaletPoint/view_model/get_shipment_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,8 +15,9 @@ final cancelPreparedShipmentController = FutureProvider.autoDispose((ref) async 
   
 
   try {
-    response = await apiService.post(url: ApiUrls.cancelPreparedShipment(shipmentId),);
-    ref.refresh(getShipmentProvider);   
+    response = await apiService.post(url: ApiUrls.cancelPreparedShipment(shipmentId));
+    ref.refresh(getShipmentProvider);
+    ref.refresh(getOrderProvider);
   } catch (e) {
     rethrow;
   }
