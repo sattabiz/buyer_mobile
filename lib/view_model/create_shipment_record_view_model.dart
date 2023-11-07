@@ -1,5 +1,6 @@
 import 'package:PaletPoint/view_model/get_order_view_model.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../config/api_url.dart';
@@ -17,17 +18,21 @@ final createShipmentPostProvider = FutureProvider.autoDispose((ref) async {
 
 
   for (int i = 0; i < productList.length; i++) {
-    _productsAttributes['$i'] = {
+    if(productList[i].readyAmount != null && productList[i].readyAmount != 0){
+      _productsAttributes['$i'] = {
       "products_proposal_id": productList[i].productsProposalId.toString(),
       "ready_amount": productList[i].readyAmount.toString(),
     };
+    }
   }
   
   Map<String, dynamic> data = {
     "order_id": orderId,
     "products_proposals": _productsAttributes
   };
- 
+  
+
+
 
    try {
      response = await apiService.post(url: ApiUrls.createShipment,  data: data ); 
