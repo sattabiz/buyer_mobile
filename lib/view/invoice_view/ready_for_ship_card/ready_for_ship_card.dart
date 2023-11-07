@@ -1,4 +1,5 @@
 import 'package:PaletPoint/model/shipment_model.dart';
+import 'package:PaletPoint/view_model/shipment_cancel_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -109,7 +110,10 @@ class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () async{
+                    ref.read(cancelShipmentIdProvider.notifier).state = widget.shipmentList.shipmentId.toString();
+                    ref.watch(cancelPreparedShipmentController);
+                  },
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(
                       color: Theme.of(context).colorScheme.error,
