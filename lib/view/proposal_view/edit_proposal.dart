@@ -245,13 +245,12 @@ class _EditProposalState extends ConsumerState<EditProposal> {
             itemBuilder: (context, index) {
               return ProposalBody(
                 index: index,
-                productId: proposalAsyncValue
-                    .productProposals![index].productProposalId!,
-                paletteDimensions:
-                    proposalAsyncValue.productProposals![index].name!,
-                itemCount:
-                    proposalAsyncValue.productProposals![index].amount!,
+                productId: proposalAsyncValue.productProposals![index].productProposalId!,
+                paletteDimensions:proposalAsyncValue.productProposals![index].name!,
+                itemCount:proposalAsyncValue.productProposals![index].amount!,
                 price: proposalAsyncValue.productProposals![index].price,
+                proposalNote: proposalAsyncValue.productProposals![index].proposalNote,
+                currenciesCode: proposalAsyncValue.productProposals![index].currencyCode,
               );
             },
           ),

@@ -65,6 +65,9 @@ class FormItem {
         currencies: currencies ?? this.currencies,
         image: image ?? this.image);
   }
+  String? get getNote{
+    return note;
+  }
 }
 
 final formItemProvider = StateNotifierProvider<FormItemModelNotifier, List<FormItem>>((ref) {
@@ -75,10 +78,32 @@ class FormItemModelNotifier extends StateNotifier<List<FormItem>> {
   FormItemModelNotifier() : super([]);
   
   void addFormItem(FormItem form, int productId) {
+  // Check if a formItem with the same productId already exists
+  if (state.any((item) => item.productId == productId)) {
+    // Handle the case where a formItem with the same productId already exists
+    // You can return an error, update the existing item, or take any other action as needed.
+    // In this example, we'll just update the existing item.
+    state = state.map((item) {
+      if (item.productId == productId) {
+        // Update the existing item with the new values from 'form'
+        return item.copyWith(
+          image: form.image,
+          price: form.price,
+          currencies: form.currencies,
+          note: form.note,
+        );
+      } else {
+        return item;
+      }
+    }).toList();
+  } else {
+    // If there is no existing item with the same productId, add the new formItem
     form.productId = productId;
     form.currencies = 0;
     state = [...state, form];
   }
+}
+
 
   void addImage(int productId, MultipartFile image) {
     state = [
@@ -110,7 +135,10 @@ class FormItemModelNotifier extends StateNotifier<List<FormItem>> {
   void addNote(int productId, String note) {
     state = [
       for (final form in state)
-        if (form.productId == productId) form.copyWith(note: note) else form
+        if (form.productId == productId) 
+          form.copyWith(note: note) 
+        else 
+          form
     ];
   }
 }

@@ -64,6 +64,18 @@ class _ProposalState extends ConsumerState<ProposalView> {
                   ref.watch(getListCurrenciesProvider);
                   ref.refresh(formItemProvider);
                   ref.read(messageIconProvider.notifier).state = data[index].messageNotification;
+                  for(int i = 0; i < data[index].productProposals!.length; i++){            
+                    //If the user has previously submitted an offer, the previous data is assigned to the formItem controller here.                                            
+                    ref.read(formItemProvider.notifier).addFormItem(FormItem(), data[index].productProposals![i].productProposalId!);
+                    if(data[index].productProposals![i].proposalNote != null){
+                      ref.read(formItemProvider.notifier).addNote(data[index].productProposals![i].productProposalId!, data[index].productProposals![i].proposalNote!);
+                    }                    
+                    int currenciesValue = getCurrencyValue(data[index].productProposals![i].currencyCode!);
+                    ref.read(formItemProvider.notifier).addCurrencies(data[index].productProposals![i].productProposalId!, currenciesValue);
+                    if(data[index].productProposals![i].price != null){
+                      ref.read(formItemProvider.notifier).addPrice(data[index].productProposals![i].productProposalId!, data[index].productProposals![i].price!);
+                    }
+                  }
                   context.goNamed('proposal_detail', pathParameters: {'proposalId' : data[index].proposalId.toString()});
                 },
               ),

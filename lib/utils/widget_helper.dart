@@ -42,7 +42,22 @@ String getCurrencySymbol(String currencyCode) {
     case 'GBP':
       return '£';
     default:
-      return currencyCode;
+      return '₺';
+  }
+}
+
+int getCurrencyValue(String currencyCode) {
+  switch (currencyCode) {
+    case 'TRY':
+      return 0;
+    case 'EUR':
+      return 2;
+    case 'USD':
+      return 1;
+    case 'GBP':
+      return 3;
+    default:
+      return 0;
   }
 }
 

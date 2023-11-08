@@ -6,6 +6,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../model/currency_model.dart';
+import '../../utils/widget_helper.dart';
 import '../../view_model/proposal_controller/create_proposal_view_model.dart';
 
 class ProposalBody extends ConsumerStatefulWidget {
@@ -14,6 +15,8 @@ class ProposalBody extends ConsumerStatefulWidget {
   final String paletteDimensions;
   final double itemCount;
   final double? price;
+  final String? proposalNote;
+  final String? currenciesCode;
 
   const ProposalBody(
       {super.key,
@@ -21,7 +24,10 @@ class ProposalBody extends ConsumerStatefulWidget {
       required this.index,
       required this.paletteDimensions,
       required this.itemCount,
-      this.price});
+      this.price,
+      this.proposalNote,
+      this.currenciesCode
+      });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ProposalBodyState();
@@ -29,9 +35,14 @@ class ProposalBody extends ConsumerStatefulWidget {
 
 class _ProposalBodyState extends ConsumerState<ProposalBody> {
   bool isTextFieldVisible = false;
-
+  final TextEditingController _textEditingController = TextEditingController();
+  
   @override
   void initState() {
+    if(widget.proposalNote != null){
+      _textEditingController.text = widget.proposalNote!;
+      //ref.read(formItemProvider.notifier).addNote(widget.productId, widget.proposalNote!);
+    }
     super.initState();
   }
 
@@ -92,6 +103,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
+                    initialValue: widget.price?.toString(),
                     cursorColor: Theme.of(context).colorScheme.onBackground,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true, signed: true),
@@ -132,21 +144,23 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                       if (value == null || value.isEmpty) {
                         return FlutterI18n.translate(
                             context, 'tr.validations.price');
+                      }else if(value.isNotEmpty){
+                        ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
+                        boolean = true;
+                        ref.read(formItemProvider.notifier).addPrice(widget.productId, double.parse(value));
                       }
-                      return null;
+                      //return null;
                     },
                     onChanged: (value) {
                       /* ref.read(formItemProvider.notifier).state[widget.index].price = double.parse(value);
                       ref.read(formItemProvider.notifier).state[widget.index].productId = widget.productId; */
-                      if (boolean == false) {
-                        ref
-                            .read(formItemProvider.notifier)
-                            .addFormItem(FormItem(), widget.productId);
+                      if(value.isNotEmpty){
+                        if (boolean == false) {
+                        ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
                         boolean = true;
                       }
-                      ref
-                          .read(formItemProvider.notifier)
-                          .addPrice(widget.productId, double.parse(value));
+                      ref.read(formItemProvider.notifier).addPrice(widget.productId, double.parse(value));
+                      }
                     },
                   ),
                   const SizedBox(
@@ -177,7 +191,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                       ),
                     ),
                     items: dropDownMenuCurrency,
-                    value: '₺', //ref.read(offerModelProvider).currencyCode,
+                    value: getCurrencySymbol(widget.currenciesCode!), //ref.read(offerModelProvider).currencyCode,
                     onChanged: (value) {
                       if (boolean == false) {
                         ref
@@ -234,6 +248,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
               padding: const EdgeInsets.only(right: 40.0, bottom: 10.0),
               child: TextFormField(
                 cursorColor: Theme.of(context).colorScheme.onBackground,
+                controller: _textEditingController,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Theme.of(context).colorScheme.onPrimary,
@@ -250,6 +265,12 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                   border: const OutlineInputBorder(),
                 ),
                 onChanged: (value) {
+                  if (boolean == false) {
+                        ref
+                            .read(formItemProvider.notifier)
+                            .addFormItem(FormItem(), widget.productId);
+                        boolean = true;
+                  }
                   ref.read(formItemProvider.notifier)
                      .addNote(widget.productId, value);
                 },
