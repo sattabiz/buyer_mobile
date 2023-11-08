@@ -38,7 +38,10 @@ class ReadyForShipInvoice extends ConsumerWidget {
                       controller: _scrollController,
                       itemCount: data.length, //Bu products nereden geliyor
                       shrinkWrap: true,      //eleman sayisi kadar boyutun artsin
-                      itemBuilder: (context, index) => ReadyForShipCard(shipmentList: data[index]),
+                      itemBuilder: (context, index) => ReadyForShipCard(
+                        shipmentList: data[index],
+                        message: data[index].messageNotification!,
+                      ),
                     ),
                   ),
                 ],
@@ -55,7 +58,7 @@ class ReadyForShipInvoice extends ConsumerWidget {
                     ),
                   ),
                   icon: SvgPicture.asset(
-                    'assets/Shape.svg',
+                    'assets/svg/shape.svg',
                     width: 40,
                     height: 30,
                     fit: BoxFit.cover,

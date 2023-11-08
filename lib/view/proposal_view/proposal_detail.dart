@@ -78,7 +78,9 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
             ],
           ),
         ),
-        Container(
+        proposalAsyncValue.proposalState == 'last_offer' || proposalAsyncValue.proposalState == 'proposal_stvs'
+        ? const SizedBox()
+        : Container(
           alignment: Alignment.bottomRight,
           padding: const EdgeInsets.all(20.0),
           child: FloatingActionButton.extended(

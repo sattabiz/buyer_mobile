@@ -46,7 +46,7 @@ class _LoginState extends ConsumerState<Login> {
               right: 0,
               height: 700,
               child: SvgPicture.asset(
-                'assets/ellipse.svg',
+                'assets/svg/ellipse.svg',
                 fit: BoxFit.cover,
               ),
             ),
@@ -82,7 +82,7 @@ class _LoginState extends ConsumerState<Login> {
                     }
                   },
                   child: SvgPicture.asset(
-                    'assets/login_logo.svg',
+                    'assets/svg/login_logo.svg',
                     fit: BoxFit.cover,
                   ),
                 ),

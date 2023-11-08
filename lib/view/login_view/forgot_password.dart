@@ -41,7 +41,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
               right: 0,
               height: 700,
               child: SvgPicture.asset(
-                'assets/ellipse.svg',
+                'assets/svg/ellipse.svg',
                 fit: BoxFit.cover,
               ),
             ),
@@ -50,7 +50,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  'assets/login_logo.svg',
+                  'assets/svg/login_logo.svg',
                   fit: BoxFit.cover,
                 ),
                 const SizedBox(
