@@ -156,21 +156,21 @@ class OrderDetail extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 10.0),
-                OutlinedButton(
-                    onPressed: () {},
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                      fixedSize: const Size(100, 30),
-                    ),
-                    child: Text(
-                      'Ret',
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                    )
-                  )
+                // OutlinedButton(
+                //     onPressed: () {},
+                //     style: OutlinedButton.styleFrom(
+                //       side: BorderSide(
+                //         color: Theme.of(context).colorScheme.error,
+                //       ),
+                //       fixedSize: const Size(100, 30),
+                //     ),
+                //     child: Text(
+                //       'Ret',
+                //       style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                //         color: Theme.of(context).colorScheme.error,
+                //       ),
+                //     )
+                //   )
               ],
               ),
         )

@@ -79,7 +79,7 @@ tr:
   ready_for_ship:
     title: "Sevke Hazır Ürünler"
     information: "Sevke hazır olan malzeme miktarlarını girip kaydet butonuna basın. Daha sonra fatura bölümünde yeni fatura butonuna basarak bu malzemeleri faturalandırabilirsiniz."
-    order_no: "Sipariş No"
+    order_no: "Sipariş No: "
     tracking: "Nakliye: "
     payment: "Ödeme: "
     product: "Ürün"

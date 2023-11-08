@@ -181,7 +181,7 @@ class Home extends ConsumerWidget {
                     title: "Yeni Mesaj", /* FlutterI18n.translate(context, 'tr.shipment.shipment_no ${data[index].shipmentId}'), */ 
                     subtitle: FlutterI18n.translate(context, 'tr.shipment.shipment_no'),                        //duzeltilecek
                     subtitle2: data[index].shipmentId.toString(),
-                    svgPath: data[index].messageAppNotification == true ? "assets/chat.svg" : 'assets/svg/alert_error.svg',            //duzeltilecek
+                    svgPath: data[index].messageAppNotification == true ? "assets/svg/chat_black.svg" : 'assets/svg/alert_error.svg',            //duzeltilecek
                     width: 100,
                     onTap: () async{
                       ref.read(messageIdProvider.notifier).state = 'shipment_id=${data[index].shipmentId}';
