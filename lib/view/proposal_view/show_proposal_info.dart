@@ -116,7 +116,7 @@ class ShowProposalInfo extends StatelessWidget {
         TableRow(
           children: [
             Text(
-              row5, 
+              row5 == "null" ? "Cari Hesap" : "null value", 
               style: Theme.of(context).textTheme.bodyMedium
             ),
             row6,

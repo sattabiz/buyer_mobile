@@ -41,7 +41,7 @@ class _EditProposalState extends ConsumerState<EditProposal> {
     final proposalAsyncValue = ref.watch(proposalIndexProvider);
     ref.read(offerModelProvider).proposalId = proposalAsyncValue!.proposalId;
     List<DropdownMenuItem<String>> dropDownMenuPaymentType =
-        ["Cari Hesap", "DBS"].map((String value) {
+        ["Cari Hesap"].map((String value) {
       return DropdownMenuItem<String>(
         value: value,
         child: Text(
