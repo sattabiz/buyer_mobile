@@ -57,7 +57,7 @@ class _EditProposalState extends ConsumerState<EditProposal> {
           value: value.toString(),
           child: Text(
             '$value İş günü',
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.bodyMedium,
           ));
     }).toList();
     return Container(
@@ -94,7 +94,7 @@ class _EditProposalState extends ConsumerState<EditProposal> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
+                Flexible(
                   flex: 2,
                   child: DropdownButtonFormField2<String>(
                     decoration: InputDecoration(
@@ -106,9 +106,11 @@ class _EditProposalState extends ConsumerState<EditProposal> {
                       ),
                       floatingLabelAlignment: FloatingLabelAlignment.start,
                       contentPadding: const EdgeInsets.only(
-                          left: 5, bottom: 13, right: 5),
+                          left: 5, bottom: 17),
+                      isDense: true,
                       constraints: const BoxConstraints(
                         maxHeight: 40,
+                        minWidth: 20,
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -131,11 +133,10 @@ class _EditProposalState extends ConsumerState<EditProposal> {
                         Icons.arrow_drop_down,
                         color: Colors.black45,
                       ),
-                      iconSize: 24,
                     ),
                   ),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 10),
                 Expanded(
                   flex: 2,
                   child: TextFormField(
@@ -240,6 +241,7 @@ class _EditProposalState extends ConsumerState<EditProposal> {
             ),
           ),
           ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: proposalAsyncValue.productProposals!.length,
             itemBuilder: (context, index) {

@@ -74,6 +74,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
           tilePadding: const EdgeInsets.all(0.0),
           iconColor: Theme.of(context).colorScheme.onBackground,
           controlAffinity: ListTileControlAffinity.trailing,
+          collapsedIconColor: Theme.of(context).colorScheme.onBackground,
           title: Column(
             children: [
               const SizedBox(

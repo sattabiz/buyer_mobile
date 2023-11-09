@@ -31,6 +31,7 @@ class OrderView extends ConsumerWidget {
         ref.refresh(getProposalProvider);
         context.go('/proposal');
       },
+      horizontalMinDisplacement: 20,
       child: RefreshIndicator(
         onRefresh: () async{
           ref.refresh(getOrderProvider);
