@@ -19,7 +19,7 @@ class DetailTablePanel extends StatelessWidget {
         .map((entry) => Container(
               margin: const EdgeInsets.only(top: 5.0),
               alignment: Alignment.centerRight,
-              // width: 50,
+              width: 100,
               child: Text(
                 entry.key,
                 style: Theme.of(context).textTheme.labelMedium,

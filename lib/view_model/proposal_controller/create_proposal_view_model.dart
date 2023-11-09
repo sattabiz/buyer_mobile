@@ -21,7 +21,7 @@ final createProposalProvider = FutureProvider.autoDispose((ref) async {
       "price": _formItems[i].price.toString(),
       "proposal_note": _formItems[i].note,
       "currency_unit": _formItems[i].currencies,
-      // "products_proposal_files": _formItems[i].image,
+      "image": _formItems[i].image,
     };
   }
 

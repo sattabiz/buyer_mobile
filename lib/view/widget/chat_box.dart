@@ -100,7 +100,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
                                 borderRadius: BorderRadius.only(
                                   topLeft: const Radius.circular(8),
                                   topRight: const Radius.circular(8),
-                                  bottomLeft: (liveChats[index].userID !=
+                                  bottomLeft: (liveChats[index].userID ==
                                           userInfo.currentUser!.id
                                       ? const Radius.circular(10)
                                       : const Radius.circular(0)),

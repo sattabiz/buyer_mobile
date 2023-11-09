@@ -78,7 +78,7 @@ class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
-                  const SizedBox(width: 40),
+                  const SizedBox(width: 20),
                   Text(
                     FlutterI18n.translate(context, 'tr.ready_for_ship.payment'),
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(

@@ -107,7 +107,7 @@ class OrderDetail extends ConsumerWidget {
             child: FloatingActionButton.extended(
               label: Text(
                 FlutterI18n.translate(context, 'tr.order.ship_btn'),
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
                   color: Colors.white,
                 ),
               ),
@@ -172,8 +172,8 @@ class OrderDetail extends ConsumerWidget {
                 //     )
                 //   )
               ],
-              ),
-        )
+            ),
+          )
           : const SizedBox(width: 0,)
       ],
     );
