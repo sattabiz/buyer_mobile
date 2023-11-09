@@ -20,7 +20,7 @@ import '../widget/app_bar/dialog_app_bar.dart';
   String invoiceDate = DateFormat('dd-MM-yyyy').format(DateTime.now().add(const Duration(days: 3)));
   String shipmentDate = DateFormat('dd-MM-yyyy').format(DateTime.now().add(const Duration(days: 3)));
   String? waybillNo;
-  int? contactInformationId;
+  AddressModel? contactInformationId;
   String? carrier;
   String? tracking;
 
@@ -39,7 +39,7 @@ import '../widget/app_bar/dialog_app_bar.dart';
   }
 }
 
-final invoiceTableProvider = Provider<InvoiceTable>((ref) {
+final invoiceTableProvider = StateProvider<InvoiceTable>((ref) {
   return InvoiceTable();
 });
 
@@ -51,7 +51,12 @@ class GenerateInvoice extends ConsumerStatefulWidget {
 }
 
 class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
-
+  late String? selectedValue;
+  final TextEditingController _textEditingController = TextEditingController();
+  //waybill_no
+  final TextEditingController _waybillNo = TextEditingController();
+  final TextEditingController _carrier = TextEditingController();
+  final TextEditingController _tracking = TextEditingController();
   final TextEditingController _invoiceDate = TextEditingController(
     text: DateFormat('dd-MM-yyyy').format(DateTime.now().add(const Duration(days: 3))),
   );  
@@ -65,14 +70,26 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
 
   @override
   void initState() {
+
     super.initState();
   }
 
   @override
+  void dispose() {
+    _textEditingController.dispose();
+    _waybillNo.dispose();
+    _carrier.dispose();
+    _tracking.dispose();
+    _invoiceDate.dispose();
+    _shipDate.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final orderListAsyncValue = ref.watch(getAddressFutureProvider);
+    final adressListAsyncValue = ref.watch(getAddressFutureProvider);
     final _key = GlobalKey<FormState>();
-    return orderListAsyncValue.when(
+    return adressListAsyncValue.when(
       data: (data) {
         String? dropdownValue = data.first.address;
         return Material(
@@ -99,6 +116,7 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TextFormField(
+                          controller: _textEditingController,
                           cursorColor: Theme.of(context).colorScheme.onSurfaceVariant,
                           decoration: InputDecoration(
                             // constraints: const BoxConstraints(
@@ -118,11 +136,11 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
-                          onTap: () {
+                          /* onTap: () {
                             ref.read(invoiceTableProvider).contactInformationId = data[0].id ;
-                          },
+                          }, */
                           onChanged: (value) {
-                            ref.read(invoiceTableProvider).invoiceNo = value;
+                            ref.read(invoiceTableProvider.notifier).state.invoiceNo = value;
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -167,7 +185,7 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                               String formattedDate =
                                   DateFormat('dd-MM-yyyy').format(pickedDate);
                                   _invoiceDate.text = formattedDate; // <- Bu satır eklenmeli
-                                  ref.read(invoiceTableProvider).invoiceDate = _invoiceDate.text;
+                                  ref.read(invoiceTableProvider.notifier).state.invoiceDate = _invoiceDate.text;
                             } else {}
                           },
                         ),
@@ -207,12 +225,13 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                                   DateFormat('dd-MM-yyyy').format(pickedDate);
                               _shipDate.text =
                                   formattedDate; // <- Bu satır eklenmeli
-                              ref.read(invoiceTableProvider).shipmentDate = _shipDate.text;
+                              ref.read(invoiceTableProvider.notifier).state.shipmentDate = _shipDate.text;
                             } else {}
                           },
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
+                          controller: _waybillNo,
                           cursorColor: Theme.of(context).colorScheme.onSurfaceVariant,
                           decoration: InputDecoration(
                             constraints: const BoxConstraints(
@@ -231,12 +250,13 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                             ),
                           ),
                           onChanged: (value) {
-                            ref.read(invoiceTableProvider).waybillNo = value;
+                            ref.read(invoiceTableProvider.notifier).state.waybillNo = value;
                           },
                         ),
                         const SizedBox(height: 20),
-                        DropdownButtonFormField2<String>(
+                        DropdownButtonFormField<String>(
                           isExpanded: true,
+                          value: dropdownValue,
                           decoration: InputDecoration(
                             labelText: FlutterI18n.translate(
                                 context, 'tr.invoice.generate_invoice.address'),
@@ -259,14 +279,9 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          items: data.map<DropdownMenuItem<String>>((AddressModel value) {
+                          items: data.map<DropdownMenuItem <String>>((AddressModel value) {
                             return DropdownMenuItem<String>(
                               value: value.address,
-                              onTap: () {
-                                setState(() {
-            
-                                });
-                              },
                               child: Text(
                                 value.address!,
                                 style: Theme.of(context).textTheme.bodyLarge,
@@ -276,24 +291,15 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                           onChanged: (value) {
                             // dropdownValue = value.toString();
                           AddressModel address = data.firstWhere((element) => element.address == value);
-                          ref.read(invoiceTableProvider).contactInformationId = address.id ;
+                          dropdownValue = address.address;
+                          ref.read(invoiceTableProvider.notifier).state.contactInformationId = address ;
+                          setState(() {
+                          });
                           },
-                          onSaved: (value) {
-                          // dropdownValue = value.toString();
-                          AddressModel address = data.firstWhere((element) => element.address == value);
-                          ref.read(invoiceTableProvider).contactInformationId = address.id ;
-                          },
-            
-                          iconStyleData: const IconStyleData(
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: Colors.black45,
-                            ),
-                            iconSize: 24,
-                          ),
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
+                          controller: _carrier,
                           cursorColor: Theme.of(context).colorScheme.onSurfaceVariant,
                           decoration: InputDecoration(
                             constraints: const BoxConstraints(
@@ -312,11 +318,12 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                             ),
                           ),
                           onChanged: (value) {
-                            ref.read(invoiceTableProvider).carrier = value;
+                            ref.read(invoiceTableProvider.notifier).state.carrier = value;
                           },
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
+                          controller: _tracking,
                           cursorColor: Theme.of(context).colorScheme.onSurfaceVariant,
                           decoration: InputDecoration(
                             constraints: const BoxConstraints(
@@ -336,7 +343,7 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                             ),
                           ),
                           onChanged: (value) {
-                            ref.read(invoiceTableProvider).tracking = value;
+                            ref.read(invoiceTableProvider.notifier).state.tracking = value;
                           },
                         ),
                         const SizedBox(height: 20),

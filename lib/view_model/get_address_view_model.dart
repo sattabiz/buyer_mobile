@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/api_url.dart';
 import '../service/get_services.dart';
+import '../view/invoice_view/generate_invoice.dart';
 
 final getAddressFutureProvider =
     FutureProvider.autoDispose<List<AddressModel>>((ref) async {
@@ -19,6 +20,10 @@ final getAddressFutureProvider =
         .map((e) => AddressModel.fromMap(e))
         .toList();
   }
+
+  ref.read(invoiceTableProvider.notifier).state.contactInformationId = _addressModelList[0];
+
+  
 
 
   return _addressModelList;
