@@ -33,7 +33,7 @@ final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((ref,) async 
     "invoice_date": _contentItems.invoiceDate.toString(),
     "shipment_date": _contentItems.shipmentDate.toString(),
     "waybill_no": _contentItems.waybillNo.toString(),
-    "contact_information_id": _contentItems.contactInformationId,
+    "contact_information_id": _contentItems.contactInformationId!.id,
     "carrier": _contentItems.carrier.toString(),
     "tracking": _contentItems.tracking.toString(),
     "products_proposal_shipments": _productsAttributes
