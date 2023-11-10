@@ -73,7 +73,7 @@ class OrderDetail extends ConsumerWidget {
                             ? "Alıcı"
                             : "Satıcı",
                         row5: orderAsyncValue.paymentType ??
-                            "API Null deger", //null gelmesine gore ayarlamak lazim
+                            "Cari Hesap", //null gelmesine gore ayarlamak lazim
                       ),
                     ),
                     const SizedBox(height: 20.0),

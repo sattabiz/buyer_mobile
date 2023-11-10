@@ -89,7 +89,7 @@ class DetailInfo extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(top: 5.0),
               child: Text(
-                row4,
+                row4 == "null" ? 'Cari Hesap' : row4,
                 style: Theme.of(context).textTheme.bodyMedium
               ),
             ),
