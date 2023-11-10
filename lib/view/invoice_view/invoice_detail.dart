@@ -57,7 +57,7 @@ class InvoiceDetail extends ConsumerWidget {
                     row1: invoiceList.invoiceDate.toString().split('T')[0],
                     row2: invoiceList.paymentDate.toString().split('T')[0],
                     row3: invoiceList.orderId.toString(),
-                    row4: invoiceList.paymentType ?? 'null deger',
+                    row4: invoiceList.paymentType ?? 'null',
                   ),
                 ),
                 const SizedBox(height: 20.0),
