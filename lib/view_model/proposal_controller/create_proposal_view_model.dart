@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/api_url.dart';
 import '../../service/post_service.dart';
@@ -21,7 +22,7 @@ final createProposalProvider = FutureProvider.autoDispose((ref) async {
       "price": _formItems[i].price.toString(),
       "proposal_note": _formItems[i].note,
       "currency_unit": _formItems[i].currencies,
-      "image": _formItems[i].image,
+      //"image": _formItems[i].image,
     };
   }
 
@@ -34,9 +35,11 @@ final createProposalProvider = FutureProvider.autoDispose((ref) async {
   };
 
   final formData = FormData.fromMap(data);
+  debugPrint(data.toString());
 
   try {
     response = await apiService.postFormdata(url: ApiUrls.replyProposal, data: formData);
+    debugPrint(response.data.toString());
     await ref.refresh(getProposalProvider);
     ref.read(getProposalProvider.future);
     await ref.refresh(getNotificationProvider);
