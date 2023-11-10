@@ -29,7 +29,7 @@ class ApiUrls{
   static const String createMultiOrderInvoice = "$baseUrl/supplier_generate_multi_order_shipment.json";
 
 
-  static const String address = "$baseUrl/list_avaliable_customer_addresses.json?customer_company_id=1";
+  static const String address = "$baseUrl/list_avaliable_customer_addresses.json?customer_company_id=$customerCompanyId";
 
 
   static String getMessage (String id){

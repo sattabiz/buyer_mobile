@@ -91,7 +91,7 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
     final _key = GlobalKey<FormState>();
     return adressListAsyncValue.when(
       data: (data) {
-        String? dropdownValue = ref.watch(invoiceTableProvider).contactInformationId!.address;
+        String? dropdownValue = ref.watch(invoiceTableProvider).contactInformationId!.name;
         return Material(
           child: Form(
             key: _key,
@@ -281,16 +281,16 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                           ),
                           items: data.map<DropdownMenuItem <String>>((AddressModel value) {
                             return DropdownMenuItem<String>(
-                              value: value.address,
+                              value: value.name,
                               child: Text(
-                                value.address!,
+                                value.name!,
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             );
                           }).toList(),
                           onChanged: (value) {
                             // dropdownValue = value.toString();
-                          AddressModel address = data.firstWhere((element) => element.address == value);
+                          AddressModel address = data.firstWhere((element) => element.name == value);
                           ref.read(invoiceTableProvider.notifier).state.contactInformationId = address ;
                           setState(() {
                           });

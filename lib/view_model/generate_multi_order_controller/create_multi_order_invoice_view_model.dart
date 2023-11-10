@@ -26,7 +26,6 @@ final createMultiOrderInvoiceProvider = FutureProvider.autoDispose((ref,) async 
       _productsAttributes["${_formItems[i].productsProposalShipmentId}"] = _formItems[i].invoiceAmount;
    
   }
-  debugPrint(_contentItems.contactInformationId.toString());
 
   Map<String, dynamic> data = {
     "invoice_no": _contentItems.invoiceNo.toString(),
