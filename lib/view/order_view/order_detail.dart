@@ -25,7 +25,6 @@ class OrderDetail extends ConsumerWidget {
     //tasarima karar verilecek
     OrderModel? orderAsyncValue = ref.watch(orderIndexProvider);
     final chatId = ref.watch(messageRoomIdProvider);
-
     double width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -97,7 +96,6 @@ class OrderDetail extends ConsumerWidget {
                 ),
               ),
             ),
-    
           ],
         ),
         orderAsyncValue.state == 'order_confirmed'
@@ -131,47 +129,26 @@ class OrderDetail extends ConsumerWidget {
         : const SizedBox(width: 0,),
         orderAsyncValue.state == 'order_approved'
         ?  Container(
-            alignment: Alignment.bottomLeft,
+            alignment: Alignment.bottomRight,
             padding: const EdgeInsets.all(20.0),
-            child: Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    ref.watch(confirmOrderProvider);
-                    ref.refresh(getOrderProvider);
-                    context
-                        .go('/order'); //order sayfasina geri dondurulmesi lazim
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Theme.of(context).colorScheme.primary),
-                    fixedSize:
-                        MaterialStateProperty.all<Size>(const Size(100, 30)),
-                  ),
-                  child: Text(
-                    'Onayla',
-                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                  ),
+            child: ElevatedButton(
+              onPressed: () async {
+                ref.watch(confirmOrderProvider);
+                ref.refresh(getOrderProvider);
+                context.go('/order'); //order sayfasina geri dondurulmesi lazim
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  Theme.of(context).colorScheme.primary),
+                fixedSize:
+                  MaterialStateProperty.all<Size>(const Size(100, 30)),
+              ),
+              child: Text(
+                'Onayla',
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
-                const SizedBox(width: 10.0),
-                // OutlinedButton(
-                //     onPressed: () {},
-                //     style: OutlinedButton.styleFrom(
-                //       side: BorderSide(
-                //         color: Theme.of(context).colorScheme.error,
-                //       ),
-                //       fixedSize: const Size(100, 30),
-                //     ),
-                //     child: Text(
-                //       'Ret',
-                //       style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                //         color: Theme.of(context).colorScheme.error,
-                //       ),
-                //     )
-                //   )
-              ],
+              ),
             ),
           )
           : const SizedBox(width: 0,)

@@ -48,6 +48,12 @@ class TopAppBarLarge extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
+        IconButton(
+          onPressed: () => context.go('/profile'), 
+          icon: SvgPicture.asset(
+            'assets/svg/profile.svg',
+          ),
+        ),
         SubmenuButton(
           menuChildren: [
             MenuItemButton(

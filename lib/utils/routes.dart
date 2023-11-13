@@ -9,9 +9,11 @@ import '../view/invoice_view/generate_invoice.dart';
 import '../view/invoice_view/invoice_detail.dart';
 import '../view/invoice_view/invoice_view.dart';
 import '../view/invoice_view/ready_for_ship.dart';
+import '../view/login_view/sign_up.dart';
 import '../view/order_view/order_detail.dart';
 import '../view/order_view/order_view.dart';
 import '../view/order_view/ready_for_ship_detail.dart';
+import '../view/profile_view/profile.dart';
 import '../view/proposal_view/proposal_detail.dart';
 import '../view/proposal_view/proposal_view.dart';
 import '../view/widget/app_bar/top_app_bar_large.dart';
@@ -41,6 +43,10 @@ final router = GoRouter(
       path: '/forgot_password',
       builder: (context, state) => const ForgotPassword(),
     ),
+    GoRoute(
+      path: '/sign_up',
+      builder: (context, state) => const SignUp(),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return Index(
@@ -58,116 +64,128 @@ final router = GoRouter(
             ),
           ],
         ),
-        StatefulShellBranch(routes: <RouteBase>[
-          GoRoute(
-            path: '/proposal',
-            builder: (context, state) => const ProposalView(),
-            routes: <RouteBase>[
-              GoRoute(
-                name: 'proposal_detail',
-                path: 'detail/:proposalId',
-                builder: (context, state) => ProposalDetail(
-                  key: state.pageKey,
-                  proposalId: state.pathParameters['proposalId']!,
-                ),
-                routes: [
-                  GoRoute(
-                    name: 'proposal_chat',
-                    path: 'chat/:chatId', //messageId ile degistirilecek
-                    builder: (context, state) => ChatBox(
-                      key: state.pageKey,
-                      id: state.pathParameters['chatId']!,
-                    ),
-                  )
-                ]
-              ),
-            ],
-          ),
-        ]),
-        StatefulShellBranch(initialLocation: '/order', routes: <RouteBase>[
-          GoRoute(
-            path: '/order',
-            builder: (context, state) => const OrderView(),
-            routes: <RouteBase>[
-              GoRoute(
-                name: 'order_detail',
-                path: 'detail/:orderId',
-                builder: (context, state) => OrderDetail(
-                  key: state.pageKey,
-                  orderId: state.pathParameters['orderId']!,
-                ),
-                routes: [
-                  GoRoute(
-                    name: 'order_chat',
-                    path: 'chat/:chatId', //message id ile degistirilecek
-                    builder: (context, state) => ChatBox(
-                      key: state.pageKey,
-                      id: state.pathParameters['chatId']!,
-                    ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+              path: '/proposal',
+              builder: (context, state) => const ProposalView(),
+              routes: <RouteBase>[
+                GoRoute(
+                  name: 'proposal_detail',
+                  path: 'detail/:proposalId',
+                  builder: (context, state) => ProposalDetail(
+                    key: state.pageKey,
+                    proposalId: state.pathParameters['proposalId']!,
                   ),
-                  GoRoute(
-                    // name: 'order_ready',
-                    path: 'ready',
-                    builder: (context, state) => ReadyForShipDetail(
-                      key: state.pageKey,
-                    ),
-                  ),
-                ]
-              ),
-            ],
-          ),
-        ]),
-        StatefulShellBranch(routes: <RouteBase>[
-          GoRoute(
-            path: '/invoice',
-            builder: (context, state) => InvoiceView(
-              key: state.pageKey,
-            ),
-            routes: <RouteBase>[
-              GoRoute(
-                name: 'invoice_detail',
-                path: 'detail/:invoiceId',
-                builder: (context, state) => InvoiceDetail(
-                  key: state.pageKey,
-                ),
-                routes: [
-                  GoRoute(
-                    name: 'invoice_chat',
-                    path: 'chat/:chatId', //messageId ile degistirilecek
-                    builder: (context, state) => ChatBox(
-                      key: state.pageKey,
-                      id: state.pathParameters['chatId']!,
-                    ),
-                  ),
-                ]
-              ),
-              GoRoute(
-                path: 'invoice_ready',
-                builder: (context, state) => ReadyForShipInvoice(
-                  key: state.pageKey,
-                ),
-                routes: [
-                  GoRoute(
-                    name: 'invoice_ready_chat',
-                    path: 'chat/:chatId', //messageId ile degistirilecek
-                    builder: (context, state) => ChatBox(
-                      key: state.pageKey,
-                      id: state.pathParameters['chatId']!,
+                  routes: [
+                    GoRoute(
+                      name: 'proposal_chat',
+                      path: 'chat/:chatId',
+                      builder: (context, state) => ChatBox(
+                        key: state.pageKey,
+                        id: state.pathParameters['chatId']!,
+                      ),
                     )
+                  ]
+                ),
+              ],
+            ),
+          ]
+        ),
+        StatefulShellBranch(
+          initialLocation: '/order', 
+          routes: <RouteBase>[
+            GoRoute(
+              path: '/order',
+              builder: (context, state) => const OrderView(),
+              routes: <RouteBase>[
+                GoRoute(
+                  name: 'order_detail',
+                  path: 'detail/:orderId',
+                  builder: (context, state) => OrderDetail(
+                    key: state.pageKey,
+                    orderId: state.pathParameters['orderId']!,
                   ),
-                  GoRoute(
-                    path: 'generate',
-                    builder: (context, state) => GenerateInvoice(
-                      key: state.pageKey,
+                  routes: [
+                    GoRoute(
+                      name: 'order_chat',
+                      path: 'chat/:chatId',
+                      builder: (context, state) => ChatBox(
+                        key: state.pageKey,
+                        id: state.pathParameters['chatId']!,
+                      ),
                     ),
-                  ),
-                ]
+                    GoRoute(
+                      path: 'ready',
+                      builder: (context, state) => ReadyForShipDetail(
+                        key: state.pageKey,
+                      ),
+                    ),
+                  ]
+                ),
+              ],
+            ),
+          ]
+        ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+              path: '/invoice',
+              builder: (context, state) => InvoiceView(
+                key: state.pageKey,
               ),
-            ],
-          ),
-        ])
+              routes: <RouteBase>[
+                GoRoute(
+                  name: 'invoice_detail',
+                  path: 'detail/:invoiceId',
+                  builder: (context, state) => InvoiceDetail(
+                    key: state.pageKey,
+                  ),
+                  routes: [
+                    GoRoute(
+                      name: 'invoice_chat',
+                      path: 'chat/:chatId',
+                      builder: (context, state) => ChatBox(
+                        key: state.pageKey,
+                        id: state.pathParameters['chatId']!,
+                      ),
+                    ),
+                  ]
+                ),
+                GoRoute(
+                  path: 'invoice_ready',
+                  builder: (context, state) => ReadyForShipInvoice(
+                    key: state.pageKey,
+                  ),
+                  routes: [
+                    GoRoute(
+                      name: 'invoice_ready_chat',
+                      path: 'chat/:chatId',
+                      builder: (context, state) => ChatBox(
+                        key: state.pageKey,
+                        id: state.pathParameters['chatId']!,
+                      )
+                    ),
+                    GoRoute(
+                      path: 'generate',
+                      builder: (context, state) => GenerateInvoice(
+                        key: state.pageKey,
+                      ),
+                    ),
+                  ]
+                ),
+              ],
+            ),
+          ]
+        ),
       ],
     ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) => Profile(
+        key: state.pageKey,
+      ),
+    )
   ],
 );
 
