@@ -2,20 +2,18 @@ import 'package:PaletPoint/view_model/get_invoice_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../utils/routes.dart';
 import '../../../view_model/message_controller/websocket_message_view_model.dart';
 
 class TopAppBarCentered extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final String? backRoute;
-  final Widget? drawerButton;
+  final bool? openDrawer;
 
   const TopAppBarCentered({
     Key? key,
     required this.title,
     this.backRoute,
-    this.drawerButton,
+    this.openDrawer = false
   }) : super(key: key);
 
   @override
@@ -46,7 +44,19 @@ class TopAppBarCentered extends ConsumerWidget implements PreferredSizeWidget {
             .copyWith(color: Theme.of(context).colorScheme.onSecondary),
       ),
       actions: [
-        drawerButton ?? const SizedBox(),
+        openDrawer == true
+        ? Builder(builder: (context) {
+          return IconButton(
+            onPressed: () {
+              Scaffold.of(context).openEndDrawer();
+            },
+            icon: Icon(
+              Icons.menu,
+              color: Theme.of(context).colorScheme.onPrimary,
+            )
+          );
+        })
+        : Container(),
       ],
     );
   }

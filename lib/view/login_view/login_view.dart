@@ -210,7 +210,7 @@ class _LoginState extends ConsumerState<Login> {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 100
                 ),
                 InkWell(
                   hoverColor: Theme.of(context).colorScheme.primary,
