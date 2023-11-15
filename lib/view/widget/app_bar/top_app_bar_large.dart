@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../view_model/logout_view_model.dart';
-
 class CustomAppBar extends PreferredSize {
   @override
   final Widget child;
@@ -48,22 +46,28 @@ class TopAppBarLarge extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
-        SubmenuButton(
-          menuChildren: [
-            MenuItemButton(
-              onPressed: () async {
-                final logoutViewModel =ref.read(logoutViewModelProvider.notifier);
-                await logoutViewModel.logout();
-                context.go('/login');
-              },
-              child: const MenuAcceleratorLabel('&Çıkış'),
-            ),
-          ], 
-          child:const Icon(
-            Icons.menu,
-              color: Colors.white,
+        IconButton(
+          onPressed: () => context.go('/profile'), 
+          icon: SvgPicture.asset(
+            'assets/svg/profile.svg',
           ),
-        )
+        ),
+        // SubmenuButton(
+        //   menuChildren: [
+        //     MenuItemButton(
+        //       onPressed: () async {
+        //         final logoutViewModel =ref.read(logoutViewModelProvider.notifier);
+        //         await logoutViewModel.logout();
+        //         context.go('/login');
+        //       },
+        //       child: const MenuAcceleratorLabel('&Çıkış'),
+        //     ),
+        //   ], 
+        //   child:const Icon(
+        //     Icons.menu,
+        //       color: Colors.white,
+        //   ),
+        // )
       ],
     );
   }

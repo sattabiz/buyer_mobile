@@ -35,6 +35,7 @@ class _LoginState extends ConsumerState<Login> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Material(
       child: Container(
         color: Theme.of(context).colorScheme.secondary,
@@ -44,7 +45,7 @@ class _LoginState extends ConsumerState<Login> {
             Positioned(
               left: 0,
               right: 0,
-              height: 700,
+              height: height - 100,
               child: SvgPicture.asset(
                 'assets/svg/ellipse.svg',
                 fit: BoxFit.cover,
@@ -202,10 +203,29 @@ class _LoginState extends ConsumerState<Login> {
                   child: Text(
                     FlutterI18n.translate(context, 'tr.login.forgot_password'),
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.outline,
-                          decoration: TextDecoration.underline,
-                          decorationColor: Theme.of(context).colorScheme.shadow,
-                        ),
+                      color: Theme.of(context).colorScheme.outline,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Theme.of(context).colorScheme.shadow,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 100
+                ),
+                InkWell(
+                  hoverColor: Theme.of(context).colorScheme.primary,
+                  overlayColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context).colorScheme.primary),
+                  onTap: () {
+                    context.push('/sign_up');
+                  },
+                  child: Text(
+                    FlutterI18n.translate(context, 'tr.login.sign_up'),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.outline,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Theme.of(context).colorScheme.shadow,
+                    ),
                   ),
                 ),
               ],

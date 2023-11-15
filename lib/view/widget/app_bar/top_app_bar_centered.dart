@@ -2,18 +2,18 @@ import 'package:PaletPoint/view_model/get_invoice_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../utils/routes.dart';
 import '../../../view_model/message_controller/websocket_message_view_model.dart';
 
 class TopAppBarCentered extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
-  final String ?backRoute;
+  final String? backRoute;
+  final bool? openDrawer;
 
   const TopAppBarCentered({
     Key? key,
     required this.title,
-     this.backRoute,
+    this.backRoute,
+    this.openDrawer = false
   }) : super(key: key);
 
   @override
@@ -21,7 +21,6 @@ class TopAppBarCentered extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       centerTitle: true,
@@ -30,7 +29,7 @@ class TopAppBarCentered extends ConsumerWidget implements PreferredSizeWidget {
           Icons.arrow_back,
           color: Theme.of(context).colorScheme.onSecondary,
         ),
-        onPressed:() async{
+        onPressed: () async {
           backRoute == "null" ? context.pop() : context.go(backRoute!);
           ref.read(messagePipeProvider.notifier).state = 2;
           ref.watch(webSocketProvider);
@@ -44,6 +43,21 @@ class TopAppBarCentered extends ConsumerWidget implements PreferredSizeWidget {
             .headlineSmall!
             .copyWith(color: Theme.of(context).colorScheme.onSecondary),
       ),
+      actions: [
+        openDrawer == true
+        ? Builder(builder: (context) {
+          return IconButton(
+            onPressed: () {
+              Scaffold.of(context).openEndDrawer();
+            },
+            icon: Icon(
+              Icons.menu,
+              color: Theme.of(context).colorScheme.onPrimary,
+            )
+          );
+        })
+        : Container(),
+      ],
     );
   }
 }
