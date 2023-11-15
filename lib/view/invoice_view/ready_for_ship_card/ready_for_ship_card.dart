@@ -58,7 +58,7 @@ class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
                       color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                   Text(
-                    widget.shipmentList.shipmentId.toString(), //order id eklenecek
+                    widget.shipmentList.readyShipmentOrderId.toString(), //order id eklenecek
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
@@ -85,7 +85,7 @@ class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
                       color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                   Text(
-                    widget.shipmentList.paymentType ?? 'Api data Null',
+                    widget.shipmentList.paymentType ?? 'Cari Hesap',
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),

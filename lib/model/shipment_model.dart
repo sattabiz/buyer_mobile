@@ -3,6 +3,7 @@ import 'dart:convert';
 class ShipmentModel {
     int? shipmentId;
     String? invoiceNo;
+    int? readyShipmentOrderId;
     String? invoiceDate;
     String? waybillNo;
     DateTime? shipmentDate;
@@ -25,6 +26,7 @@ class ShipmentModel {
     ShipmentModel({
         this.shipmentId,
         this.invoiceNo,
+        this.readyShipmentOrderId,
         this.invoiceDate,
         this.waybillNo,
         this.shipmentDate,
@@ -52,6 +54,7 @@ class ShipmentModel {
     factory ShipmentModel.fromMap(Map<String, dynamic> json) => ShipmentModel(
         shipmentId: json["shipment_id"],
         invoiceNo: json["invoice_no"],
+        readyShipmentOrderId: json["ready_shipment_order_id"],
         invoiceDate: json["invoice_date"],
         waybillNo: json["waybill_no"],
         shipmentDate: json["shipment_date"] == null ? null : DateTime.parse(json["shipment_date"]),
