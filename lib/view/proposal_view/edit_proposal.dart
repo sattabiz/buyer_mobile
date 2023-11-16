@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../view_model/proposal_controller/create_proposal_view_model.dart';
 import '../../view_model/proposal_controller/get_proposal_view_model.dart';
 import '../widget/detail_components/detail_info.dart';
 import 'detail_product.dart';
 
 class EditProposal extends ConsumerStatefulWidget {
-  const EditProposal({super.key});
+  int? tgs;
+  int? deliveryTime;
+  EditProposal({super.key, this.tgs, this.deliveryTime});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _EditProposalState();
@@ -22,9 +21,11 @@ class EditProposal extends ConsumerStatefulWidget {
 class _EditProposalState extends ConsumerState<EditProposal> {
 
   final TextEditingController _tgs = TextEditingController(text: "10");
-  
+  final TextEditingController _deliveryTime = TextEditingController(text: "3");
   @override
   void initState() {
+    _tgs.text = (widget.tgs ?? 10).toString();
+    _deliveryTime.text = widget.deliveryTime.toString();
     super.initState();
   }
 
