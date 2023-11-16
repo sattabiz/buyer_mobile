@@ -35,11 +35,9 @@ final createProposalProvider = FutureProvider.autoDispose((ref) async {
   };
 
   final formData = FormData.fromMap(data);
-  debugPrint(data.toString());
 
   try {
     response = await apiService.postFormdata(url: ApiUrls.replyProposal, data: formData);
-    debugPrint(response.data.toString());
     await ref.refresh(getProposalProvider);
     ref.read(getProposalProvider.future);
     await ref.refresh(getNotificationProvider);

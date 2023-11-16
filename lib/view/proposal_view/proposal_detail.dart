@@ -73,7 +73,7 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
               ? const ShowProposal()
               : Form(
                   key: _formKey,
-                  child: const EditProposal()
+                  child: EditProposal(tgs: proposalAsyncValue.proposalValidPeriod, deliveryTime: proposalAsyncValue.proposalDeliveryTime,)
                 ),
             ],
           ),
