@@ -23,24 +23,29 @@ class Profile extends ConsumerWidget {
         return Scaffold(
           key: _scaffoldKey,
           endDrawerEnableOpenDragGesture: false,
-          // endDrawerEnableOpenDragGesture: false,
           appBar:  TopAppBarCentered(
             title: FlutterI18n.translate(context, 'tr.login.sign_up_page.profile'),
             backRoute: "/home",
             openDrawer: true,
           ),
           body: Container(
+            width: MediaQuery.of(context).size.width,
             color: Theme.of(context).colorScheme.onSecondary,
             child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  SvgPicture.asset(
-                    'assets/svg/profile_bg.svg',
-                    fit: BoxFit.cover,
+                  Positioned(
+                    width: MediaQuery.of(context).size.width,
                     height: height - 200,
+                    child: SvgPicture.asset(
+                      'assets/svg/profile_bg.svg',
+                      fit: BoxFit.cover,
+                      // height: height - 200,
+                    ),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         FlutterI18n.translate(

@@ -43,12 +43,10 @@ class ShowProposal extends ConsumerWidget {
                       ? "Satıcı"
                       : "Alıcı",
                 row5: proposalAsyncValue.paymentType.toString(),
-                row6: proposalAsyncValue.proposalState == "proposal_stvs"
-                      ? Counter() 
-                      : Text(
-                          proposalAsyncValue.proposalValidPeriod.toString(),
-                          style: Theme.of(context).textTheme.bodyMedium
-                        )
+                row6: Text(
+                        "${proposalAsyncValue.proposalValidPeriod.toString()} gün",
+                        style: Theme.of(context).textTheme.bodyMedium
+                      )
               ),
             ),
             const SizedBox(height: 20.0),
