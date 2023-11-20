@@ -16,11 +16,89 @@ Map<String, String> statusIconMap = {
   'invoice_discounted': 'assets/svg/paid.svg', //odendi
 };
 
-  List<String> CITY_LIST = ['Adana','Adıyaman','Afyon','Ağrı','Aksaray','Amasya','Ankara','Antalya','Ardahan','Artvin','Aydın','Balıkesir','Bartın','Batman','Bayburt',
-                'Bilecik','Bingöl','Bitlis','Bolu','Burdur', 'Bursa','Çanakkale','Çankırı','Çorum','Denizli','Diyarbakır','Düzce','Edirne','Elazığ','Erzincan','Erzurum','Eskişehir','Gaziantep',
-                'Giresun','Gümüşhane','Hakkari','Hatay','Iğdır','Isparta','İstanbul','İzmir','Kahramanmaraş','Karabük','Karaman','Kars','Kastamonu','Kayseri','Kırıkkale','Kırklareli',
-                'Kırşehir','Kilis','Kocaeli','Konya','Kütahya','Malatya','Manisa','Mardin','Mersin','Muğla','Muş','Nevşehir','Niğde','Ordu','Osmaniye','Rize','Sakarya','Samsun','Siirt','Sinop',
-                'Sivas','Şanlıurfa','Şırnak','Tekirdağ','Tokat','Trabzon','Tunceli','Uşak','Van','Yalova','Yozgat','Zonguldak'];
+List<String> CITY_LIST = [
+  'Adana',
+  'Adıyaman',
+  'Afyon',
+  'Ağrı',
+  'Aksaray',
+  'Amasya',
+  'Ankara',
+  'Antalya',
+  'Ardahan',
+  'Artvin',
+  'Aydın',
+  'Balıkesir',
+  'Bartın',
+  'Batman',
+  'Bayburt',
+  'Bilecik',
+  'Bingöl',
+  'Bitlis',
+  'Bolu',
+  'Burdur',
+  'Bursa',
+  'Çanakkale',
+  'Çankırı',
+  'Çorum',
+  'Denizli',
+  'Diyarbakır',
+  'Düzce',
+  'Edirne',
+  'Elazığ',
+  'Erzincan',
+  'Erzurum',
+  'Eskişehir',
+  'Gaziantep',
+  'Giresun',
+  'Gümüşhane',
+  'Hakkari',
+  'Hatay',
+  'Iğdır',
+  'Isparta',
+  'İstanbul',
+  'İzmir',
+  'Kahramanmaraş',
+  'Karabük',
+  'Karaman',
+  'Kars',
+  'Kastamonu',
+  'Kayseri',
+  'Kırıkkale',
+  'Kırklareli',
+  'Kırşehir',
+  'Kilis',
+  'Kocaeli',
+  'Konya',
+  'Kütahya',
+  'Malatya',
+  'Manisa',
+  'Mardin',
+  'Mersin',
+  'Muğla',
+  'Muş',
+  'Nevşehir',
+  'Niğde',
+  'Ordu',
+  'Osmaniye',
+  'Rize',
+  'Sakarya',
+  'Samsun',
+  'Siirt',
+  'Sinop',
+  'Sivas',
+  'Şanlıurfa',
+  'Şırnak',
+  'Tekirdağ',
+  'Tokat',
+  'Trabzon',
+  'Tunceli',
+  'Uşak',
+  'Van',
+  'Yalova',
+  'Yozgat',
+  'Zonguldak'
+];
 
 String formattedDate(String date) {
   if (date == 'null') {
@@ -28,6 +106,22 @@ String formattedDate(String date) {
   } else {
     final DateTime parsedDate = DateTime.parse(date);
     return "${parsedDate.day}-${parsedDate.month.toString().padLeft(2, '0')}-${parsedDate.year.toString().padLeft(2, '0')}";
+  }
+}
+
+DateTime dateForCount(String date) {
+  if (date == 'null') {
+    return  DateTime.now();
+  } else {
+    final DateTime parsedDate = DateTime.parse(date);
+    return parsedDate;
+    // return Duration(
+    //   days: parsedDate.day,
+    //   hours: parsedDate.hour,
+    //   minutes: parsedDate.minute,
+    //   seconds: parsedDate.second,
+    // );
+    // return "${parsedDate.day} G ${parsedDate.hour.toString().padLeft(2, '0')}-${parsedDate.minute.toString().padLeft(2, '0')}";
   }
 }
 
