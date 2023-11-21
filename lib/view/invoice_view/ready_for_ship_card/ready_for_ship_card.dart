@@ -85,7 +85,7 @@ class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
                       color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                   Text(
-                    widget.shipmentList.paymentType ?? 'Cari Hesap',
+                    widget.shipmentList.paymentType ?? 'Cari',
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),

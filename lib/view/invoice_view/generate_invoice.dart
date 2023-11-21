@@ -17,8 +17,8 @@ import '../widget/app_bar/dialog_app_bar.dart';
 
   class InvoiceTable {
   String? invoiceNo;
-  String invoiceDate = DateFormat('dd-MM-yyyy').format(DateTime.now().add(const Duration(days: 3)));
-  String shipmentDate = DateFormat('dd-MM-yyyy').format(DateTime.now().add(const Duration(days: 3)));
+  String invoiceDate = DateFormat('dd-MM-yyyy').format(DateTime.now().add(const Duration(days: 0)));
+  String shipmentDate = DateFormat('dd-MM-yyyy').format(DateTime.now().add(const Duration(days: 0)));
   String? waybillNo;
   AddressModel? contactInformationId;
   String? carrier;
@@ -58,12 +58,12 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
   final TextEditingController _carrier = TextEditingController();
   final TextEditingController _tracking = TextEditingController();
   final TextEditingController _invoiceDate = TextEditingController(
-    text: DateFormat('dd-MM-yyyy').format(DateTime.now().add(const Duration(days: 3))),
+    text: DateFormat('dd-MM-yyyy').format(DateTime.now().add(const Duration(days: 0))),
   );  
 
   final TextEditingController _shipDate = TextEditingController(
     text: DateFormat('dd-MM-yyyy')
-        .format(DateTime.now().add(const Duration(days: 3))),
+        .format(DateTime.now().add(const Duration(days: 0))),
   );
 
   final List<String> list = <String>['Cari Hesap', 'DBS', 'Three', 'Four'];
