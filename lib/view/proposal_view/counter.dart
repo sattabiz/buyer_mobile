@@ -1,10 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class Counter extends StatefulWidget {
-  const Counter({
+  final String validDate;
+  Counter({
     Key? key,
+    required this.validDate,
   }) : super(key: key);
 
   @override
@@ -12,53 +13,49 @@ class Counter extends StatefulWidget {
 }
 
 class CounterState extends State<Counter> {
-  Timer? countdownTimer;
-  Duration duration = const Duration(days: 4);
-
-  // void startTimer() {
-  //   countdownTimer =
-  //       Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
-  // }
-
-  // // Step 4
-  // void stopTimer() {
-  //   setState(() => countdownTimer!.cancel());
-  // }
-
-  // void setCountDown() {
-  //   const reduceSecondsBy = 1;
-  //   setState(() {
-  //     final seconds = duration.inSeconds - reduceSecondsBy;
-  //     if (seconds < 0) {
-  //       countdownTimer!.cancel();
-  //     } else {
-  //       duration = Duration(seconds: seconds);
-  //     }
-  //   });
-  // }
+  late DateTime parsedDate;
+  late Duration remainingTime;
+  late Timer timer;
 
   @override
   void initState() {
     super.initState();
+
+    parsedDate = DateTime.parse(widget.validDate);
+
+    calculateRemainingTime();
+
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      calculateRemainingTime();
+    });
   }
 
   @override
   void dispose() {
-    // stopTimer();
-    // startTimer();
-    // setCountDown();
+    timer.cancel();
     super.dispose();
+  }
+
+  void calculateRemainingTime() {
+    DateTime now = DateTime.now();
+    if (now.isBefore(parsedDate)) {
+      remainingTime = parsedDate.difference(now);
+
+      //for update counter
+      setState(() {});
+    } else {
+      //if time is up, cancel timer
+      timer.cancel();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    String strDigits(int n) => n.toString().padLeft(2, '0');
-    final days = strDigits(duration.inDays); // <-- SEE HERE
-    final hours = strDigits(duration.inHours.remainder(24));
-    final minutes = strDigits(duration.inMinutes.remainder(60));
-    final seconds = strDigits(duration.inSeconds.remainder(60));
+    String remainingTimeString =
+      "${remainingTime.inDays} G ${remainingTime.inHours.remainder(24).toString().padLeft(2, '0')}:${remainingTime.inMinutes.remainder(60).toString().padLeft(2, '0')}:${remainingTime.inSeconds.remainder(60).toString().padLeft(2, '0')}";
+
     return Text(
-      '$days:$hours:$minutes:$seconds',
+      remainingTimeString,
       style: const TextStyle(color: Colors.black, fontSize: 12),
     );
   }

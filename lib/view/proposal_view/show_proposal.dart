@@ -1,5 +1,4 @@
 import 'package:PaletPoint/utils/widget_helper.dart';
-import 'package:PaletPoint/view/proposal_view/counter.dart';
 import 'package:PaletPoint/view/proposal_view/proposal_detail.dart';
 import 'package:PaletPoint/view/proposal_view/show_proposal_info.dart';
 import 'package:PaletPoint/view/widget/detail_components/detail_table.dart';
