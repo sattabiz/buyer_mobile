@@ -6,16 +6,17 @@ import '../../../view_model/get_invoice_view_model.dart';
 class DetailTablePanel extends ConsumerWidget {
   final List<dynamic> productList;
   final bool isFileAttached;
+  final String pageName;
 
-  const DetailTablePanel({
-    Key? key,
-    required this.productList,
-    required this.isFileAttached,
-  }) : super(key: key);
+  const DetailTablePanel(
+      {Key? key,
+      required this.productList,
+      required this.isFileAttached,
+      required this.pageName})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String? currenciesValue= ref.watch(invoiceCurrenciesIndexProvider);
     List<Widget> keys = calculateTaxRate(productList)
         .entries
         .map((entry) => Container(
@@ -46,6 +47,20 @@ class DetailTablePanel extends ConsumerWidget {
               ),
             ))
         .toList();
+    Widget buildWidget() {
+      if (pageName == "invoice") {
+        String? currenciesValue = ref.watch(invoiceCurrenciesIndexProvider);
+        return Text(
+          currenciesValue!,
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(fontWeight: FontWeight.w400),
+        );
+      } else {
+        return Container();
+      }
+    }
 
     return Container(
       margin: const EdgeInsets.only(top: 5.0, right: 10.0, bottom: 10.0),
@@ -66,13 +81,7 @@ class DetailTablePanel extends ConsumerWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(
-            currenciesValue!,
-            style: Theme.of(context)
-                .textTheme
-                .bodySmall
-                ?.copyWith(fontWeight: FontWeight.w400),
-          )
+          buildWidget()
         ],
       ),
     );

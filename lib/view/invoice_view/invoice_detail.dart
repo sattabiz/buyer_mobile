@@ -73,7 +73,8 @@ class InvoiceDetail extends ConsumerWidget {
                   height: 140,
                   child: DetailTablePanel(
                     productList: invoiceList.products!, 
-                    isFileAttached: false, 
+                    isFileAttached: false,
+                    pageName: "invoice",
                   ),
                 ),
                 invoiceList.state == 'invoice_approved'
