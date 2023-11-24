@@ -180,7 +180,7 @@ class _GenerateInvoiceState extends ConsumerState<GenerateInvoice> {
                                 context: context,
                                 initialDate: DateTime.now(),
                                 firstDate: DateTime(1950),
-                                lastDate: DateTime(2100));
+                                lastDate: DateTime.now());
                             if (pickedDate != null) {
                               String formattedDate =
                                   DateFormat('dd-MM-yyyy').format(pickedDate);
