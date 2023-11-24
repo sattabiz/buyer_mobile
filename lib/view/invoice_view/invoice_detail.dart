@@ -70,7 +70,7 @@ class InvoiceDetail extends ConsumerWidget {
                 ),
                 SizedBox(
                   width: width,
-                  height: 100,
+                  height: 140,
                   child: DetailTablePanel(
                     productList: invoiceList.products!, 
                     isFileAttached: false, 

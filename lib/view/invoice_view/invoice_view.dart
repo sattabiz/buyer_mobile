@@ -70,6 +70,7 @@ class InvoiceView extends ConsumerWidget {
                       ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 
                       ref.watch(getMessageProvider);
                       ref.read(messageIconProvider.notifier).state = data[index].messageNotification;
+                      ref.watch(invoiceCurrenciesIndexProvider);
                       context.goNamed('invoice_detail', pathParameters: {'invoiceId' : data[index].invoiceId.toString()});
                     },
                   ),
