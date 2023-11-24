@@ -62,6 +62,7 @@ class ShowProposal extends ConsumerWidget {
               child: DetailTablePanel(
                 productList: proposalAsyncValue.productProposals!,
                 isFileAttached: false,
+                pageName: "proposal",
               ),
             ),
           ],

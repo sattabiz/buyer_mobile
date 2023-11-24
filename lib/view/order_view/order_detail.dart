@@ -89,6 +89,7 @@ class OrderDetail extends ConsumerWidget {
                          child: DetailTablePanel(
                            productList: orderAsyncValue.products!,
                            isFileAttached: false,
+                           pageName: "order",
                          )
                        )
                      : const SizedBox()
