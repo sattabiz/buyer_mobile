@@ -83,6 +83,15 @@ class _SignUpState extends ConsumerState<SignUp> {
                     customTextField(
                       context, 
                       20.0, 
+                      FlutterI18n.translate(context, 'tr.login.sign_up_page.email'), 
+                      false
+                    ),
+                    const SizedBox(
+                      height: 20
+                    ),
+                    customTextField(
+                      context, 
+                      20.0, 
                       FlutterI18n.translate(context, 'tr.login.sign_up_page.firm'),
                       false
                     ),
@@ -165,7 +174,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                       false
                     ),
                     const SizedBox(
-                      height: 20
+                      height: 10
                     ),
                     Row(
                       children: [
@@ -191,7 +200,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                       ],
                     ),
                     const SizedBox(
-                      height: 20
+                      height: 10
                     ),
                     Align(
                       alignment: Alignment.bottomRight,

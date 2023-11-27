@@ -212,22 +212,22 @@ class _LoginState extends ConsumerState<Login> {
                 const SizedBox(
                   height: 100
                 ),
-                InkWell(
-                  hoverColor: Theme.of(context).colorScheme.primary,
-                  overlayColor: MaterialStateProperty.all<Color>(
-                      Theme.of(context).colorScheme.primary),
-                  onTap: () {
-                    context.push('/sign_up');
-                  },
-                  child: Text(
-                    FlutterI18n.translate(context, 'tr.login.sign_up'),
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.outline,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Theme.of(context).colorScheme.shadow,
-                    ),
-                  ),
-                ),
+                // InkWell(
+                //   hoverColor: Theme.of(context).colorScheme.primary,
+                //   overlayColor: MaterialStateProperty.all<Color>(
+                //       Theme.of(context).colorScheme.primary),
+                //   onTap: () {
+                //     context.push('/sign_up');
+                //   },
+                //   child: Text(
+                //     FlutterI18n.translate(context, 'tr.login.sign_up'),
+                //     style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                //       color: Theme.of(context).colorScheme.outline,
+                //       decoration: TextDecoration.underline,
+                //       decorationColor: Theme.of(context).colorScheme.shadow,
+                //     ),
+                //   ),
+                // ),
               ],
             )
           ],
