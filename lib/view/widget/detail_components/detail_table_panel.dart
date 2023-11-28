@@ -67,7 +67,7 @@ class DetailTablePanel extends ConsumerWidget {
       return parsedPrice;
     }
 
-    String KDV = (splitString(price)-splitString(priceWithoutVat)).toStringAsFixed(2);    //KDV value
+    String kdv = (splitString(price)-splitString(priceWithoutVat)).toStringAsFixed(2);    //KDV value
     return Container(
       margin: const EdgeInsets.only(top: 5.0, right: 10.0, bottom: 10.0),
       child: Column(
@@ -79,7 +79,7 @@ class DetailTablePanel extends ConsumerWidget {
               children: [
                 const Spacer(flex: 1),
                 Flexible(child: Column(children: keys)),
-                Flexible(child: Column(children: [buildPrice(priceWithoutVat), buildPrice("$KDV ₺"), buildPrice(price)],)),
+                Flexible(child: Column(children: [buildPrice(priceWithoutVat), buildPrice("$kdv ₺"), buildPrice(price)],)),
                 isFileAttached == true
                     ? const SizedBox(width: 10)
                     : const SizedBox(width: 0),
