@@ -65,7 +65,7 @@ class InvoiceDetail extends ConsumerWidget {
                   width: width,
                   padding: const EdgeInsets.all(5.0),
                   child: DetailTable(
-                    products: invoiceList.products!
+                    products: invoiceList.products!,
                   ),
                 ),
                 SizedBox(
@@ -75,6 +75,8 @@ class InvoiceDetail extends ConsumerWidget {
                     productList: invoiceList.products!, 
                     isFileAttached: false,
                     pageName: "invoice",
+                    price: invoiceList.totalTlPrice,
+                    priceWithoutVat: invoiceList.priceWithoutVat,
                   ),
                 ),
                 invoiceList.state == 'invoice_approved'

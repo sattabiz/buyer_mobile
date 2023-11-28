@@ -6,12 +6,16 @@ import '../../../view_model/get_invoice_view_model.dart';
 class DetailTablePanel extends ConsumerWidget {
   final List<dynamic> productList;
   final bool isFileAttached;
+  final String? price;
+  final String? priceWithoutVat;
   final String pageName;
 
   const DetailTablePanel(
       {Key? key,
       required this.productList,
       required this.isFileAttached,
+      this.price,
+      this.priceWithoutVat,
       required this.pageName})
       : super(key: key);
 
@@ -30,23 +34,18 @@ class DetailTablePanel extends ConsumerWidget {
               ),
             ))
         .toList();
-
-    List<Widget> values = calculateTaxRate(productList)
-        .entries
-        .map((entry) => Container(
-              margin: const EdgeInsets.only(top: 5.0),
-              alignment: Alignment.centerRight,
-              // width: 50,
-              child: Text(
-                entry.value,
-                maxLines: 1,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(fontWeight: FontWeight.w400),
-              ),
-            ))
-        .toList();
+    Widget buildPrice(String? value){
+      return Container(
+        margin: const EdgeInsets.only(top: 5.0),
+        alignment: Alignment.centerRight,
+         // width: 50,
+        child: Text(
+          value!,
+          maxLines: 1,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w400),
+          ),
+        );
+    }
     Widget buildWidget() {
       if (pageName == "invoice") {
         String? currenciesValue = ref.watch(invoiceCurrenciesIndexProvider);
@@ -61,7 +60,14 @@ class DetailTablePanel extends ConsumerWidget {
         return Container();
       }
     }
+    double splitString(price){                             //Split prive and price_without_vat for KDV
+      List<String>? value= price?.split(" ");
+      double parsedPrice = double.parse((value![0]).replaceAll(",", "."));
+      
+      return parsedPrice;
+    }
 
+    String KDV = (splitString(price)-splitString(priceWithoutVat)).toStringAsFixed(2);    //KDV value
     return Container(
       margin: const EdgeInsets.only(top: 5.0, right: 10.0, bottom: 10.0),
       child: Column(
@@ -73,7 +79,7 @@ class DetailTablePanel extends ConsumerWidget {
               children: [
                 const Spacer(flex: 1),
                 Flexible(child: Column(children: keys)),
-                Flexible(child: Column(children: values)),
+                Flexible(child: Column(children: [buildPrice(priceWithoutVat), buildPrice("$KDV ₺"), buildPrice(price)],)),
                 isFileAttached == true
                     ? const SizedBox(width: 10)
                     : const SizedBox(width: 0),

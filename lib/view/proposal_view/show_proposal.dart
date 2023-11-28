@@ -59,11 +59,11 @@ class ShowProposal extends ConsumerWidget {
             SizedBox(
               width: width,
               height: 100,
-              child: DetailTablePanel(
+              /* child: DetailTablePanel(
                 productList: proposalAsyncValue.productProposals!,
                 isFileAttached: false,
                 pageName: "proposal",
-              ),
+              ), */
             ),
           ],
         ),
