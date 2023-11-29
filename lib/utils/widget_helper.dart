@@ -208,7 +208,7 @@ Map<String, String> calculateTaxRate(List<dynamic> productList) {
   getTotalCost["Toplam Tutar:"] =
       '${taxRateMap["totalWithoutTax"].toString()} ${getCurrencySymbol(currencyCode)}';
   for (var product in productList) {
-    getTotalCost["KDV(%${product.taxRate}):"] =
+    getTotalCost["KDV:"] =
         '${taxRateMap[product.taxRate.toString()].toString()} ${getCurrencySymbol(currencyCode)}';
   }
   getTotalCost["Toplam:"] =
