@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:PaletPoint/config/api_url.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../model/message_model.dart';
@@ -9,8 +10,8 @@ import 'list_messages_view_model.dart';
 
 final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
   final _jwt = await jwtStorageService().getJwtData();
-  final socket = WebSocketChannel.connect(
-      Uri.parse('wss://test.satta.biz/cable?jwt=$_jwt'));
+  String url = ApiUrls.webSocket(_jwt);
+  final socket = WebSocketChannel.connect(Uri.parse(url));
   int? messageRoomIdAsyncValue = await ref.watch(messageRoomIdProvider);
 
   if (ref.watch(messagePipeProvider) == 1 && ref.watch(messageRoomIdProvider) != 0) {
@@ -25,9 +26,8 @@ final webSocketProvider = StreamProvider<WebSocketChannel>((ref) async* {
 
     await for (final message in socket.stream) {      
       if (message.toString().contains('"body"')) {
-        print('WebSocketProvider: Mesaj alındı: $message');
-        WebSocketMessageModel webSocketAsyncValue =
-            WebSocketMessageModel.fromMap(json.decode(message!));
+        //print('WebSocketProvider: Mesaj alındı: $message');
+        WebSocketMessageModel webSocketAsyncValue = WebSocketMessageModel.fromMap(json.decode(message!));
         Message lastMessage = Message(
           id: webSocketAsyncValue.message!.id,
           body: webSocketAsyncValue.message!.body,
