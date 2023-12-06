@@ -1,9 +1,10 @@
+import 'package:PaletPoint/storage/email_storage.dart';
+import 'package:PaletPoint/storage/password_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../view_model/current_user_view_model.dart';
 import '../../view_model/get_notifications_view_model.dart';
 import '../../view_model/login_view_model.dart';
@@ -18,12 +19,29 @@ class Login extends ConsumerStatefulWidget {
 class _LoginState extends ConsumerState<Login> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  bool isChecked = false;
+  late String _password;
+  late String _email;
 
   @override
   void initState() {
     super.initState();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    Future.delayed(const Duration(milliseconds: 2),()async{
+      String _emailValue = await emailStorageService().getEmailData();
+      String _passwordValue = await passwordStorageService().getPasswordData();
+      if(_emailValue.isNotEmpty && _passwordValue.isNotEmpty){
+        setState(() {
+          isChecked = true;
+          _emailController.text = _emailValue;
+          _passwordController.text = _passwordValue;
+          });
+      }
+      else{
+
+      }
+    });
   }
 
   @override
@@ -55,37 +73,9 @@ class _LoginState extends ConsumerState<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: () async {
-                    try {
-                      await ref.read(loginProvider.notifier).login(
-                          email: "alperburat@gmail.com", password: "deneme123");
-                      final loginState = ref.watch(loginProvider);
-
-                      if (loginState == LoginState.success) {
-                        context.go('/home');
-                        ref.watch(getCurrentUserInfoProvider);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Basarili giris"),
-                          ),
-                        );
-                        //context.go('/home');
-                      } else if (loginState == LoginState.failure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Hata"),
-                          ),
-                        );
-                      }
-                    } catch (e) {
-                      // print(e);
-                    }
-                  },
-                  child: SvgPicture.asset(
-                    'assets/svg/login_logo.svg',
-                    fit: BoxFit.cover,
-                  ),
+                SvgPicture.asset(
+                  'assets/svg/login_logo.svg',
+                  fit: BoxFit.cover,
                 ),
                 const SizedBox(
                   height: 60,
@@ -142,8 +132,32 @@ class _LoginState extends ConsumerState<Login> {
                     border: const OutlineInputBorder(),
                   ),
                 ),
+                const SizedBox(height: 15,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(width: 42,),
+                    Checkbox(
+                      checkColor: Colors.white,
+                      value: isChecked,
+                      onChanged: (bool? value) async{
+                        setState(() {
+                        isChecked = value!;
+                        });
+                      },
+                    ),
+                    Text(
+                      "Beni hatırla!",
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.outline,
+                      decorationColor: Theme.of(context).colorScheme.shadow,
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(
-                  height: 60,
+                  height: 40,
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -155,6 +169,14 @@ class _LoginState extends ConsumerState<Login> {
                       ref.watch(getCurrentUserInfoProvider);
                       ref.watch(getNotificationProvider);
                       if (loginState == LoginState.success) {
+                        if(isChecked == true){
+                          debugPrint("true");
+                          await passwordStorageService().savePasswordData(_passwordController.text);
+                          await emailStorageService().saveEmailData(_emailController.text);
+                        }else{
+                          await passwordStorageService().deletePasswordData();
+                          await emailStorageService().deleteEmailData();
+                        }
                         context.go('/home');
                         ref.watch(getCurrentUserInfoProvider);
                         ScaffoldMessenger.of(context).showSnackBar(
