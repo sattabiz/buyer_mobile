@@ -1,6 +1,10 @@
 class ApiUrls{  
   static const String baseUrl = String.fromEnvironment('API_URL', defaultValue: 'https://satta.biz/api/v1');
   static const String customerCompanyId = String.fromEnvironment('CUSTOMER_COMPANY_ID', defaultValue: '789');
+  static const String baseWebSocket = String.fromEnvironment('WEB_SOCKET', defaultValue: 'wss://satta.biz/cable?jwt=');
+  static String webSocket (String _jwt){
+    return "$baseWebSocket$_jwt";
+  }
 
   static const String login = "$baseUrl/login.json";
   static const String logout = "$baseUrl/logout.json";
