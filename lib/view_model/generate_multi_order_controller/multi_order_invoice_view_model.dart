@@ -26,8 +26,8 @@ class FormItemModelNotifier extends StateNotifier<List<Product>> {
   void readShippedAmount(int productsProposalShipmentId, double shippedAmount) {
     state = [
       for (final shipmentProduct in state)
-        if (shipmentProduct.productsProposalShipmentId != productsProposalShipmentId && shipmentProduct.productsProposalShipmentId != null)
-          shipmentProduct.copyWith(invoiceAmount: shippedAmount)
+        if (shipmentProduct.productsProposalShipmentId == productsProposalShipmentId && shipmentProduct.productsProposalShipmentId != null)
+          shipmentProduct.copyWith(invoiceAmount: shippedAmount, productsProposalShipmentId: productsProposalShipmentId, checkbox: true)
         else
           shipmentProduct
     ];

@@ -139,10 +139,11 @@ class Product {
         this.checkbox
     });
 
-    Product copyWith({bool? checkbox, double? invoiceAmount}) {
+    Product copyWith({bool? checkbox, double? invoiceAmount, int? productsProposalShipmentId}) {
     return Product(
       checkbox: checkbox,
-      invoiceAmount: invoiceAmount
+      invoiceAmount: invoiceAmount,
+      productsProposalShipmentId: productsProposalShipmentId
 
     );
   }
