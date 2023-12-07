@@ -5,6 +5,7 @@ tr:
     login_btn: "Giriş Yap"
     forgot_password: "Şifremi Unuttum"
     success: "Giriş Başarılı"
+    failed: "Email veya şifre hatalı"
     send_btn: "Gönder"
     reset_password: "Yeni Şifre İsteği"
     sign_up: "Kayıt Ol"
