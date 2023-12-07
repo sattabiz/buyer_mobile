@@ -22,92 +22,86 @@ class InvoiceView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final invoiceListAsyncValue = ref.watch(getInvoicesProvider);
-    return Swipe(
-      onSwipeRight: () async{
-        ref.refresh(getOrderProvider);
-        context.go('/order');
+    return RefreshIndicator(
+      onRefresh: () async{
+        ref.refresh(getInvoicesProvider);
       },
-      child: RefreshIndicator(
-        onRefresh: () async{
-          ref.refresh(getInvoicesProvider);
-        },
-        child: invoiceListAsyncValue.when(
-          data: (data) {
-            return Stack(
-              children: [
-                ListView.builder(
-                  itemCount: data.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => IndexListTile(
-                    title: FlutterI18n.translate(context, 'tr.invoice.${data[index].state}'),
-                    subtitle: FlutterI18n.translate(context, 'tr.invoice.invoice_no'),
-                    subtitle2: data[index].invoiceNo,
-                    subtitle3: FlutterI18n.translate(context, 'tr.invoice.invoice_date'),
-                    subtitle4: formattedDate(data[index].invoiceDate.toString()),
-                    width: 100,
-                    svgPath: statusIconMap[data[index].state] ?? ' ',
-                    trailing: (() {                                                                               //for widget notification icons
-                      if (data[index].messageNotification == true) {
-                        return SvgPicture.asset(                  
-                          "assets/svg/chat.svg"
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    })(),
-                    onTap: () async {
-                      if(data[index].state == "invoice_sended"){
-                        ref.read(messageIdProvider.notifier).state = 'shipment_id=${data[index].shipmentIds![0]}';
-                        ref.read(createMessageMapProvider.notifier).state = {'shipment_id': data[index].shipmentIds![0]};
-                        ref.read(chatBoxHeaderProvider.notifier).state = "Sevkiyat No: ${data[index].shipmentIds![0]}";
-                      }else{
-                        ref.read(messageIdProvider.notifier).state = 'invoice_id=${data[index].invoiceId}';
-                        ref.read(createMessageMapProvider.notifier).state = {'invoice_id': data[index].invoiceId};
-                        ref.read(chatBoxHeaderProvider.notifier).state = "Fatura No: ${data[index].invoiceId}";
-                      }
-                      ref.watch(getInvoicesProvider);
-                      ref.read(invoiceIndexProvider.notifier).state = data[index];
-                      ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 
-                      ref.watch(getMessageProvider);
-                      ref.read(messageIconProvider.notifier).state = data[index].messageNotification;
-                      ref.watch(invoiceCurrenciesIndexProvider);
-                      context.goNamed('invoice_detail', pathParameters: {'invoiceId' : data[index].invoiceId.toString()});
-                    },
-                  ),
+      child: invoiceListAsyncValue.when(
+        data: (data) {
+          return Stack(
+            children: [
+              ListView.builder(
+                itemCount: data.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => IndexListTile(
+                  title: FlutterI18n.translate(context, 'tr.invoice.${data[index].state}'),
+                  subtitle: FlutterI18n.translate(context, 'tr.invoice.invoice_no'),
+                  subtitle2: data[index].invoiceNo,
+                  subtitle3: FlutterI18n.translate(context, 'tr.invoice.invoice_date'),
+                  subtitle4: formattedDate(data[index].invoiceDate.toString()),
+                  width: 100,
+                  svgPath: statusIconMap[data[index].state] ?? ' ',
+                  trailing: (() {                                                                               //for widget notification icons
+                    if (data[index].messageNotification == true) {
+                      return SvgPicture.asset(                  
+                        "assets/svg/chat.svg"
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  })(),
+                  onTap: () async {
+                    if(data[index].state == "invoice_sended"){
+                      ref.read(messageIdProvider.notifier).state = 'shipment_id=${data[index].shipmentIds![0]}';
+                      ref.read(createMessageMapProvider.notifier).state = {'shipment_id': data[index].shipmentIds![0]};
+                      ref.read(chatBoxHeaderProvider.notifier).state = "Sevkiyat No: ${data[index].shipmentIds![0]}";
+                    }else{
+                      ref.read(messageIdProvider.notifier).state = 'invoice_id=${data[index].invoiceId}';
+                      ref.read(createMessageMapProvider.notifier).state = {'invoice_id': data[index].invoiceId};
+                      ref.read(chatBoxHeaderProvider.notifier).state = "Fatura No: ${data[index].invoiceId}";
+                    }
+                    ref.watch(getInvoicesProvider);
+                    ref.read(invoiceIndexProvider.notifier).state = data[index];
+                    ref.read(invoiceIdProvider.notifier).state=data[index].invoiceId; 
+                    ref.watch(getMessageProvider);
+                    ref.read(messageIconProvider.notifier).state = data[index].messageNotification;
+                    ref.watch(invoiceCurrenciesIndexProvider);
+                    context.goNamed('invoice_detail', pathParameters: {'invoiceId' : data[index].invoiceId.toString()});
+                  },
                 ),
-                Container(
-                  alignment: Alignment.bottomRight,
-                  padding: const EdgeInsets.all(20.0),
-                  child: FloatingActionButton.extended(
-                    label: Text(
-                      FlutterI18n.translate(context, 'tr.invoice.invoice_btn'),
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
-                    ),
-                    icon: Icon(
-                      Icons.add,
+              ),
+              Container(
+                alignment: Alignment.bottomRight,
+                padding: const EdgeInsets.all(20.0),
+                child: FloatingActionButton.extended(
+                  label: Text(
+                    FlutterI18n.translate(context, 'tr.invoice.invoice_btn'),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
-                    onPressed: () async{
-                      ref.watch(getShipmentProvider);
-                      ref.read(multiOrderProvider.notifier).removeAllFormItems();
-                      context.go('/invoice/invoice_ready');
-                    },
-                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
-                )
-              ],
-            );
-          },
-          loading: () => Container(),
-          error: (error, stack) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.go('/login');  
-            });
-            return Text('An error occurred: $error');
-          },
-        ),
+                  icon: Icon(
+                    Icons.add,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  onPressed: () async{
+                    ref.watch(getShipmentProvider);
+                    ref.read(multiOrderProvider.notifier).removeAllFormItems();
+                    context.go('/invoice/invoice_ready');
+                  },
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                ),
+              )
+            ],
+          );
+        },
+        loading: () => Container(),
+        error: (error, stack) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.go('/login');  
+          });
+          return Text('An error occurred: $error');
+        },
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:PaletPoint/utils/widget_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
@@ -120,13 +121,11 @@ class _ReadyForShipDetailState extends ConsumerState<ReadyForShipDetail> {
                           width: 150,
                           margin: const EdgeInsets.only(left: 10.0),
                           child: TextFormField(
-                            // validator: (value) {
-                            //   if (value!.isEmpty || value == '0') {
-                            //     return 'Lütfen bir sayı girin.';
-                            //   }else if(int.parse(value) != 0){
-                            //     return "Lütfen sıfır haricinde bir sayı girin.";
-                            //   }
-                            // },
+                            validator: (value) {
+                              if (checkSendedAmount(orderAsyncValue.products![index].amount!, orderAsyncValue.products![index].sendedAmount ?? 0, value!)) {
+                                return 'Gönderilecek miktar, toplam miktarı geçemez.';
+                              }
+                            },
                             cursorColor: Theme.of(context).colorScheme.onBackground,
                             keyboardType:const TextInputType.numberWithOptions(
                                decimal: true, signed: true),
@@ -143,6 +142,10 @@ class _ReadyForShipDetailState extends ConsumerState<ReadyForShipDetail> {
                               fillColor: Theme.of(context).colorScheme.onPrimary,
                               contentPadding: const EdgeInsets.only(left: 10.0, right: 5.0, bottom: 15.0),
                               isDense: true,
+                              errorMaxLines: 2,
+                              errorStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
                               label: Text(
                                 orderAsyncValue.products![index].sendedAmount == null 
                                 ? "${orderAsyncValue.products![index].amount} ${orderAsyncValue.products![index].unit}"  
