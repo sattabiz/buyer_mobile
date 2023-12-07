@@ -22,63 +22,52 @@ class OrderView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final orderListAsyncValue = ref.watch(getOrderProvider);
-    return Swipe(
-      onSwipeLeft: () async{
-        ref.refresh(getInvoicesProvider);
-        context.go('/invoice');
+    return RefreshIndicator(
+      onRefresh: () async{
+        ref.refresh(getOrderProvider);
       },
-      onSwipeRight:() async{
-        ref.refresh(getProposalProvider);
-        context.go('/proposal');
-      },
-      horizontalMinDisplacement: 20,
-      child: RefreshIndicator(
-        onRefresh: () async{
-          ref.refresh(getOrderProvider);
+      child: orderListAsyncValue.when(
+        data: (data) {
+          return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) => IndexListTile(
+              title: FlutterI18n.translate(context, 'tr.order.${data[index].state}'),
+              subtitle: FlutterI18n.translate(context, 'tr.order.order_no'),
+              subtitle2: data[index].id.toString(),
+              subtitle3: FlutterI18n.translate(context, 'tr.order.order_date'),
+              subtitle4: formattedDate(data[index].orderDate.toString()),
+              width: 30,
+              svgPath: statusIconMap[data[index].state] ?? '',
+              trailing: (() {                                                                               //for widget notification icons
+                if (data[index].messageNotification == true) {
+                  return SvgPicture.asset(                  
+                    "assets/svg/chat.svg"
+                  );
+                } else {
+                  return SizedBox();
+                }
+              })(),
+              onTap: () async{
+                ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
+                ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
+                ref.read(chatBoxHeaderProvider.notifier).state = "Sipariş No: ${data[index].id}";   //for chat box header name
+                ref.read(orderIdProvider.notifier).state=data[index].id;        //read orderId for confirm order post service
+                ref.read(orderIndexProvider.notifier).state = data[index];            //read index for order-detail page
+                ref.watch(getOrderProvider);                                          //get order data
+                ref.watch(getMessageProvider);                                        //get order messages
+                context.goNamed('order_detail', pathParameters: {'orderId' : data[index].id.toString()});
+                ref.read(messageIconProvider.notifier).state = data[index].messageNotification; //for product detail view' s Icon provider
+              }, //context.go('/order/detail'),
+            ),
+          );
         },
-        child: orderListAsyncValue.when(
-          data: (data) {
-            return ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) => IndexListTile(
-                title: FlutterI18n.translate(context, 'tr.order.${data[index].state}'),
-                subtitle: FlutterI18n.translate(context, 'tr.order.order_no'),
-                subtitle2: data[index].id.toString(),
-                subtitle3: FlutterI18n.translate(context, 'tr.order.order_date'),
-                subtitle4: formattedDate(data[index].orderDate.toString()),
-                width: 30,
-                svgPath: statusIconMap[data[index].state] ?? '',
-                trailing: (() {                                                                               //for widget notification icons
-                  if (data[index].messageNotification == true) {
-                    return SvgPicture.asset(                  
-                      "assets/svg/chat.svg"
-                    );
-                  } else {
-                    return SizedBox();
-                  }
-                })(),
-                onTap: () async{
-                  ref.read(messageIdProvider.notifier).state = 'order_id=${data[index].id}';
-                  ref.read(createMessageMapProvider.notifier).state = {'order_id': data[index].id};
-                  ref.read(chatBoxHeaderProvider.notifier).state = "Sipariş No: ${data[index].id}";   //for chat box header name
-                  ref.read(orderIdProvider.notifier).state=data[index].id;        //read orderId for confirm order post service
-                  ref.read(orderIndexProvider.notifier).state = data[index];            //read index for order-detail page
-                  ref.watch(getOrderProvider);                                          //get order data
-                  ref.watch(getMessageProvider);                                        //get order messages
-                  context.goNamed('order_detail', pathParameters: {'orderId' : data[index].id.toString()});
-                  ref.read(messageIconProvider.notifier).state = data[index].messageNotification; //for product detail view' s Icon provider
-                }, //context.go('/order/detail'),
-              ),
-            );
-          },
-          loading: () => Container(),
-          error: (error, stack) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.go('/login');  
-            });
-            return Text('An error occurred: $error');
-          },
-        ),
+        loading: () => Container(),
+        error: (error, stack) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.go('/login');  
+          });
+          return Text('An error occurred: $error');
+        },
       ),
     );
   }

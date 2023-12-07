@@ -28,100 +28,90 @@ class _ProposalState extends ConsumerState<ProposalView> {
   Widget build(BuildContext context) {
     final proposalListAsyncValue = ref.watch(getProposalProvider);
     ref.watch(getListCurrenciesProvider);
-    return Swipe(
-      onSwipeLeft: () async {
-        ref.refresh(getOrderProvider);
-        context.go('/order');
+    return RefreshIndicator(
+      onRefresh: () async {
+        await ref.refresh(getProposalProvider);
       },
-      onSwipeRight: () async {
-        ref.refresh(getNotificationProvider);
-        context.go('/home');
-      },
-      child: RefreshIndicator(
-        onRefresh: () async {
-          await ref.refresh(getProposalProvider);
-        },
-        child: proposalListAsyncValue.when(
-          data: (data) {
-            return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  return IndexListTile(
-                    title: "Teklif No: ${data[index].proposalId.toString()}",
-                    subtitle: data[index].demandListName!,
-                    svgPath: statusIconMap[data[index].proposalState] ?? '',
-                    trailing: (() {
-                      //for widget notification icons
-                      if (data[index].messageNotification == true) {
-                        return SvgPicture.asset("assets/svg/chat.svg");
+      child: proposalListAsyncValue.when(
+        data: (data) {
+          return ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return IndexListTile(
+                  title: "Teklif No: ${data[index].proposalId.toString()}",
+                  subtitle: data[index].demandListName!,
+                  svgPath: statusIconMap[data[index].proposalState] ?? '',
+                  trailing: (() {
+                    //for widget notification icons
+                    if (data[index].messageNotification == true) {
+                      return SvgPicture.asset("assets/svg/chat.svg");
+                    } else {
+                      if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
+                        return const SizedBox();
                       } else {
-                        if (data[index].proposalState == 'last_offer' || data[index].proposalState == 'proposal_stvs') {
-                          return const SizedBox();
-                        } else {
-                          return Counter(
-                            validDate: data[index].proposalValidDate ?? '0');
-                        }
+                        return Counter(
+                          validDate: data[index].proposalValidDate ?? '0');
                       }
-                    })(),
-                    onTap: () async {
-                      ref.read(messageIdProvider.notifier).state =
-                          'proposal_id=${data[index].proposalId}';
-                      ref.read(createMessageMapProvider.notifier).state = {
-                        'proposal_id': data[index].proposalId
-                      };
-                      ref.read(chatBoxHeaderProvider.notifier).state =
-                          "Teklif No: ${data[index].proposalId}";
-                      ref.read(proposalIndexProvider.notifier).state =
-                          data[index];
-                      ref.watch(getListCurrenciesProvider);
-                      ref.refresh(formItemProvider);
-                      ref.read(messageIconProvider.notifier).state =
-                          data[index].messageNotification;
-                      for (int i = 0;
-                          i < data[index].productProposals!.length;
-                          i++) {
-                        //If the user has previously submitted an offer, the previous data is assigned to the formItem controller here.
-                        ref.read(formItemProvider.notifier).addFormItem(
-                            FormItem(),
+                    }
+                  })(),
+                  onTap: () async {
+                    ref.read(messageIdProvider.notifier).state =
+                        'proposal_id=${data[index].proposalId}';
+                    ref.read(createMessageMapProvider.notifier).state = {
+                      'proposal_id': data[index].proposalId
+                    };
+                    ref.read(chatBoxHeaderProvider.notifier).state =
+                        "Teklif No: ${data[index].proposalId}";
+                    ref.read(proposalIndexProvider.notifier).state =
+                        data[index];
+                    ref.watch(getListCurrenciesProvider);
+                    ref.refresh(formItemProvider);
+                    ref.read(messageIconProvider.notifier).state =
+                        data[index].messageNotification;
+                    for (int i = 0;
+                        i < data[index].productProposals!.length;
+                        i++) {
+                      //If the user has previously submitted an offer, the previous data is assigned to the formItem controller here.
+                      ref.read(formItemProvider.notifier).addFormItem(
+                          FormItem(),
+                          data[index]
+                              .productProposals![i]
+                              .productProposalId!);
+                      if (data[index].productProposals![i].proposalNote !=
+                          null) {
+                        ref.read(formItemProvider.notifier).addNote(
                             data[index]
                                 .productProposals![i]
-                                .productProposalId!);
-                        if (data[index].productProposals![i].proposalNote !=
-                            null) {
-                          ref.read(formItemProvider.notifier).addNote(
-                              data[index]
-                                  .productProposals![i]
-                                  .productProposalId!,
-                              data[index].productProposals![i].proposalNote!);
-                        }
-                        int currenciesValue = getCurrencyValue(
-                            data[index].productProposals![i].currencyCode!);
-                        ref.read(formItemProvider.notifier).addCurrencies(
-                            data[index].productProposals![i].productProposalId!,
-                            currenciesValue);
-                        if (data[index].productProposals![i].price != null) {
-                          ref.read(formItemProvider.notifier).addPrice(
-                              data[index]
-                                  .productProposals![i]
-                                  .productProposalId!,
-                              data[index].productProposals![i].price!);
-                        }
+                                .productProposalId!,
+                            data[index].productProposals![i].proposalNote!);
                       }
-                      context.goNamed('proposal_detail', pathParameters: {
-                        'proposalId': data[index].proposalId.toString()
-                      });
-                    },
-                  );
-                });
-          },
-          loading: () => Container(),
-          error: (error, stack) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.go('/login');
-            });
-            return Text('An error occurred: $error');
-          },
-        ),
+                      int currenciesValue = getCurrencyValue(
+                          data[index].productProposals![i].currencyCode!);
+                      ref.read(formItemProvider.notifier).addCurrencies(
+                          data[index].productProposals![i].productProposalId!,
+                          currenciesValue);
+                      if (data[index].productProposals![i].price != null) {
+                        ref.read(formItemProvider.notifier).addPrice(
+                            data[index]
+                                .productProposals![i]
+                                .productProposalId!,
+                            data[index].productProposals![i].price!);
+                      }
+                    }
+                    context.goNamed('proposal_detail', pathParameters: {
+                      'proposalId': data[index].proposalId.toString()
+                    });
+                  },
+                );
+              });
+        },
+        loading: () => Container(),
+        error: (error, stack) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.go('/login');
+          });
+          return Text('An error occurred: $error');
+        },
       ),
     );
   }
