@@ -128,12 +128,12 @@ DateTime dateForCount(String date) {
 bool checkSendedAmount(double amount, double sendedAmount, String value) {
   late bool result;
   if (sendedAmount == 0) {
-    amount > double.parse(value) ? result = false : result = true;
+    amount >= double.parse(value) ? result = false : result = true;
   } else if (value.isEmpty || value == '0') {
     result = false;
   } else {
     double totalAmount = amount - sendedAmount;
-    totalAmount > double.parse(value) ? result = false : result = true;
+    totalAmount >= double.parse(value) ? result = false : result = true;
   }
   return result;
 }
