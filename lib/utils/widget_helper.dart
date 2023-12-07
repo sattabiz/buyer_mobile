@@ -111,7 +111,7 @@ String formattedDate(String date) {
 
 DateTime dateForCount(String date) {
   if (date == 'null') {
-    return  DateTime.now();
+    return DateTime.now();
   } else {
     final DateTime parsedDate = DateTime.parse(date);
     return parsedDate;
@@ -123,6 +123,19 @@ DateTime dateForCount(String date) {
     // );
     // return "${parsedDate.day} G ${parsedDate.hour.toString().padLeft(2, '0')}-${parsedDate.minute.toString().padLeft(2, '0')}";
   }
+}
+
+bool checkSendedAmount(double amount, double sendedAmount, String value) {
+  late bool result;
+  if (sendedAmount == 0) {
+    amount > double.parse(value) ? result = false : result = true;
+  } else if (value.isEmpty || value == '0') {
+    result = false;
+  } else {
+    double totalAmount = amount - sendedAmount;
+    totalAmount > double.parse(value) ? result = false : result = true;
+  }
+  return result;
 }
 
 String getCurrencySymbol(String currencyCode) {
@@ -208,7 +221,7 @@ Map<String, String> calculateTaxRate(List<dynamic> productList) {
   getTotalCost["Toplam Tutar:"] =
       '${taxRateMap["totalWithoutTax"].toString()} ${getCurrencySymbol(currencyCode)}';
   for (var product in productList) {
-    getTotalCost["KDV:"] =
+    getTotalCost["KDV(%${product.taxRate}):"] =
         '${taxRateMap[product.taxRate.toString()].toString()} ${getCurrencySymbol(currencyCode)}';
   }
   getTotalCost["Toplam:"] =
