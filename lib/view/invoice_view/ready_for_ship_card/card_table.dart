@@ -154,6 +154,7 @@ class _CardTableState extends ConsumerState<CardTable> {
                     color: Theme.of(context).colorScheme.onSurfaceVariant),
                   decoration: InputDecoration(
                     constraints: const BoxConstraints(maxHeight: 25),
+                    contentPadding: const EdgeInsets.all(0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(3),
                       borderSide: BorderSide(
