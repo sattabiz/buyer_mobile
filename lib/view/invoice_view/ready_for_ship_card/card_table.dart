@@ -138,7 +138,7 @@ class _CardTableState extends ConsumerState<CardTable> {
                 margin: const EdgeInsets.all(5.0),
                 alignment: Alignment.center,
                 child: TextFormField(
-                  initialValue: widget.shipmentProduct[i].invoiceAmount!.toString(),
+                  controller: TextEditingController(text: widget.shipmentProduct[i].invoiceAmount!.toString()),
                   keyboardType: const TextInputType.numberWithOptions(
                       decimal: true, signed: true),
                   inputFormatters: [
