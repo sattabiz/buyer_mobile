@@ -42,8 +42,7 @@ class _ChatBoxState extends ConsumerState<ChatBox> {
     messageController.dispose();
     super.dispose();
   }
-
-  FocusNode focusNode = FocusNode();
+  
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
