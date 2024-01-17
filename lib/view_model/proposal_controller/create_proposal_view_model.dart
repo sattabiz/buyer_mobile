@@ -22,7 +22,7 @@ final createProposalProvider = FutureProvider.autoDispose((ref) async {
       "price": _formItems[i].price.toString(),
       "proposal_note": _formItems[i].note,
       "currency_unit": _formItems[i].currencies,
-      //"image": _formItems[i].image,
+      if(_formItems[i].image != null) 'image': _formItems[i].image
     };
   }
 
@@ -33,6 +33,7 @@ final createProposalProvider = FutureProvider.autoDispose((ref) async {
     "payment_type": null,
     "products_proposals_attributes": _productsAttributes
   };
+
 
   final formData = FormData.fromMap(data);
 

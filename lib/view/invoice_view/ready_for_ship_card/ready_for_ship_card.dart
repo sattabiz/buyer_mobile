@@ -5,7 +5,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-
+import '../../../view_model/get_shipment_view_model.dart';
 import '../../../view_model/message_controller/create_message_view_model.dart';
 import '../../../view_model/message_controller/get_message_view_model.dart';
 import '../../../view_model/message_controller/websocket_message_view_model.dart';
@@ -27,6 +27,7 @@ class ReadyForShipCard extends ConsumerStatefulWidget {
 }
 
 class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
+
   @override
   Widget build(BuildContext context) {
     final chatId = ref.watch(messageRoomIdProvider);
@@ -127,6 +128,8 @@ class _ReadyForShipCardState extends ConsumerState<ReadyForShipCard> {
                 ref.read(cancelShipmentIdProvider.notifier).state =
                     widget.shipmentList.shipmentId.toString();
                 ref.watch(cancelPreparedShipmentController);
+                ref.refresh(getShipmentProvider.future);
+                setState(() {});
               },
               style: OutlinedButton.styleFrom(
                 side: BorderSide(
