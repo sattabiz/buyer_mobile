@@ -15,6 +15,7 @@ final createProposalProvider = FutureProvider.autoDispose((ref) async {
   OfferModel _contentItems = await ref.watch(offerModelProvider);
 
   Map<String, dynamic> _productsAttributes = {};
+  debugPrint(_formItems[0].image!.filename);
 
   for (int i = 0; i < _formItems.length; i++) {
     _productsAttributes['$i'] = {
@@ -129,6 +130,25 @@ class FormItemModelNotifier extends StateNotifier<List<FormItem>> {
       for (final form in state)
         if (form.productId == productId)
           form.copyWith(currencies: currencies)
+        else
+          form
+    ];
+  }
+
+  void updateImage(int productId, MultipartFile image) {
+    state = [
+      for (final form in state)
+        if (form.productId == productId)
+          form.copyWith(image: image)
+        else
+          form
+    ];
+  }
+  void removeImage(int productId) {
+    state = [
+      for (final form in state)
+        if (form.productId == productId)
+          form.copyWith(image: null)
         else
           form
     ];
