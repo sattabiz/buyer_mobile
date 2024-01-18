@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../model/currency_model.dart';
 import '../../utils/widget_helper.dart';
 import '../../view_model/proposal_controller/create_proposal_view_model.dart';
+import 'create_proposal_show_dialog.dart';
 
 class ProposalBody extends ConsumerStatefulWidget {
   final int productId;
@@ -197,16 +199,12 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                     value: getCurrencySymbol(widget.currenciesCode!), //ref.read(offerModelProvider).currencyCode,
                     onChanged: (value) {
                       if (boolean == false) {
-                        ref
-                            .read(formItemProvider.notifier)
-                            .addFormItem(FormItem(), widget.productId);
+                        ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
                         boolean = true;
                       }
                       int selectedIndex = dropDownMenuCurrency
                           .indexWhere((item) => item.value == value);
-                      ref
-                          .read(formItemProvider.notifier)
-                          .addCurrencies(widget.productId, selectedIndex);
+                      ref.read(formItemProvider.notifier).addCurrencies(widget.productId, selectedIndex);
                     },
                     iconStyleData: const IconStyleData(
                       icon: Icon(
@@ -222,7 +220,13 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                   IconButton(
                     padding: const EdgeInsets.only(bottom: 15),
                     onPressed: () async {
-                      FilePickerResult? result = await FilePicker.platform.pickFiles();
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return CreateProposalShowDialog(productId: widget.productId);
+                      },
+                    );
+                    /* FilePickerResult? result = await FilePicker.platform.pickFiles();
                       if (result != null) {
                         PlatformFile file = result.files.first;
                         MultipartFile filetoMultipart = await MultipartFile.fromFile(
@@ -232,7 +236,8 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                         ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart);
                       } else {
                         return;
-                      }
+                      } */
+                      /* XFile? image = await ImagePicker().pickImage(source: ImageSource.camera); */
                     },
                     icon: Icon(
                       Icons.attach_file_outlined,
