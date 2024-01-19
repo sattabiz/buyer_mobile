@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../config/api_url.dart';
 import '../../service/post_service.dart';
 import '../../view/proposal_view/proposal_detail.dart';
@@ -58,18 +59,25 @@ class FormItem {
   String? note;
   int? currencies;
   MultipartFile? image;
-  FormItem({this.productId, this.price, this.note, this.currencies, this.image});
+  XFile? imageXfile;
+  
+  FormItem({this.productId, this.price, this.note, this.currencies, this.image, this.imageXfile});
 
-  FormItem copyWith({int? productId, double? price, String? note, int? currencies, MultipartFile? image}) {
+  FormItem copyWith({int? productId, double? price, String? note, int? currencies, MultipartFile? image, XFile? imageXfile, bool clearImage = false,
+  bool clearImageXfile = false,}) {
     return FormItem(
         productId: productId ?? this.productId,
         price: price ?? this.price,
         note: note ?? this.note,
         currencies: currencies ?? this.currencies,
+        imageXfile: imageXfile ?? this.imageXfile,
         image: image ?? this.image);
   }
   String? get getNote{
     return note;
+  }
+  void nullImage(){
+    image = null;
   }
 }
 
@@ -108,11 +116,11 @@ class FormItemModelNotifier extends StateNotifier<List<FormItem>> {
 }
 
 
-  void addImage(int productId, MultipartFile image) {
+  void addImage(int productId, MultipartFile image, XFile imageXfile) {
     state = [
       for (final form in state)
         if (form.productId == productId)
-          form.copyWith(image: image)
+          form.copyWith(image: image, imageXfile: imageXfile)
         else 
           form
     ];
@@ -145,15 +153,15 @@ class FormItemModelNotifier extends StateNotifier<List<FormItem>> {
     ];
   }
   void removeImage(int productId) {
-    state = [
-      for (final form in state)
-        if (form.productId == productId)
-          form.copyWith(image: null)
-        else
-          form
-    ];
+    state = state.map((form) {
+      if (form.productId == productId) {
+        form.nullImage(); //function that converts image to null value
+        return form; // update form
+      } else {
+        return form; // return form
+      }
+    }).toList();
   }
-
   void addNote(int productId, String note) {
     state = [
       for (final form in state)
@@ -163,4 +171,21 @@ class FormItemModelNotifier extends StateNotifier<List<FormItem>> {
           form
     ];
   }
+  bool isImageSelected(int productId) {
+    for (final form in state) {
+      if (form.productId == productId) {
+        return form.image != null;
+      }
+    }
+    return false;
+  }
+  XFile? isImageXfile(int productId) {
+    for (final form in state) {
+      if (form.productId == productId) {
+        return form.imageXfile;
+      }
+    }
+    return null;
+  }
+
 }
