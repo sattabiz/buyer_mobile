@@ -31,7 +31,7 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
     }
   }
   void handleImageSelection() {
-    widget.onImageSelected(); // Callback'i çağır
+    widget.onImageSelected(); 
   }
 
   @override
@@ -87,9 +87,10 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
               () async {
                 XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
                 if (pickedFile != null) {
-                  File imageFile = File(pickedFile.path); // Bu satırı düzeltin
+                  File imageFile = File(pickedFile.path);
                   MultipartFile filetoMultipart = await MultipartFile.fromFile(imageFile.path);
                   ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart, pickedFile);
+                  handleImageSelection();
                 }
               }
             ),
@@ -99,9 +100,10 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
               ()async{
                 XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
                 if (pickedFile != null) {
-                  File imageFile = File(pickedFile.path); // Bu satırı düzeltin
+                  File imageFile = File(pickedFile.path);
                   MultipartFile filetoMultipart = await MultipartFile.fromFile(imageFile.path);
                   ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart, pickedFile);
+                  handleImageSelection();
                 }
               }
             ),
@@ -152,7 +154,7 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
         child: Row(
           children: [
             Icon(iconData, color: Colors.black,),
-            SizedBox(width: 5,),
+            const SizedBox(width: 5,),
             Text(buttonName,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: Theme.of(context).colorScheme.shadow,
