@@ -1,17 +1,14 @@
 import 'package:PaletPoint/view_model/proposal_controller/list_currencies_view_model.dart';
-import 'package:dio/dio.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
-
 import '../../model/currency_model.dart';
 import '../../utils/widget_helper.dart';
 import '../../view_model/proposal_controller/create_proposal_view_model.dart';
 import 'create_proposal_show_dialog.dart';
+import 'create_proposasl_selected_dialog.dart';
 
 class ProposalBody extends ConsumerStatefulWidget {
   final int productId;
@@ -220,10 +217,17 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                   IconButton(
                     padding: const EdgeInsets.only(bottom: 15),
                     onPressed: () async {
+                      ref.watch(formItemProvider.notifier).isImageSelected(widget.productId)?
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                        return CreateProposalShowDialog(productId: widget.productId);
+                        return ImageDialog(productId: widget.productId,onImageRemove: onImageSelectedCallback,);
+                      },
+                    ) :
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return CreateProposalShowDialog(productId: widget.productId,onImageSelected: onImageSelectedCallback,);
                       },
                     );
                     /* FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -240,7 +244,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                       /* XFile? image = await ImagePicker().pickImage(source: ImageSource.camera); */
                     },
                     icon: Icon(
-                      Icons.attach_file_outlined,
+                      ref.watch(formItemProvider.notifier).isImageSelected(widget.productId)? Icons.image_outlined: Icons.attach_file,
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     )
                   ),
@@ -288,5 +292,16 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
         ),
       ),
     );
+  }
+  bool changeIcon(int productId, WidgetRef ref) {
+  if (ref.watch(formItemProvider.notifier).isImageSelected(productId) == true) {
+    return true;
+  } else {
+    return false;
+  }
+  }
+  void onImageSelectedCallback() {
+    setState(() {
+    });
   }
 }

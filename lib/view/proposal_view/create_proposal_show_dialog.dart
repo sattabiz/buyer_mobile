@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,7 +8,8 @@ import '../../view_model/proposal_controller/create_proposal_view_model.dart';
 
 class CreateProposalShowDialog extends ConsumerStatefulWidget {
   int productId;
-  CreateProposalShowDialog({super.key, required this.productId});
+  final Function onImageSelected;
+  CreateProposalShowDialog({super.key, required this.productId, required this.onImageSelected});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _State();
@@ -22,7 +21,6 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
   @override
   void initState() {
     super.initState();
-    debugPrint(widget.productId.toString());
   }
 
   bool isFileSelected() {
@@ -31,6 +29,9 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
     } else {
       return true;
     }
+  }
+  void handleImageSelection() {
+    widget.onImageSelected(); // Callback'i çağır
   }
 
   @override
@@ -88,7 +89,7 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
                 if (pickedFile != null) {
                   File imageFile = File(pickedFile.path); // Bu satırı düzeltin
                   MultipartFile filetoMultipart = await MultipartFile.fromFile(imageFile.path);
-                  ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart);
+                  ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart, pickedFile);
                 }
               }
             ),
@@ -100,7 +101,7 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
                 if (pickedFile != null) {
                   File imageFile = File(pickedFile.path); // Bu satırı düzeltin
                   MultipartFile filetoMultipart = await MultipartFile.fromFile(imageFile.path);
-                  ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart);
+                  ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart, pickedFile);
                 }
               }
             ),
@@ -111,9 +112,11 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
         ElevatedButton(
           style: ButtonStyle(
             fixedSize: MaterialStateProperty.all(const Size(120, 45)),
+            backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
           ),
           onPressed: () {
             Navigator.of(context).pop();
+            handleImageSelection();
           },
           child: Text(
             'Kaydet',
