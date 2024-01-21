@@ -54,6 +54,8 @@ class ShowProposal extends ConsumerWidget {
               padding: const EdgeInsets.all(5.0),
               child: DetailTable(
                 products: proposalAsyncValue.productProposals!,
+                className: "proposal",
+                id: proposalAsyncValue.proposalId!,
               ),
             ),
             SizedBox(

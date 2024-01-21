@@ -254,6 +254,7 @@ class _EditProposalState extends ConsumerState<EditProposal> {
                 price: proposalAsyncValue.productProposals![index].price,
                 proposalNote: proposalAsyncValue.productProposals![index].proposalNote,
                 currenciesCode: proposalAsyncValue.productProposals![index].currencyCode,
+                productsProposalFiles: proposalAsyncValue.productProposals![index].productsProposalFiles,
               );
             },
           ),

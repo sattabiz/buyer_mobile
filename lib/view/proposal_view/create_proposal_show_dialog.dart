@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -63,7 +64,7 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
                   child: const Text('Dosya Yükleme')),
             ),
             Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(right: 20),
               child: IconButton(
                 iconSize: 30,
                 color: Theme.of(context).colorScheme.shadow,
@@ -82,7 +83,7 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             button(context,
-             "Kamerayi Ac",
+             FlutterI18n.translate(context, "tr.proposal.open_camera"),
               Icons.camera_alt_rounded,
               () async {
                 XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -91,11 +92,12 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
                   MultipartFile filetoMultipart = await MultipartFile.fromFile(imageFile.path);
                   ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart, pickedFile);
                   handleImageSelection();
+                  Navigator.of(context).pop();
                 }
               }
             ),
             button(context,
-             "Galeriden Sec",
+              FlutterI18n.translate(context, "tr.proposal.open_gallery"),
               Icons.photo_library,
               ()async{
                 XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -104,30 +106,13 @@ class _State extends ConsumerState<CreateProposalShowDialog> {
                   MultipartFile filetoMultipart = await MultipartFile.fromFile(imageFile.path);
                   ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart, pickedFile);
                   handleImageSelection();
+                  Navigator.of(context).pop();
                 }
               }
             ),
           ],
         ),
       ),
-      actions: <Widget>[
-        ElevatedButton(
-          style: ButtonStyle(
-            fixedSize: MaterialStateProperty.all(const Size(120, 45)),
-            backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-            handleImageSelection();
-          },
-          child: Text(
-            'Kaydet',
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-          ),
-        ),
-      ],
     );
   }
 

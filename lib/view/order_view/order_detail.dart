@@ -80,7 +80,7 @@ class OrderDetail extends ConsumerWidget {
                       width: width,
                       padding: const EdgeInsets.all(5.0),
                       child: orderAsyncValue.state.toString() ==  'order_approved'
-                      ? DetailTable(products: orderAsyncValue.products!)
+                      ? DetailTable(products: orderAsyncValue.products!, className: "order",id: orderAsyncValue.id!,)
                       : DetailTableOrder(products: orderAsyncValue.products!),
                     ),
                     orderAsyncValue.state.toString() ==  'order_approved'
