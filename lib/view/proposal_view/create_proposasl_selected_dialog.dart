@@ -79,7 +79,6 @@ class _ImageDialogState extends ConsumerState<ImageDialog> {
           child: const Text('Sil'),
           onPressed: () {
             ref.read(formItemProvider.notifier).removeImage(widget.productId);
-            debugPrint(ref.watch(formItemProvider.notifier).state.length.toString());
             widget.onImageRemove();
             Navigator.of(context).pop();
           },

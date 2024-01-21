@@ -16,7 +16,6 @@ final createProposalProvider = FutureProvider.autoDispose((ref) async {
   OfferModel _contentItems = await ref.watch(offerModelProvider);
 
   Map<String, dynamic> _productsAttributes = {};
-  debugPrint(_formItems[0].image!.filename);
 
   for (int i = 0; i < _formItems.length; i++) {
     _productsAttributes['$i'] = {

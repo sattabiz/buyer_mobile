@@ -19,6 +19,7 @@ import '../view/proposal_view/proposal_view.dart';
 import '../view/widget/app_bar/top_app_bar_large.dart';
 import '../view/widget/bottom_navigation.dart';
 import '../view/widget/chat_box.dart';
+import '../view/widget/image_view.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _sectionNavigatorKey = GlobalKey<NavigatorState>();
@@ -85,7 +86,15 @@ final router = GoRouter(
                         key: state.pageKey,
                         id: state.pathParameters['chatId']!,
                       ),
-                    )
+                    ),
+                    GoRoute(
+                      name: 'proposal_image',
+                      path: 'image/:imageUrl',
+                      builder: (context, state) {
+                        final imageUrl = state.pathParameters['imageUrl']!;
+                        return ImageView(imageUrl: imageUrl);
+                      },
+                    ),
                   ]
                 ),
               ],
@@ -114,6 +123,14 @@ final router = GoRouter(
                         key: state.pageKey,
                         id: state.pathParameters['chatId']!,
                       ),
+                    ),
+                    GoRoute(
+                      name: "order_image",
+                      path: 'image/:imageUrl',
+                      builder: (context, state) {
+                        final imageUrl = state.pathParameters['imageUrl']!;
+                        return ImageView(imageUrl: imageUrl);
+                      },
                     ),
                     GoRoute(
                       path: 'ready',
@@ -149,6 +166,14 @@ final router = GoRouter(
                         key: state.pageKey,
                         id: state.pathParameters['chatId']!,
                       ),
+                    ),
+                    GoRoute(
+                      name: "invoice_image",
+                      path: 'image/:imageUrl',
+                      builder: (context, state) {
+                        final imageUrl = state.pathParameters['imageUrl']!;
+                        return ImageView(imageUrl: imageUrl);
+                      },
                     ),
                   ]
                 ),

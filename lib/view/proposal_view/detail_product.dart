@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../model/currency_model.dart';
 import '../../utils/widget_helper.dart';
 import '../../view_model/proposal_controller/create_proposal_view_model.dart';
@@ -18,6 +19,7 @@ class ProposalBody extends ConsumerStatefulWidget {
   final double? price;
   final String? proposalNote;
   final String? currenciesCode;
+  final Map? productsProposalFiles;
 
   const ProposalBody(
       {super.key,
@@ -27,7 +29,8 @@ class ProposalBody extends ConsumerStatefulWidget {
       required this.itemCount,
       this.price,
       this.proposalNote,
-      this.currenciesCode
+      this.currenciesCode,
+      this.productsProposalFiles
       });
 
   @override
@@ -128,7 +131,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                             : widget.price.toString(),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      constraints: const BoxConstraints(maxWidth: 150),
+                      constraints: const BoxConstraints(maxWidth: 140),
                       isDense: true,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -212,7 +215,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                     ),
                   ),
                   const SizedBox(
-                    width: 10,
+                    width: 5,
                   ),
                   IconButton(
                     padding: const EdgeInsets.only(bottom: 15),
@@ -230,21 +233,24 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                         return CreateProposalShowDialog(productId: widget.productId,onImageSelected: onImageSelectedCallback,);
                       },
                     );
-                    /* FilePickerResult? result = await FilePicker.platform.pickFiles();
-                      if (result != null) {
-                        PlatformFile file = result.files.first;
-                        MultipartFile filetoMultipart = await MultipartFile.fromFile(
-                          file.path!,
-                          filename: file.name,
-                        );
-                        ref.read(formItemProvider.notifier).addImage(widget.productId, filetoMultipart);
-                      } else {
-                        return;
-                      } */
-                      /* XFile? image = await ImagePicker().pickImage(source: ImageSource.camera); */
                     },
                     icon: Icon(
                       ref.watch(formItemProvider.notifier).isImageSelected(widget.productId)? Icons.image_outlined: Icons.attach_file,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    )
+                  ),
+                  if(widget.productsProposalFiles!.values.isNotEmpty)
+                  IconButton(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    onPressed: () async {
+                      context.goNamed('proposal_image', pathParameters: {
+                        'proposalId': widget.productId.toString(),
+                        'imageUrl': widget.productsProposalFiles!.values.first,
+                      });
+                    },
+                    icon: Icon(
+                       Icons.image_outlined,
+                       size: 25,
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     )
                   ),

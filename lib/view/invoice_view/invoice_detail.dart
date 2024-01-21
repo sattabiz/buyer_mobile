@@ -66,6 +66,8 @@ class InvoiceDetail extends ConsumerWidget {
                   padding: const EdgeInsets.all(5.0),
                   child: DetailTable(
                     products: invoiceList.products!,
+                    id: invoiceList.invoiceId!,
+                    className: "invoice",
                   ),
                 ),
                 SizedBox(

@@ -34,6 +34,8 @@ tr:
     proposal_period: "Teslim Süresi"
     payment_type: "Ödeme Şekli"
     products: "Teklif İstenen Ürünler"
+    open_camera: "Kamerayı Aç"
+    open_gallery: "Galeriyi aç"
   order:
     order_approved: "Yeni Sipariş"
     order_confirmed: "Hazırlanıyor"
@@ -77,6 +79,7 @@ tr:
     row_3: "Fiyat"
     row_4: "Toplam"
     row_5: "Sevk"
+    row_6: ""
   detail_info:
     proposal: 
       row_1: "Talep Tarihi:"
