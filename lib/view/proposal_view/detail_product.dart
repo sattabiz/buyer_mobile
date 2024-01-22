@@ -131,7 +131,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                             : widget.price.toString(),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      constraints: const BoxConstraints(maxWidth: 140),
+                      constraints: const BoxConstraints(maxWidth: 130),
                       isDense: true,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -241,7 +241,7 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                   ),
                   if(widget.productsProposalFiles!.values.isNotEmpty)
                   IconButton(
-                    padding: const EdgeInsets.only(bottom: 15),
+                    padding: const EdgeInsets.only(bottom: 15, right: 5),
                     onPressed: () async {
                       context.goNamed('proposal_image', pathParameters: {
                         'proposalId': widget.productId.toString(),
