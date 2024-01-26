@@ -145,17 +145,17 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                                 Theme.of(context).colorScheme.onSurfaceVariant),
                       ),
                     ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return FlutterI18n.translate(
-                            context, 'tr.validations.price');
-                      }else if(value.isNotEmpty){
-                        ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
-                        boolean = true;
-                        ref.read(formItemProvider.notifier).addPrice(widget.productId, double.parse(value));
-                      }
-                      //return null;
-                    },
+                    // validator: (String? value) {
+                    //   if (value == null || value.isEmpty ) {
+                    //     return FlutterI18n.translate(
+                    //         context, 'tr.validations.price');
+                    //   }else if(value.isNotEmpty){
+                    //     ref.read(formItemProvider.notifier).addFormItem(FormItem(), widget.productId);
+                    //     boolean = true;
+                    //     ref.read(formItemProvider.notifier).addPrice(widget.productId, double.parse(value));
+                    //   }
+                    //   //return null;
+                    // },
                     onChanged: (value) {
                       /* ref.read(formItemProvider.notifier).state[widget.index].price = double.parse(value);
                       ref.read(formItemProvider.notifier).state[widget.index].productId = widget.productId; */
@@ -166,6 +166,10 @@ class _ProposalBodyState extends ConsumerState<ProposalBody> {
                       }
                       ref.read(formItemProvider.notifier).addPrice(widget.productId, double.parse(value));
                       }
+                      else {
+                        ref.read(formItemProvider.notifier).addPrice(widget.productId, 0);
+                      }
+
                     },
                   ),
                   const SizedBox(
