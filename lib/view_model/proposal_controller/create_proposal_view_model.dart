@@ -18,14 +18,18 @@ final createProposalProvider = FutureProvider.autoDispose((ref) async {
   Map<String, dynamic> _productsAttributes = {};
 
   for (int i = 0; i < _formItems.length; i++) {
-    _productsAttributes['$i'] = {
-      "id": _formItems[i].productId.toString(),
-      "price": _formItems[i].price.toString(),
-      "proposal_note": _formItems[i].note,
-      "currency_unit": _formItems[i].currencies,
-      if(_formItems[i].image != null) 'image': _formItems[i].image
-    };
+    if (_formItems[i].price != null && _formItems[i].price != 0.0) {
+      _productsAttributes['$i'] = {
+        "id": _formItems[i].productId.toString(),
+        "price": _formItems[i].price.toString(),
+        "proposal_note": _formItems[i].note,
+        "currency_unit": _formItems[i].currencies,
+        if(_formItems[i].image != null) 'image': _formItems[i].image
+      };
+    }
   }
+
+  debugPrint(_productsAttributes.toString());
 
   Map<String, dynamic> data = {
     "id": _contentItems.proposalId,
