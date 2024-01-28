@@ -25,53 +25,59 @@ class ReadyForShipInvoice extends ConsumerWidget {
       },
       child: shipmentListAsyncValue.when(
         data: (data) {
-          return Stack(
-            children: [
-              Column(
-                children: [
-                  TopAppBarCentered(
-                    title: FlutterI18n.translate(context, 'tr.ready_for_ship.title'),
-                    backRoute: '/invoice',
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      itemCount: data.length, //Bu products nereden geliyor
-                      shrinkWrap: true,      //eleman sayisi kadar boyutun artsin
-                      itemBuilder: (context, index) => ReadyForShipCard(
-                        shipmentList: data[index],
-                        message: data[index].messageNotification!,
+          return WillPopScope(
+            onWillPop: () async{
+              context.go('/invoice');
+              return false;
+            },
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    TopAppBarCentered(
+                      title: FlutterI18n.translate(context, 'tr.ready_for_ship.title'),
+                      backRoute: '/invoice',
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: data.length, //Bu products nereden geliyor
+                        shrinkWrap: true,      //eleman sayisi kadar boyutun artsin
+                        itemBuilder: (context, index) => ReadyForShipCard(
+                          shipmentList: data[index],
+                          message: data[index].messageNotification!,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-
-              Container(
-                alignment: Alignment.bottomRight,
-                padding: const EdgeInsets.all(20.0),
-                child: FloatingActionButton.extended(
-                  label: Text(
-                    FlutterI18n.translate(context, 'tr.ready_for_ship.generate_invoice'),
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  ),
-                  icon: SvgPicture.asset(
-                    'assets/svg/shape.svg',
-                    width: 40,
-                    height: 30,
-                    fit: BoxFit.cover,
-                  ),
-                  onPressed: () async{
-                    context.go('/invoice/invoice_ready/generate');
-                    ref.refresh(invoiceTableProvider);
-                    ref.watch(getAddressFutureProvider);
-                  },
-                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  ],
                 ),
-              ),
-            ],
+          
+                Container(
+                  alignment: Alignment.bottomRight,
+                  padding: const EdgeInsets.all(20.0),
+                  child: FloatingActionButton.extended(
+                    label: Text(
+                      FlutterI18n.translate(context, 'tr.ready_for_ship.generate_invoice'),
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
+                    icon: SvgPicture.asset(
+                      'assets/svg/shape.svg',
+                      width: 40,
+                      height: 30,
+                      fit: BoxFit.cover,
+                    ),
+                    onPressed: () async{
+                      context.go('/invoice/invoice_ready/generate');
+                      ref.refresh(invoiceTableProvider);
+                      ref.watch(getAddressFutureProvider);
+                    },
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ],
+            ),
           );
         },
         loading: () => Container(),

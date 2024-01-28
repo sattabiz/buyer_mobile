@@ -177,7 +177,12 @@ String? alertIconWithState(String state) {
 }
 
 String calcuteAmount(String amount, String price) {
-  return (double.parse(amount) * double.parse(price)).toString();
+  if(price == "null"){
+    return "-";
+  }else{
+    return (double.parse(amount) * double.parse(price)).toString();
+  }
+
 }
 
 Map<String, String> calculateTaxRate(List<dynamic> productList) {
