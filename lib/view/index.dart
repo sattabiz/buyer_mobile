@@ -12,11 +12,16 @@ class Index extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: customAppBar,
-      body: navigationShell,
-      bottomNavigationBar: bottomNavigationBar,
-      resizeToAvoidBottomInset: true,
+    return WillPopScope(
+      onWillPop: () async{
+          return false;
+        },
+      child: Scaffold(
+        appBar: customAppBar,
+        body: navigationShell,
+        bottomNavigationBar: bottomNavigationBar,
+        resizeToAvoidBottomInset: true,
+      ),
     );
   }
 }

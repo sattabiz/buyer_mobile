@@ -52,73 +52,79 @@ class _ProposalDetailState extends ConsumerState<ProposalDetail> {
     final chatId = ref.watch(messageRoomIdProvider);
     ref.read(offerModelProvider).proposalId = proposalAsyncValue!.proposalId;
     List<FormItem> detailProposals = ref.watch(formItemProvider);
-    return Stack(children: [
-      SingleChildScrollView(
-        child: Column(
-          children: [
-            TopAppBarLeft(
-              title: 'Teklif No: ${proposalAsyncValue.proposalId}',
-              backRoute: () => context.go('/proposal'),
-              chatRoute: () => context.goNamed('proposal_chat',
-                  pathParameters: {
-                    'proposalId': proposalAsyncValue.proposalId.toString(),
-                    'chatId': '$chatId'
-                  }),
-              refreshProvider: () async {
-                ref.refresh(getProposalProvider);
-                ref.refresh(getProposalProvider.future);
-              },
-            ),
-            proposalAsyncValue.proposalState == 'last_offer' ||
-                    proposalAsyncValue.proposalState == 'proposal_stvs'
-                ? const ShowProposal()
-                : Form(
-                    key: _formKey,
-                    child: EditProposal(
-                      tgs: proposalAsyncValue.proposalValidPeriod,
-                      deliveryTime: proposalAsyncValue.proposalDeliveryTime,
-                    )),
-          ],
+    return WillPopScope(
+      onWillPop: () async{
+        context.go('/proposal');
+        return false;
+      },
+      child: Stack(children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              TopAppBarLeft(
+                title: 'Teklif No: ${proposalAsyncValue.proposalId}',
+                backRoute: () => context.go('/proposal'),
+                chatRoute: () => context.goNamed('proposal_chat',
+                    pathParameters: {
+                      'proposalId': proposalAsyncValue.proposalId.toString(),
+                      'chatId': '$chatId'
+                    }),
+                refreshProvider: () async {
+                  ref.refresh(getProposalProvider);
+                  ref.refresh(getProposalProvider.future);
+                },
+              ),
+              proposalAsyncValue.proposalState == 'last_offer' ||
+                      proposalAsyncValue.proposalState == 'proposal_stvs'
+                  ? const ShowProposal()
+                  : Form(
+                      key: _formKey,
+                      child: EditProposal(
+                        tgs: proposalAsyncValue.proposalValidPeriod,
+                        deliveryTime: proposalAsyncValue.proposalDeliveryTime,
+                      )),
+            ],
+          ),
         ),
-      ),
-      proposalAsyncValue.proposalState == 'last_offer' ||
-              proposalAsyncValue.proposalState == 'proposal_stvs'
-          ? const SizedBox()
-          : Container(
-              alignment: Alignment.bottomRight,
-              padding: const EdgeInsets.all(20.0),
-              child: FloatingActionButton.extended(
-                  label: Text(
-                    'Teklif Gönder (${ref.watch(proposalIndexProvider)!.updateCounter.toString()}/3)',
-                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                  ),
-                  onPressed: () {
-                    bool validProposalExists = detailProposals.any((proposal) =>
-                        proposal != null &&
-                        proposal.price != null &&
-                        proposal.price != 0);
-
-                    if (!validProposalExists) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Lütfen bir fiyat giriniz.'),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-                    } else {
-                      if (proposalAsyncValue.updateCounter != 3) {
-                        ref.watch(createProposalProvider);
-                        context.go('/proposal');
+        proposalAsyncValue.proposalState == 'last_offer' ||
+                proposalAsyncValue.proposalState == 'proposal_stvs'
+            ? const SizedBox()
+            : Container(
+                alignment: Alignment.bottomRight,
+                padding: const EdgeInsets.all(20.0),
+                child: FloatingActionButton.extended(
+                    label: Text(
+                      'Teklif Gönder (${ref.watch(proposalIndexProvider)!.updateCounter.toString()}/3)',
+                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                    ),
+                    onPressed: () {
+                      bool validProposalExists = detailProposals.any((proposal) =>
+                          proposal != null &&
+                          proposal.price != null &&
+                          proposal.price != 0);
+    
+                      if (!validProposalExists) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Lütfen bir fiyat giriniz.'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      } else {
+                        if (proposalAsyncValue.updateCounter != 3) {
+                          ref.watch(createProposalProvider);
+                          context.go('/proposal');
+                        }
                       }
-                    }
-                  },
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  )),
-            )
-    ]);
+                    },
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    )),
+              )
+      ]),
+    );
   }
 }
