@@ -127,8 +127,8 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
         productsProposalId: json["products_proposal_id"],
-        productFiles: json['products_proposal_files'],
-        productsProposalFiles: json['products_proposal_files'],
+        productFiles: {},
+        productsProposalFiles: {},
         name: json["name"],
         categoryId: json["category_id"],
         description: json["description"],
